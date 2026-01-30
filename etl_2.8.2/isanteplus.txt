@@ -1,0 +1,172 @@
+
+Nord ---> hyP&rion!NORD2020
+Nord-Est ---> hyP&rion!NORE2020
+Nord-Ouest --->	hyP&rion!NORO2020
+Artibonite --->	hyP&rion!ARTI2021
+Centre ---> hyP&rion!CENT2021
+Ouest ---> hyP&rion!OUES2021
+Grand'Anse --->	hyP&rion!GRAN2022
+Nippes ---> hyP&rion!NIPP2022
+Sud ---> hyP&rion!SUDD2022
+Sud-Est ---> hyP&rion!SUDE2022
+
+	D&moiSaP@2025
+	1.1-SNAPSHOT
+	
+CREATE USER 'root'@'10.2.109.13' IDENTIFIED BY 'bioplugin@!!';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.2.109.13' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+CREATE USER 'root'@'%' IDENTIFIED BY 'bioplugin@!!';`
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+
+*/5 * * * * sh /home/isanteplus/set_isante_id.sh > /home/isanteplus/set_isante_id.log 2>&1
+
+select l.location_id, l.name, a.value_reference, l.address3, l.city_village, state_province from openmrs.location_attribute a inner join location l on l.location_id = a.location_id where a.attribute_type_id
+	   =1 and l.name like '%limbe%'
+
+--1. Copy etl_2.8.2 folder to /home/isanteplus
+     sudo chmod 777 -R /home/isanteplus/etl_2.8.2
+
+--2. Backup the patient_status_arv table in isanteplus database
+     mysqldump -uroot -p'Admin@123' isanteplus patient_status_arv > /home/jeejen/etl_2.8.2/patient_status_arv.sql
+     
+--3. Delete the isanteplus database
+     sudo service mysql.server restart
+     mysql -uroot -p'jO3!u7US&#rl'
+     DROP DATABASE isanteplus;
+     
+--4. Create the isanteplus database
+     CREATE DATABASE isanteplus;
+
+--5. Import the ddl, drug, flags, patient_status_arv.sql
+     mysql -uroot -p'Admin@123' < /home/jeejen/etl_2.8.2/isanteplusreportsddlscript.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/drug_lookup_isanteplus.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/openmrs_patientflags.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/psychoSocialResume.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/patient_status_arv.sql
+     
+--6. Run the .sh file
+     sh /home/jeejen/etl_2.8.2/etl.sh
+     
+--7. Setup the crontab
+     crontab -e
+     @reboot sh /home/isanteplus/etl_2.8.2/etl.sh > /home/isanteplus/etl_2.8.2/etl.log 2>&1
+     0 */4 * * * sh /home/isanteplus/etl_2.8.2/etl.sh > /home/isanteplus/etl_2.8.2/etl.log 2>&1
+     
+--8. Replace the isanteplus and report module
+     sudo chmod +x /home/isanteplus/etl_2.8.2/*.omod
+     sudo chown root:root /home/isanteplus/etl_2.8.2/*.omod
+     sudo mv -f /home/isanteplus/etl_2.8.2/*.omod /usr/share/tomcat7/.OpenMRS/modules/
+     sudo service tomcat7 restart
+     tialsetup
+     
+--9. Change the reports module version to 0.9
+     Go to Administration systeme -> Administration avancee -> Settings -> reports
+     sudo service tomcat7 restart
+     
+-10. Import concept
+     mysql -uroot -p'jO3!u7US&#rl' openmrs < /home/isanteplus/etl_2.8.2/concept/isantePlus_concept_20230321.sql
+     
+     
+End...
+
+
+
+
+patient_id=183
+
+<% if (breadcrumbs) { %>
+${ ui.includeFragment("coreapps", "patientsearch/patientSearchWidget",
+        [ afterSelectedUrl: afterSelectedUrl,
+          showLastViewedPatients: showLastViewedPatients,
+          breadcrumbOverride: breadcrumbs,
+          registrationAppLink: registrationAppLink])}
+<% } else { %>
+${ ui.includeFragment("coreapps", "patientsearch/patientSearchWidget",
+        [ afterSelectedUrl: afterSelectedUrl,
+          showLastViewedPatients: showLastViewedPatients,
+          registrationAppLink: registrationAppLink ])}
+<% } %>
+
+
+
+-- Replication
+
+
+
+
+
+
+Module allowing the creation of a new patient
+
+
+
+
+
+
+                         
+
+arv_drugs                     
+arv_status_loockup            
+discontinuation_reason        
+druglookup                    
+exposed_infants               
+exposed_infants_day           
+family_planning               
+health_qual_patient_visit     
+immunization_dose             
+immunization_lookup           
+indicator_type                
+indicators                    
+key_populations               
+last_obs                      
+location                      
+location_address              
+obs_by_day                    
+openmrs.isanteplus_patient_arv
+patient                       
+patient_delivery              
+patient_diagnosis             
+patient_dispensing            
+patient_dispensing_day        
+patient_imagerie              
+patient_immunization          
+patient_laboratory            
+patient_malaria               
+patient_menstruation          
+patient_nutrition             
+patient_ob_gyn                
+patient_on_art                
+patient_on_arv                
+patient_pcr                   
+patient_pregnancy             
+patient_prescription          
+patient_prescription_day      
+patient_status_arv            
+patient_status_arv_day        
+patient_tb_diagnosis          
+patient_visit                 
+pediatric_hiv_visit           
+pepfarTable                   
+regimen                       
+report_type                   
+serological_tests             
+stopping_reason               
+vaccination                   
+vih_risk_factor               
+virological_tests             
+visit_type                    
+
+
+
+
+
+
+
+
+
+
+
