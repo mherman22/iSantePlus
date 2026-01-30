@@ -1,0 +1,18 @@
+[
+    {
+        "id": "coreapps.activePatientVisitsTriaged",
+        "description": "coreapps.triage.app.description",
+        "order": 10,
+        "extensions": [
+            {
+                "id": "${project.parent.groupId}.${project.parent.artifactId}.activeVisitsHomepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "label": "coreapps.triage.app.label",
+                "url": "coreapps/activePatientVisitsTriaged.page?app=coreapps.activePatientVisitsTriaged",
+                "icon": "icon-list-ol",
+                "requiredPrivilege": "App: coreapps.activePatientVisitsTriaged"
+            }
+        ]
+    }
+]

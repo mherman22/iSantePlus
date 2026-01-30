@@ -1,0 +1,907 @@
+<htmlform formUuid="2eeb983b-50e2-4a94-8881-8047f6c2c599"
+	formName="Retention et Adhesion au TAR" formVersion="1.0"
+	formEncounterType="f02f3267-02f3-4586-8341-4a03a42874e9"
+	formDescription="Saisie Retention et Adhesion aun TAR">
+	<style>
+		.section {
+		border: 1px solid $headerColor;
+		padding: 1px;
+		text-align: left;
+		margin-bottom: 1em;
+		}
+		.section_b {
+		background-color: #2F4F4F;
+		color:#FFFFFF;
+		padding: 2px;
+		text-align: center;
+		margin-bottom: 1em;
+		}
+		.sectionHeader {
+		background-color: $headerColor;
+		color: $fontOnHeaderColor;
+		display: block;
+		padding: 1px;
+		font-weight: bold;
+		}
+		.lienvisible#first{display: block}
+		.toggle-button{
+		height:auto; background:#132959; border:1px solid #FFFFFF;
+		color:#FFFAF4;
+		width:100%";
+		}
+		.contener
+		{
+		width:100%;
+		height:100%;
+		border:1px solid;
+		margin:0px;
+		padding:0px;
+		background:#87CEEB; border:1px solid #FFFFFF;
+		}
+		.hide{
+		margin:0px;
+		padding:0px;
+		}
+		a:link
+		{
+		text-decoration:none;
+		}
+		table.baseline-aligned td {
+		vertical-align: baseline;
+		}
+		#sauvegarde
+		{
+		background:#c1e5f1;
+		position:relative;
+		bottom:0px;
+		width:100%;
+		margin:0px;
+		padding-top:0px;
+		padding-bottom:5px;
+		padding-left:0px;
+		padding-right:0px;
+		height:50px;
+		}
+		#dateVisite{
+		background:#c1e5f1;
+		top:0px;
+		width:100%;
+		}
+		#scroll{
+		width: 99%;
+		margin-right:1%;
+		margin-left:0px;
+		margin-bottom:0px;
+		height:520px;
+		overflow: scroll;
+		border: 1px solid black;
+		text-align: justify;
+		padding: 5px;
+		}
+		#contenerGeneral
+		{
+			height:100%;
+			width:100%;
+			margin:0px;
+			padding:0px;
+			bottom:0px;
+			height: 87vh;
+			overflow: scroll;
+        background: white;
+		}
+		#contenerGeneral::-webkit-scrollbar {
+		display: none;          
+		}
+		form input[type="checkbox"], form input[type="radio"], .form
+		input[type="checkbox"], .form input[type="radio"] {
+		float: none;
+		display: inline-block;
+		}
+
+		form input[type="textarea"]{
+		border: 1px solid red;
+		}
+
+		form label, .form label {
+		display: inline-block;
+		}
+
+		.sansbordure
+		{
+		border: 0;
+		}
+
+		.error {
+		color: red;
+		background-color: white;
+		}
+
+
+		#divMotifCons1 {
+		width: 100%;
+		margin: 10px
+		padding: 10px;
+		}
+
+		<!--  START      MODIFICATION MACKENDY AND JEEJEN-->
+		.tableTdMotif1 {
+		width: 16.66%;
+		}
+
+		.tableTdImpresClin {
+		width: 25%;
+		}
+
+		<!--        END MODIFICATION MACKENDY AND JEEJEN-->
+
+		.clear {
+		float: right;
+		margin-top: -29px;
+		margin-right: 10px;
+		}
+
+		.icon-remove-sign:hover {
+		color: #aa007f;
+		}
+
+		<!--MODIFICATION SCHNEIDER-->
+
+		.display-flex {
+			display:flex;
+		}
+
+		.mr-5{
+			margin-right: 5px;
+		}
+
+		.mr-15{
+			margin-right: 15px;
+		}
+
+		.locationRightAlign {
+			margin-left: auto;
+			margin-right: 0px;
+		},
+	</style>
+
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery( '.toggle-button' ).on( 'click', function() {
+		// À décommenter si tu veux masquer toutes les autres div
+		jQuery( '.togglable' ).not( this.getAttribute( 'data-target' ) ).hide( 'slow'
+		);
+
+		jQuery( this.getAttribute( 'data-target' ) ).toggle( 'slow' );
+		});
+		});
+	</script>
+
+	<script type="text/javascript">
+        //Valition des donnees
+
+        beforeSubmit.push(function() {
+
+            //if(getValue('form_status.value') != 163339 &amp;&amp; getValue('form_status.value') != 1267) {
+            //    alert('Erreur ! Veuillez saisir le Statut de la fiche !');
+            //    return false;
+            //}
+            return true;
+        });
+
+
+		<!-- Set location for consultation -->
+
+		jQuery(function() {
+		if (getValue('locationTypeValue.value') == '') {
+		setValue('locationTypeValue.value','Le site même');
+		}if (getValue('locationTypeValue.value') == '') {
+		setValue('locationTypeValue.value','Le site même');
+		}if ((getValue('locationTypeValue.value') == 'Point fixe ou satellite') || (getValue('locationTypeValue.value') == 'Clinique privée') || (getValue('locationTypeValue.value') == 'Maison privée') || (getValue('locationTypeValue.value') == 'Télémédecine')) {
+		jQuery('#locationValue').hide()
+		}
+
+		//jQuery('#locationType:not(:has(.required))').append('<span class="required">*</span>');
+		jQuery('#locationTypeValue').on( 'change', function() {
+		if (getValue('locationTypeValue.value') == 'Le site même') {
+		jQuery('#locationValue').show();
+		//jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+		} else if (getValue('locationTypeValue.value') == 'Site autre que celui du patient') {
+		jQuery('#locationValue').show();
+		//jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+		} else {
+		jQuery('#locationValue').hide()
+		}
+		});
+		});
+
+
+	</script>
+
+
+	<ifMode mode="ENTER">
+		<lookup complexExpression="
+				#set( $encounter = 0 )
+				#set( $encounter = $fn.latestEncounter('12f4d7c3-e047-4455-a607-47a40fe32460') )
+				#if( $encounter != 0 )
+
+				 &lt;script type=&quot;text/javascript&quot;>
+				 alert('Cette fiche, doit etre en un seul exemplaire');
+						var url = window.location.search;
+						var idurl=url.substring(url.lastIndexOf(&quot;=&quot;)+1);
+							var cheminComplet = document.location.href;
+							var longueur = window.location.protocol + &quot;//&quot; + window.location.host + &quot;/&quot;;
+							var souschaine=cheminComplet.substring(longueur.length,cheminComplet.indexOf(&quot;/&quot;,longueur.length));
+							window.location = window.location.protocol + &quot;//&quot; + window.location.host + &quot;/&quot;+ souschaine +&quot;/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=$encounter.patient.uuid&amp;formUuid=$encounter.form.uuid&amp;encounterId=$encounter.uuid&quot;;
+				&lt;/script>
+
+			#end
+		"/>
+
+	</ifMode>
+	<div id="contenerGeneral">
+		<div id="dateVisite">
+			<b align="center" id="sauvegarde" >
+					<center style="padding: 5px !important;">Fiche de Retention et Adhesion aun TAR</center>
+			</b>
+			<table>
+				<tr>
+					<td class="display-flex">
+						<div class="display-flex mr-15">
+							<p style="margin-top: 0.8rem; margin-right: 5px;">Date visite:</p>
+							<encounterDate default="today" />
+						</div>
+						
+						<div class="display-flex locationRightAlign">
+							<h5 style="color: #d66f08; margin-right: 5px;"><i class="icon-map-marker"></i>Lieu de consultation</h5>
+							<span style="" id="locationType" class="mr-5">
+								<obs 
+									id="locationTypeValue" 
+									conceptId="CIEL:163529" 
+									answers="Le site même,Point fixe ou satellite,Clinique privée,Maison privée,Télémédecine,Site autre que celui du patient"
+									default="Le site même"
+								/>
+							</span>
+
+							<span style="" id="locationValue" class="mr-5">
+								<encounterLocation default="SessionAttribute:emrContext.sessionLocationId" />
+							</span>
+							<span>
+								<submit submitClass="confirm right" submitCode="general.save"/>
+							</span>	
+						</div>				
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div>
+			<br />
+			<table>
+				<tbody>
+					<tr>
+						<td class="sansbordure display-flex" valign="top">
+							<div class="mr-15">
+								<span style="" id="">
+									<label style="color: #d66f08; font-size: 12px;">Mode de suivi</label>
+									<obs 
+										id="locationTypeValue" 
+										conceptId="CIEL:163529" 
+										answers="Face à face, À distance"
+										default="Face à face"
+									/>
+								</span>
+							</div>
+							<div >
+								<span style="" id="">
+									<label style="color: #d66f08; font-size: 12px;">Évalué par</label>
+									<obs 
+										id="locationTypeValue" 
+										conceptId="CIEL:163529" 
+										answers="Médecin,Infirmier(ère),Pharmacien,Dispensateur pharmaceutique,Psychologue,Travailleur social,Operateur d’appel"
+										default="Travailleur social"
+									/>
+								</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+		</div>
+
+		<div width="100%">
+			<a href="#read" class="lien">
+				<div class="toggle-button" data-target="#div6">ÉVALUATION DE LA RÉTENTION EN SOINS</div>
+			</a>
+			<div id="div6" class="togglable" style="display: none;">
+				<section headerLabel="">
+					<table>
+						<br/>
+						<tr>
+							<td valign="top" style="border: none;">
+								<span style="font-size: 0.75em; font-style: italic;">Compléter les quatre prochaines questions à partir du dossier du patient sur les 12 derniers mois :</span>
+								<br/><br/>	
+								Le patient a-t-il bénéficié d’au moins de deux visites d’évaluation médicale espacées au moins de 90 jours (3mois) et respectant la fréquence de suivi recommandée ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+
+								Le patient a-t-il bénéficié d’au moins une visite d’évaluation psychosociale ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+
+								Le patient a-t-il bénéficié d’au moins un prélèvement pour suivi de charge virale ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+
+								Le patient a-t-il manqué au moins un rendez-vous de retrait de médicaments avec l’institution ou dans la communauté ? Oui ☐ Non ☐
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+								<br/>
+							</td>
+
+							<td valign="top" >
+								<span style="font-size: 0.75em; font-style: italic;">Compléter les quatre prochaines questions à partir du dossier du patient sur les 12 derniers mois :</span>
+								<br/><br/>
+								Est-ce que vous n’êtes pas venu à un rendez-vous clinique au cours des 12 derniers mois ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+
+								Est-ce que vous avez déjà raté un rendez-vous pour retrait de médicaments au cours des 12 derniers mois ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+
+								Est-ce que vous avez déjà passé un jour ou plus sans avoir vos médicaments ARV en main au cours des 12 derniers mois ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+							</td>
+						</tr>
+					</table>
+
+					<table>
+						<br/>
+						<b style="font-style: italic;">Raisons ou impressions fournies par le/la patient/e s’il y a un manque dans les services cliniques ou le retrait de médicaments (cocher tout ce qui est rapporté):</b>
+						<br/>
+							<tr>
+								<td>Barrières structurelles</td>
+								<td>Barrières personnelles et interpersonnelles</td>
+								<td>Obstacles « communautaires » ou liés aux établissements de santé</td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Absence de téléphone / téléphones non fonctionnels"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Catastrophe naturelle"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Chômage"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Déplacement interne brusque forcé"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Déplacements fréquents / Pas de résidence fixe / Nomade"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Indisponibilité d’argent pour payer le transport"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Incarcération"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Insécurité / Vit dans une zone dangereuse"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Limitations de mouvement : Routes bloquées / impraticables au moment du rendez-vous"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Manque de temps / Horaires de travail chargés / Occupation incompatible avec heures de rendez-vous"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Migration temporaire vers un autre pays"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Migration volontaire interne récente"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Non-programmation de rendez-vous nécessaire"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Numéro de téléphone ou l’adresse du patient étaient incorrects"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Pas de logement (Sans-abri)"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Précarité socioéconomique"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Problème de santé passager ayant coïncidé avec le rendez-vous"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Situations familiales difficiles limitant le respect de rendez-vous ou les déplacements prolongés"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Zone de résidence d’accès difficile / Indisponibilité de transport dans sa zone de résidence"/>
+								</td>
+
+								<td valign="top">
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Confusion entre les différents rendez-vous"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Croyances personnelles ou culturelles"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Déni / Ne croit pas avoir le VIH"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Evénement social malheureux (décès familial, perte d’emploi, hospitalisation d’un proche, etc..)"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Etat général altéré / Est alité"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Handicap physique entrainant une mobilité réduite"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Incapacité mentale / Problèmes de santé mentale"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Isolation sociale / Manque de soutien"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Manque d’autonomie (trop âgé ou trop jeune et sans accompagnement stable)"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Oubli"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Perte d’intérêt pour le plan thérapeutique / N’en comprend pas bien l’importance ou la valeur ajoutée / Autres priorités paraissant plus importantes"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Peur de la stigmatisation"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Refus de recevoir les soins (préciser pourquoi en commentaire)"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Toxicomanie ou dépendance à l'alcool"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Victime de la stigmatisation des proches ou de l’entourage / Rejet"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Victime de violences émotionnelles, physiques, ou sexuelles"/>
+								</td>
+
+								<td valign="top">
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Absence ou absentéisme des prestataires"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Coûts de services dans la clinique"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Coûts de transport pour se rendre à la clinique"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Counseling reçu sur TAR insuffisant ou de mauvaise qualité"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Dispensation/livraison en retard des médicaments au patient"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Hôpital/Clinique ou DDP fermé ou non-fonctionnel"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Horaires non flexibles et inadaptés aux horaires du patient (scolaires/professionnels)"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Longs délais d'attente"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Longue distance pour se rendre à la clinique"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Manque de stock d’ARV limitant dispensation"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Mauvaise relation patients-prestaires / Attitude stigmatisante des prestataires ou autres employés de l’hôpital/clinique"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Non occurrence de la livraison d’ARV prévue à domicile ou ailleurs dans la communauté"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Pas d’information pour contacter l’hôpital/clinique"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Problèmes de confidentialité / confidentialité compromise"/><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Services insatisfaisants"/>
+								</td>
+							</tr>
+					</table>
+					<br/>
+					<b>Autre raison fournie (précizez)</b>
+					<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+						<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+					</obsgroup>
+					<br/>
+					<b>Raison évoquée si refus de recevoir les soins</b>
+					<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+						<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+					</obsgroup>
+				</section>
+			</div>
+		</div>
+
+		<div width="100%">
+			<a href="#read" class="lien">
+				<div class="toggle-button" data-target="#div3">EVALUATION DE L’ADHESION MEDICAMENTEUSE (ADHERENCE / OBSERVANCE) AU TAR</div>
+			</a>
+			<div id="div3" class="togglable" style="display: none;">
+
+				<section headerLabel="">
+					<br/>
+					<table>
+						<tr>
+							<td valign="top" class="sansbordure">
+								Nombre de comprimés d’ARV restants:
+								<obs id="nbpers" conceptId="CIEL:1474" /><!-- new concept added -->
+								Avez-vous déjà oublié de prendre vos médicaments ARV au cours des 6 derniers mois ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br />
+								Lorsque vous vous sentez mieux, arrêtez-vous parfois de prendre vos médicaments ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br />
+								Si vous vous sentez moins bien lorsque vous prenez vos médicaments, arrêtez-vous parfois de les prendre ?
+								<br />
+								Au cours des 30 derniers jours, combien de jours n’avez-vous pas pris vos ARV ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+									<obs 
+									id="locationTypeValue" 
+									conceptId="CIEL:163529" 
+									answers="Moins de 3 jours,3 jours,4 jours,5 jours,6 jours,7 jours,8 jours,9 jours,10 jours,Pas d'ARV durant les 30 derniers jours"
+									default="Tous les jours"
+								/>
+
+							</td>
+						</tr>
+
+					</table>
+					<br/>
+					<table>
+						<tr>
+							<td>Barrières structurelles</td>
+							<td>Barrières personnelles ou interpersonnelles</td>
+							<td>Obstacles « communautaires » ou liés aux établissements de santé</td>
+						</tr>						
+						<tr>
+							<td valign="top">
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Absence ou inadéquation d’espace de stockage médicament à la résidence du patient"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Déplacements fréquents / Pas de résidence fixe / Nomade"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Incarcération"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Insécurité / Déplacement forcé sans médicament"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Insécurité alimentaire"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Manque d’intimité au niveau de la résidence patient"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Migration temporaire vers un autre pays"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Migration volontaire interne récente"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Pas de logement (Sans-abri)"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Précarité socioéconomique"/><br/>
+							</td>
+
+							<td valign="top">
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="A décidé d’utiliser de préférence un traitement à base de plantes"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Croyances personnelles ou culturelles / Conceptions erronées sur la maladie et le traitement"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Déni / Ne croit pas avoir le VIH"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Difficultés à avaler"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Effets secondaires des ARV"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Etat général altéré / Est alité"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Incapacité mentale / Problèmes de santé mentale"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Isolation sociale / Manque de soutien"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Manque d’autonomie (trop âgé ou trop jeune et sans accompagnement stable)"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Manque d’intimité lié à la non-divulgation du statut VIH aux proches"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Oubli"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Perte des médicaments"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Peur de stigmatisation"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Problème de santé passager pendant lequel le patient a interrompu le traitement"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Refus de recevoir les soins (préciser pourquoi en commentaire)"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Toxicomanie ou dépendance à l'alcool"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Trop de médicaments à prendre"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Victime de la stigmatisation des proches ou de l’entourage / Rejet"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Victime de violences émotionnelles, physiques, ou sexuelles"/><br/>
+							</td>
+
+							<td valign="top">
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Absence ou insuffisance de counseling sur l’adhésion médicamenteuse"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Attitude stigmatisante du personnel soignant"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Dispensation tardive ou non faite des médicaments"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Pas d’appel de motivation pour l’adhésion médicamenteuse"/><br/>
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648" answerLabel="Problèmes de confidentialité / Confidentialité compromise"/><br/>
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<b>Autre raison fournie (précizez)</b>
+					<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+						<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+					</obsgroup>
+					<br/>
+					<b>Raison évoquée si refus de recevoir les soins</b>
+					<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+						<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+					</obsgroup>
+				</section>
+			</div>
+		</div>
+
+		<div width="100%">
+			<a href="#read" class="lien">
+				<div class="toggle-button" data-target="#div1">CONDITION SOCIO-DÉMOGRAPHIQUE</div>
+			</a>
+			<div id="div1" class="togglable" style="display: none;">
+				<br/>
+				<table>
+					<tr>
+						<th>Niveau d'étude</th>
+						<th>Sécurité alimentaire</th>
+					</tr>
+					<tr colspan="6">
+						<td>
+							<obs conceptId="CIEL:1712"
+								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:1067"
+								answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Analphabète,Inconnue"
+								style="radio" />
+						</td>
+						<td>
+							<obs conceptId="CIEL:1712"
+								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785"
+								answerLabels="Peut s’offrir régulièrement à manger au moins 2 fois/jour,Peut s’offrir régulièrement à manger au moins 1 fois/jour,Ne peut pas s’offrir à manger certains jours"
+								style="radio" />
+						</td>
+					</tr>
+				</table>
+				<br/>
+				
+				<table border="0">
+					<tr>
+						<th class="sansbordure">Type de logement du patient</th>
+						<th class="sansbordure">Revêtement de sol</th>
+						<th class="sansbordure">Toiture de logement</th>
+						<th class="sansbordure">Autres informations</th>
+						<th>Statut Marital</th>
+						<th>Comportements à risque ou indésirables</th>
+					</tr>
+					<tbody>
+						<tr >
+							<td valign="top" class="sansbordure">
+								<!-- Type de logement -->
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163576"
+										answerLabel="Maison autonome" /><br />
+
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163574"
+										answerLabel="Appartement" /><br />
+
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+										answerLabel="Maison familiale" /><br />
+
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+										answerLabel="Abris provisoire (SDF)" /><br /><!-- a remplacer 163575 -->
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+										answerLabel="Sans Domicile Fixe (SDF)" /><br /><!-- a remplacer 163575 -->
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+										answerLabel="Institution Penitenciaire" /><br /><!-- a remplacer 163575 -->
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+										answerLabel="Maison de Retraite" /><br /><!-- a remplacer 163575 -->
+								<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+										answerLabel="Azile Communale" /><br /><!-- a remplacer 163575 -->
+							</td>
+
+							<td valign="top" class="sansbordure">
+								<!-- Type de sol -->
+								<obs conceptId="CIEL:159387" answerConceptId="CIEL:1943"
+										answerLabel="béton/ciment" />
+								<br />
+								<obs conceptId="CIEL:159387" answerConceptId="CIEL:1944"
+										answerLabel="Terre battue" />
+								<br />
+								<obs conceptId="CIEL:159387" answerConceptId="CIEL:159691"
+										answerLabel="Tapis" />
+								<br />
+								<obs conceptId="CIEL:159387" answerConceptId="CIEL:159755"
+										answerLabel="Parquet bois" />
+								<br />
+								<obs conceptId="CIEL:159387" answerConceptId="CIEL:159679"
+										answerLabel="Tuile en céramique" />
+								<br />
+							</td>
+
+							<td valign="top" class="sansbordure">
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:159685"
+										answerLabel="Bambou" />
+								<br />
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:159476"
+										answerLabel="Bâche" />
+								<br />
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942"
+										answerLabel="Pailles" />
+								<br />
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:159688"
+										answerLabel="Tôle ondulée" />
+								<br />
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1107"
+										answerLabel="Aucun" />
+								<br />
+							</td>
+
+							<td valign="top" class="sansbordure">
+								Le patient ou conjoint est-il propriétaire de la maison?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br />
+								Nombre de personne vivant dans le logement :
+								<obs id="nbpers" conceptId="CIEL:1474" /><!-- new concept added -->
+								Le patient peut-il payer les frais de transport vers l’hôpital/clinique ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br />
+								Le patient a-t-il un travail ou une source régulière de revenus ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br/>
+							</td>
+							<td valign="top" >
+								<!--Conditions de vie sociale: 163466<br/> -->
+								<obs conceptId="CIEL:163466" answerConceptId="CIEL:135704"
+										answerLabel="Célibataire" />
+								<br />
+								<obs conceptId="CIEL:163466" answerConceptId="CIEL:5555"
+										answerLabel="Marié" />
+								<br />
+								<obs conceptId="CIEL:163466" answerConceptId="CIEL:1060"
+										answerLabel="Concubinage" />
+								<br />
+								
+								<obs conceptId="CIEL:163466" answerConceptId="CIEL:163467"
+										answerLabel="Divorcé" /><!-- new concept added -->
+								<br />
+								<obs conceptId="CIEL:163466" answerConceptId="CIEL:163468"
+										answerLabel="En union libre" /><!-- new concept added -->
+								<br />
+								<obs conceptId="CIEL:163466" answerConceptId="CIEL:135703"
+										answerLabel="Veuf/ve" />
+								<br />
+								Nombre d'enfant :
+								<obs id="nbpers" conceptId="CIEL:1474" /><!-- new concept added -->
+								<br />
+							</td>
+
+							<td valign="top">
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942" answerLabel="Cigarette/Tabac"/><br/><!-- A remplacer tous les concept-id et leur answer-->
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942" answerLabel="Alcool"/><br/>
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942" answerLabel="Drogues"/><br/>
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942" answerLabel="Alimentation non équilibrée"/><br/>
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942" answerLabel="Sédentarité"/><br/>
+								<obs conceptId="CIEL:1290" answerConceptId="CIEL:1942" answerLabel="Comportements sexuels à risque"/><br/><!--End-->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br />
+			</div>
+		</div>
+
+
+		<div width="100%">
+			<a href="#read" class="lien">
+				<div class="toggle-button" data-target="#div7">SERVICE RENDU ET REÇU</div>
+			</a>
+			<div id="div7" class="togglable" style="display: none;">
+				<section headerLabel="">
+					<br/>		
+					<!-- <table>
+							<tr>
+								<td>
+									Cochez la ou les cases<br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:5490"
+									answerLabel="Counseling/Support psychosocial pour patient ou famille" /><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Aide alimentaire" /><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="eb2104d6-bb87-4283-a024-d9a115e57a27"
+									answerLabel="Kit pour les soins à domicile" />
+								</td>
+								<td>
+									<obs conceptId="CIEL:163560" answerConceptId="6e2a8a88-e49d-4382-8125-e7afc8d420b8"
+									answerLabel="Livraisons des Médicaments" /><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:1379"
+									answerLabel="Conseils santé" /><br/>
+									<obs conceptId="CIEL:163560" answerConceptId="CIEL:5622"
+									answerLabel="Autres" showCommentField="true" commentFieldLabel=", préciser" /><br/>
+									
+								</td>
+							</tr>
+					</table> -->
+
+					<br/>
+					<table>
+						<th>SERVICE REÇU</th>
+						<tr>
+							<td valign="top" class="sansbordure">
+								Sur les 12 derniers mois, le patient a bénéficié de combien de séances d’éducation thérapeutique et de renforcement de l’adhérence ?
+								<obs id="nbpers" conceptId="CIEL:1474" /><!-- new concept added -->
+								Sur les 12 derniers mois, le patient a-t-il participé à des groupes de support ou classes d’adhérence ?
+								<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+									answerLabels="Oui,Non" style="radio" /><br />
+							</td>
+						</tr>
+
+					</table>
+					<br/>
+
+					<table>
+						<tr>
+							<td valign="top">
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Abonnement à DDP" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Actualisation des données d’identification et de contact" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Aide alimentaire" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Apprentissage des fonctionnalités du téléphone" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Assignation d’un Coach individuel" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Assistance pour la santé mentale" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Assistance pour dévoilement de statut" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Coaching ou encadrement technique avec les pairs" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Collection de spécimens" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Charge virale" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="PCR" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:5622"
+									answerLabel="Autres" showCommentField="true" commentFieldLabel=", préciser" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Conseils santé" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Counseling hygiéno-diététique" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Arrêt/réduction tabac/alcool" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Alimentation saine et équilibrée" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Gestion de stress" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Sur l’alimentation de l’enfant" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:5622"
+									answerLabel="Autres" showCommentField="true" commentFieldLabel=", préciser" /><br/><br/>
+							</td>
+							<td valign="top">
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Counseling renforcé sur l’observance du TAR" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Dépistage de la TB (4 symptômes)" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Distribution de kit hygiénique" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Enrôlement dans un groupe de support" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Entretien motivationnel" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Évaluation psychosociale" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Counseling de routine" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Entretien motivationnel" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Exemption de couts pour autres services cliniques, médicaments non HIV ou services labo" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Facilitation pour accès à d’autres services cliniques ou labo" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Facilitation pour enregistrement à services PCPI" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Gestion des effets secondaires" /><br/>
+								
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Livraison des Médicaments" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="ARV" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="TPT" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Anti-TB" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="CTX" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:5622"
+									answerLabel="Autres" showCommentField="true" commentFieldLabel=", préciser" /><br/><br/>
+							</td>
+							<td valign="top">
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Partage de résultats de laboratoire" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="Charge virale" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+									answerLabel="PCR" /><br/>
+									&#160;&#160;&#160;&#160;&#160;&#160;<obs conceptId="CIEL:163560" answerConceptId="CIEL:5622"
+									answerLabel="Autres" showCommentField="true" commentFieldLabel=", préciser" /><br/><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Participation à un groupe de support" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Participation à une classe d’observance/adhérence" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Plan individuel d’observance" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Prélèvement de crachats pour dépistage TB" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Référence à autre prestataire pour counseling renforcé" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Référence pour évaluation/prise en charge médicale" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Référence pour gestion des effets secondaires" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Référence vers des association de pairs, si désirée" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Séance d’éducation thérapeutique" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Séance d’information, éducation, communication (IEC) / Communication pour le changement comportemental (CCC)" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Souscription et Apprentissage de SantePam" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Souscription SMS" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Support financier (AGR, frais de transport) et/ou matériels" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Support psychosocial pour patient ou famille" /><br/>
+
+								<obs conceptId="CIEL:163560" answerConceptId="CIEL:161648"
+								answerLabel="Thérapie sous observation directe (TOD)" /><br/>
+							</td>
+						</tr>
+					</table>
+				</section>
+			</div>
+		</div>
+	</div>
+	<!--	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>-->
+	<!--	<script src="multiselect-dropdown.js" ></script>-->
+</htmlform>

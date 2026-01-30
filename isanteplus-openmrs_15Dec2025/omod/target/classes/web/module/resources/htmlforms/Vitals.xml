@@ -1,0 +1,180 @@
+<htmlform formUuid="a000cb34-9ec1-4344-a1c8-f692232f6edd"
+		  formName="Signes Vitaux" formVersion="1.0"
+		  formEncounterType="67a71486-1a54-468f-ac3e-7091a9a79584"
+		  formDescription="Saisie Signes Vitaux" style="">
+	<style>
+		.section {
+		border: 1px solid $headerColor;
+		padding: 1px;
+		text-align: left;
+		margin-bottom: 1em;
+		}
+		.section_b {
+		background-color: #2F4F4F;
+		color:#FFFFFF;
+		padding: 2px;
+		text-align: center;
+		margin-bottom: 1em;
+		}
+		.sectionHeader {
+		background-color: $headerColor;
+		color: $fontOnHeaderColor;
+		display: block;
+		padding: 1px;
+		font-weight: bold;
+		}
+		.lienvisible#first{display: block}
+		.toggle-button{
+		height:auto; background:#132959; border:1px solid #FFFFFF;
+		color:#FFFAF4;
+		width:100%";
+		}
+		.contener
+		{
+		width:100%;
+		height:100%;
+		border:1px solid;
+		margin:0px;
+		padding:0px;
+		background:#87CEEB; border:1px solid #FFFFFF;
+		}
+		.hide{
+		margin:0px;
+		padding:0px;
+		}
+		a:link
+		{
+		text-decoration:none;
+		}
+		table.baseline-aligned td {
+		vertical-align: baseline;
+		}
+		#sauvegarde
+		{
+		background:#c1e5f1;
+		position:relative;
+		bottom:0px;
+		width:100%;
+		margin:0px;
+		padding-top:0px;
+		padding-bottom:5px;
+		padding-left:0px;
+		padding-right:0px;
+		height:50px;
+		}
+		#dateVisite{
+		background:#c1e5f1;
+		top:0px;
+		width:100%;
+		}
+		#scroll{
+		width: 99%;
+		margin-right:1%;
+		margin-left:0px;
+		margin-bottom:0px;
+		height:520px;
+		overflow: scroll;
+		border: 1px solid black;
+		text-align: justify;
+		padding: 5px;
+		}
+		#contenerGeneral
+		{
+		height:100%;
+		width:100%;
+		margin:0px;
+		padding:0px;
+		bottom:0px;
+        background: white;
+		}
+		form input[type="checkbox"], form input[type="radio"], .form
+		input[type="checkbox"], .form input[type="radio"] {
+		float: none;
+		display: inline-block;
+		}
+
+		form input[type="textarea"]{
+		border: 1px solid red;
+		}
+
+		form label, .form label {
+		display: inline-block;
+		}
+
+		.sansbordure
+		{
+		border: 0;
+		}
+
+		.error {
+		color: red;
+		background-color: white;
+		}
+
+
+		#divMotifCons1 {
+		width: 100%;
+		margin: 10px
+		padding: 10px;
+		}
+
+		<!--  START      MODIFICATION MACKENDY AND JEEJEN-->
+		.tableTdMotif1 {
+		width: 16.66%;
+		}
+
+		.tableTdImpresClin {
+		width: 25%;
+		}
+
+		<!--        END MODIFICATION MACKENDY AND JEEJEN-->
+
+		.clear {
+		float: right;
+		margin-top: -29px;
+		margin-right: 10px;
+		}
+
+		.icon-remove-sign:hover {
+		color: #aa007f;
+		}
+
+		#container {
+		width: 100%;
+		background-color: #fff;
+		border-radius: 5px;
+		}
+
+		.input {
+		width: 90px;
+		color: red;
+		}
+
+		#div-form{
+		margin: 10px;
+		margin-top: 10px;
+		}
+
+
+	</style>
+
+	<script type="text/javascript">
+		beforeSubmit.push(function() {
+
+		if (!valid) {
+		alert("La sauvegarde a échoué à cause d'une erreur dans la fiche, veuillez corriger les champs avec erreur" +
+		labelsList);
+		}
+		return valid;
+
+		});
+	</script>
+
+
+
+	<div id="container">
+
+
+	</div>
+
+</htmlform>

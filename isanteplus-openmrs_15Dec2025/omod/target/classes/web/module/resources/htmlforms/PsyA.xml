@@ -1,0 +1,2987 @@
+<htmlform formUuid="89710ca2-ac5a-42e4-a430-0dfa2cb71f6e"
+          formName="Fiche de Consultation Psychosociale" formVersion="1.0"
+          formEncounterType="a0d57dca-3028-4153-88b7-c67a30fde595"
+          formDescription="Fiche Psychosociale Adulte">
+    <macros>
+        paperFormId = (Fill this in)
+        <!--headerColor =#009d8e -->
+        headerColor =#000000
+        fontOnHeaderColor = white
+    </macros>
+
+    <script>
+        (function () {
+        if (!document.querySelector('meta[name="viewport"]')) {
+        var meta = document.createElement('meta');
+        meta.name = "viewport";
+        meta.content = "width=device-width, initial-scale=1";
+        document.head.appendChild(meta);
+        }
+        })();
+    </script>
+
+    <style>
+        .section {
+        border: 1px solid $headerColor;
+        padding: 1px;
+        text-align: left;
+        margin-bottom: 1em;
+        }
+        .section_b {
+        background-color: #2F4F4F;
+        color:#FFFFFF;
+        padding: 2px;
+        text-align: center;
+        margin-bottom: 1em;
+        }
+        .sectionHeader {
+        background-color: $headerColor;
+        color: $fontOnHeaderColor;
+        display: block;
+        padding: 1px;
+        font-weight: bold;
+        }
+        .lienvisible#first{display: block}
+        .lienvisible{
+        height:auto; background:#87CEEB; border:1px solid #FFFFFF;
+        width:100%";
+        }
+        .contener
+        {
+        width:100%;
+        height:100%;
+        border:1px solid;
+        margin:0px;
+        padding:0px;
+        background:#87CEEB; border:1px solid #FFFFFF;
+        }
+        .hide{
+        margin:0px;
+        padding:0px;
+        }
+        a:link
+        {
+        text-decoration:none;
+        }
+        table.baseline-aligned td {
+        vertical-align: baseline;
+        }
+        #sauvegarde
+        {
+        background:#c1e5f1;
+        position:relative;
+        bottom:0px;
+        width:100%;
+        margin:0px;
+        padding-top:0px;
+        padding-bottom:5px;
+        padding-left:0px;
+        padding-right:0px;
+        height:50px;
+        }
+        #dateVisite{
+        <!-- background:#c1e5f1; -->
+        top:0px;
+        width:100%;
+        padding-top:5px;
+        }
+        #visiteTitle{
+        width: 100%;
+        text-align: left;
+        padding: 1rem;
+        background:#c1e5f1;
+        font-weight: bold;
+        }
+        #scroll{
+        width: 99%;
+        margin-right:1%;
+        margin-left:0px;
+        margin-bottom:0px;
+        height:520px;
+        overflow: scroll;
+        border: 1px solid black;
+        text-align: justify;
+        padding: 5px;
+        }
+        #contenerGeneral
+        {
+        height:100%;
+        width:100%;
+        margin:0px;
+        padding:0px;
+        bottom:0px;
+        background: white;
+        }
+
+        #nbpers.obs-field>input{
+        border: 1px solid red;
+        max-width: 10px;
+        }
+
+        form input[type="checkbox"], form input[type="radio"], .form
+        input[type="checkbox"], .form input[type="radio"] {
+        float: none;
+        display: inline-block;
+        }
+
+        form label, .form label {
+        display: inline-block;
+        }
+
+        #conteneur
+        {
+        font-family:arial, sans-serif;
+        font-weight: normal;
+        font-size: medium;
+        height: 470px;
+        padding: 5px;
+        overflow: scroll;
+        background-color: #fff;
+        }
+        .error {
+        color: red;
+        background-color: white;
+        }
+        .toggle-button{
+        height:auto; background:#132959; border:1px solid #FFFFFF;
+        color:#FFFAF4;
+        width:100%;
+        padding:10px !important;
+        margin-top:5px !important;
+        }
+        a:link
+        {
+        text-decoration:none;
+        }
+
+        @media (max-width: 800px) {
+        *, *::before, *::after {
+        box-sizing: border-box;
+        }
+
+        html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        }
+
+        #conteneur {
+        overflow-x: hidden !important;
+        }
+
+        #conteneur td label {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        max-width: 100%;
+        }
+
+        #conteneur table td {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        }
+
+        #conteneur textarea,
+        #conteneur input[type="text"] {
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        }
+
+        .section td {
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+        }
+
+        .sectionHeader {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        }
+
+        #conteneur label[for] {
+        display: inline-block !important;
+        white-space: normal !important;
+        vertical-align: middle;
+        max-width: calc(100% - 30px); /* Espace pour checkbox */
+        }
+
+        #conteneur .checkboxGroup {
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 6px;
+        flex-wrap: nowrap !important; /* IMPORTANT: ne pas wrap */
+        }
+
+        #conteneur .checkboxGroup input[type="checkbox"],
+        #conteneur .checkboxGroup input[type="radio"] {
+        flex-shrink: 0 !important;
+        margin-top: 2px; /* Alignement avec première ligne texte */
+        }
+
+        #conteneur .checkboxGroup label,
+        #conteneur td label {
+        flex: 1;
+        min-width: 0;
+        word-wrap: break-word !important;
+        }
+
+        #conteneur table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        #conteneur table tr {
+        display: block;
+        margin-bottom: 12px;
+        background: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 8px;
+        }
+        #conteneur table td {
+        display: block;
+        width: 100%;
+        padding: 6px 0;
+        border: none !important;
+        }
+
+        #conteneur td[width],
+        #conteneur td[width="50%"] {
+        width: 100% !important;
+        }
+
+        #conteneur input:not([type="radio"]):not([type="checkbox"]),
+        #conteneur select,
+        #conteneur textarea {
+        width: 100%;
+        max-width: 100%;
+        margin: 4px 0;
+        }
+
+        #conteneur label,
+        #conteneur .checkboxGroup {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: normal;
+        }
+
+        #conteneur input[type="radio"],
+        #conteneur input[type="checkbox"] {
+        flex-shrink: 0;
+        margin: 0;
+        }
+
+        #conteneur label span {
+        white-space: normal;
+        }
+
+        #conteneur td input[type="radio"],
+        #conteneur td input[type="checkbox"] {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 4px 0 0;
+        }
+
+        #conteneur td label {
+        display: inline;
+        vertical-align: middle;
+        margin-right: 12px;
+        white-space: nowrap;
+        text-wrap: auto;
+        }
+
+        #conteneur td {
+        word-break: normal;
+        overflow-wrap: normal;
+        }
+
+        #conteneur td > br {
+        display: block;
+        margin-bottom: 6px;
+        }
+
+        .section > .sectionHeader {
+        display: block;
+        }
+
+        .section > .sectionHeader + table {
+        width: 100%;
+        }
+
+        /* Supprimer les en-têtes desktop */
+        .section > .sectionHeader + table tr:first-child,
+        .section > .sectionHeader + table tr:nth-child(2) {
+        display: none;
+        }
+
+        .section > .sectionHeader + table,
+        .section > .sectionHeader + table tbody {
+        display: block;
+        width: 100%;
+        }
+
+        .section > .sectionHeader + table tr {
+        display: block;
+        margin-bottom: 16px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #fafafa;
+        }
+
+        .section > .sectionHeader + table td {
+        display: block;
+        width: 100% !important;
+        border: none !important;
+        padding: 6px 0;
+        }
+
+        .section input[type="text"] {
+        width: 100% !important;
+        max-width: 100%;
+        }
+
+        .obs-field {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        }
+
+        .section > .sectionHeader + table tr td:nth-child(n+4) {
+        display: inline-flex;
+        width: 48%;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        margin-bottom: 6px;
+        }
+
+        .section input[type="checkbox"] {
+        margin: 0;
+        flex-shrink: 0;
+        }
+
+        .section > .sectionHeader + table tr td:first-child label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        }
+
+        .section table:last-of-type,
+        .section table:last-of-type tr,
+        .section table:last-of-type td {
+        display: block;
+        width: 100%;
+        border: none;
+        }
+
+        #div2 > table:first-of-type th {
+        display: none !important; /* cache l'entête */
+        }
+
+        /* === 2️⃣ Les cellules deviennent verticales === */
+        #div2  table td {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 18px;
+        }
+
+        /* === 3️⃣ Titres mobiles injectés === */
+        #div2 > table:first-of-type td:nth-child(1)::before {
+        content: "Religion";
+        }
+
+        #div2 > table:first-of-type td:nth-child(2)::before {
+        content: "Conditions de vie matrimoniale";
+        }
+
+        #div2 > table:first-of-type td:nth-child(3)::before {
+        content: "Niveau d’étude";
+        }
+
+        #div2 > table:first-of-type td:nth-child(4)::before {
+        content: "Soutien social";
+        }
+
+        #div2 > table:first-of-type td::before {
+        display: block;
+        font-weight: bold;
+        font-size: 1.05em;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+        border-bottom: 2px solid #333;
+        }
+
+        /*  Cibler la 2e table directe de #div2 */
+        #div2 > table:nth-of-type(2) {
+        width: 100%;
+        }
+
+        /*MASQUER L’ENTÊTE (1er tbody uniquement) */
+        #div2 > table:nth-of-type(2) > tbody:first-of-type {
+        display: none !important;
+        }
+
+        /* Transformer le tbody de contenu */
+        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 24px;
+        }
+
+        /* Injecter titres mobiles */
+        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(1)::before {
+        content: "Plaintes de nature socio-économiques";
+        }
+
+        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(2)::before {
+        content: "Logement";
+        }
+
+        /* Style titres injectés */
+        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td::before {
+        display: block;
+        font-weight: bold;
+        font-size: 1.05em;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
+        border-bottom: 2px solid #333;
+        }
+
+        /* Sécuriser formulaires */
+        #div2 > table:nth-of-type(2) input[type="checkbox"],
+        #div2 > table:nth-of-type(2) input[type="radio"] {
+        margin-right: 6px;
+        }
+
+        #div2 > table:nth-of-type(2) label {
+        white-space: normal !important;
+        }
+
+        #div2 > table:nth-of-type(2) input[type="text"] {
+        width: 100% !important;
+        margin-top: 6px;
+        }
+
+        #div1, #div2, #div3 , #div4 , #div5 , #div6 , #div7 , #div8 {
+        height: 460px;
+        overflow-y: scroll;
+        }
+
+        .toggle-button.mobile-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 999 !important;
+        <!-- background: inherit !important; -->
+        }
+
+        #dateVisite{
+        margin-bottom: 5% !important;
+        }
+
+        #visiteTitle{
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        background:#81BEF7;
+        font-weight: bold;
+        }
+
+        }
+
+        /* ========== STYLES COMMUNS ========== */
+        .family-section {
+        width: 100%;
+        }
+
+        .family-section table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        .family-section th {
+        background-color: #2c3e50;
+        color: white;
+        font-size: 12px;
+        padding: 10px 8px;
+        text-align: left;
+        }
+
+        .family-section td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        vertical-align: top;
+        }
+
+        .family-section input[type="text"],
+        .family-section select {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+
+        /* Bouton Ajouter */
+        .btn-add-member {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 10px 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        }
+
+        .btn-add-member:hover {
+        background-color: #218838;
+        }
+
+        .btn-add-member:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        }
+
+        /* Bouton Supprimer */
+        .btn-remove-member {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 12px;
+        }
+
+        .btn-remove-member:hover {
+        background-color: #c82333;
+        }
+
+        /* Ligne cachée par défaut - IMPORTANT */
+        .family-row {
+        display: none !important;
+        }
+
+        /* Ligne visible sur Desktop */
+        .family-row.visible {
+        display: table-row !important;
+        }
+
+        /* Labels cachés sur desktop */
+        .mobile-label {
+        display: none;
+        font-weight: bold;
+        font-size: 12px;
+        color: #555;
+        margin-bottom: 5px;
+        }
+
+        /* Compteur */
+        .member-counter {
+        font-size: 14px;
+        color: #666;
+        margin-left: 15px;
+        }
+
+        /* Header mobile caché sur desktop */
+        .row-header-cell {
+        display: none;
+        }
+
+        /* ========== VERSION MOBILE ========== */
+        @media screen and (max-width: 768px) {
+        .family-section thead {
+        display: none;
+        }
+
+        .family-section table,
+        .family-section tbody {
+        display: block;
+        width: 100%;
+        }
+
+        /* IMPORTANT: Garder caché par défaut sur mobile aussi */
+        .family-section .family-row {
+        display: none !important;
+        border: 2px solid #2c3e50;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        }
+
+        /* Visible sur mobile = flex */
+        .family-section .family-row.visible {
+        display: flex !important;
+        flex-direction: column;
+        }
+
+        .family-section td {
+        display: block;
+        border: none;
+        padding: 8px 0;
+        }
+
+        .mobile-label {
+        display: block;
+        }
+
+        /* Header de la carte mobile */
+        .family-row.visible .row-header-cell {
+        display: block;
+        }
+
+        .row-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #2c3e50;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        }
+
+        .member-title {
+        font-weight: bold;
+        font-size: 16px;
+        color: #2c3e50;
+        }
+
+        /* Cacher la colonne action sur mobile (bouton dans le header) */
+        .family-row td.action-cell {
+        display: none;
+        }
+
+        .btn-add-member {
+        width: 100%;
+        justify-content: center;
+        }
+        }
+
+        /* ========== STYLES POUR SECTION COMPORTEMENT SEXUEL ========== */
+
+        #section-comportement-sexuel {
+        padding: 10px;
+        }
+
+        /* Sous-titres en gras */
+        #section-comportement-sexuel b {
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding: 8px;
+        background-color: #2c3e50;
+        color: white;
+        border-radius: 3px;
+        font-size: 14px;
+        }
+
+        /* Checkboxes et radios */
+        #section-comportement-sexuel input[type="checkbox"],
+        #section-comportement-sexuel input[type="radio"] {
+        margin-right: 5px;
+        vertical-align: middle;
+        }
+
+        #section-comportement-sexuel label {
+        margin-right: 15px;
+        vertical-align: middle;
+        }
+
+        /* Champ texte "Préciser" */
+        #section-comportement-sexuel input[type="text"] {
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-width: 200px;
+        }
+
+        /* Espacement des lignes */
+        #section-comportement-sexuel br + br {
+        display: none;
+        }
+
+        /* ========== VERSION MOBILE ========== */
+        @media screen and (max-width: 768px) {
+        #section-comportement-sexuel {
+        padding: 5px;
+        }
+
+        /* Forcer retour à la ligne après chaque label */
+        #section-comportement-sexuel label {
+        display: inline-block;
+        margin-bottom: 8px;
+        }
+
+        /* Sous-titres */
+        #section-comportement-sexuel b {
+        font-size: 12px;
+        padding: 6px;
+        }
+
+        /* Champ texte pleine largeur */
+        #section-comportement-sexuel input[type="text"] {
+        width: 100%;
+        min-width: unset;
+        margin-top: 5px;
+        box-sizing: border-box;
+        }
+
+        /* Meilleur espacement vertical */
+        #section-comportement-sexuel br {
+        display: block;
+        content: "";
+        margin-top: 5px;
+        }
+        }
+
+        /* ========== STYLES DESKTOP ========== */
+        #section-eval-psy {
+        padding: 10px;
+        }
+
+        #section-eval-psy .main-grid {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        #section-eval-psy .main-row {
+        display: table-row;
+        }
+
+        #section-eval-psy .main-cell {
+        display: table-cell;
+        vertical-align: top;
+        padding: 5px;
+        width: 33.33%;
+        }
+
+        #section-eval-psy .symptom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+        }
+
+        #section-eval-psy .symptom-table thead th {
+        background-color: #2c3e50;
+        color: white;
+        padding: 8px;
+        font-size: 12px;
+        text-align: left;
+        }
+
+        #section-eval-psy .symptom-table tbody td {
+        padding: 6px;
+        border-bottom: 1px solid #eee;
+        vertical-align: middle;
+        }
+
+        #section-eval-psy .symptom-table input[type="checkbox"] {
+        margin-left: 5px;
+        vertical-align: middle;
+        }
+
+        #section-eval-psy .symptom-table label {
+        vertical-align: middle;
+        font-size: 13px;
+        }
+
+        #section-eval-psy .symptom-table input[type="text"] {
+        width: 100%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        font-size: 12px;
+        }
+
+        /* Accordéon header - caché sur desktop */
+        #section-eval-psy .accordion-header {
+        display: none;
+        }
+
+        /* ========== VERSION MOBILE ========== */
+        @media screen and (max-width: 992px) {
+        #section-eval-psy .main-grid,
+        #section-eval-psy .main-row,
+        #section-eval-psy .main-cell {
+        display: block;
+        width: 100%;
+        }
+
+        #section-eval-psy .main-cell {
+        margin-bottom: 10px;
+        padding: 0;
+        }
+
+        /* Cacher le thead sur mobile */
+        #section-eval-psy .symptom-table thead {
+        display: none;
+        }
+
+        /* Accordéon header visible sur mobile */
+        #section-eval-psy .accordion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #2c3e50;
+        color: white;
+        padding: 12px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 0;
+        }
+
+        #section-eval-psy .accordion-header:hover {
+        background-color: #34495e;
+        }
+
+        #section-eval-psy .accordion-header .accordion-icon {
+        font-size: 18px;
+        transition: transform 0.3s ease;
+        }
+
+        #section-eval-psy .accordion-header.active .accordion-icon {
+        transform: rotate(180deg);
+        }
+
+        /* Contenu accordéon */
+        #section-eval-psy .accordion-content {
+        display: none;
+        border: 2px solid #2c3e50;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin-bottom: 10px;
+        }
+
+        #section-eval-psy .accordion-content.active {
+        display: block;
+        }
+
+        #section-eval-psy .symptom-table {
+        margin-bottom: 0;
+        }
+
+        #section-eval-psy .symptom-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+        }
+
+        #section-eval-psy .symptom-table tbody tr:last-child {
+        border-bottom: none;
+        }
+
+        #section-eval-psy .symptom-table tbody td {
+        display: block;
+        width: 100%;
+        padding: 4px 0;
+        border: none;
+        }
+
+        #section-eval-psy .symptom-table tbody td:first-child {
+        font-weight: normal;
+        }
+
+        #section-eval-psy .symptom-table tbody td:last-child {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        }
+
+        #section-eval-psy .symptom-table tbody td:last-child::before {
+        content: "Date:";
+        font-size: 12px;
+        color: #666;
+        min-width: 35px;
+        }
+
+        #section-eval-psy .symptom-table input[type="text"] {
+        flex: 1;
+        }
+
+        }
+
+    </style>
+    <script type="text/javascript">
+        //Valition des donnees
+
+        beforeSubmit.push(function() {
+
+        if(getValue('travailleur_sexe_b.value')==1065 || getValue('travailleur_sexe_b.value')==1066){
+        setValue('travailleur_sexe_a.value', '160580');
+        }
+        if(getValue('echange_sexe_b.value')==1065 || getValue('echange_sexe_b.value')==1066){
+        setValue('echange_sexe_a.value', '160579');
+        }
+        if(getValue('form_status.value') != 163339 &amp;&amp; getValue('form_status.value') != 1267)
+        {
+        alert('Erreur ! Veuillez saisir le Statut de la fiche !');
+        }
+        return true;
+        });
+
+    </script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+
+        $('.toggle-button').on('click', function (e) {
+        e.preventDefault();
+
+        var targetSelector = this.getAttribute('data-target');
+        var $target = $(targetSelector);
+        var $btn = $(this);
+        var isMobile = window.matchMedia('(max-width: 800px)').matches;
+        var isVisible = $target.is(':visible');
+
+        $('.togglable').stop(true, true);
+
+        $('.togglable').not(targetSelector).hide('slow');
+
+        $('.toggle-button').removeClass('mobile-sticky');
+
+        if (isVisible) {
+        $target.hide('slow');
+        return;
+        }
+
+        $target.show('slow', function () {
+
+        if (isMobile) {
+        $btn.addClass('mobile-sticky');
+
+        $('html, body').animate({
+        scrollTop: $btn.offset().top
+        }, 250);
+        }
+
+        });
+        });
+
+        });
+    </script>
+    <script type="text/javascript">
+        jQuery(function() {
+
+        jQuery('.titre').each(function() {
+        var m =jQuery(this).find(".master").attr("id");
+        if(getValue(''+m+'.value')&gt;0)
+        {
+        jQuery( this.getAttribute( 'ch-target' ) ).show();
+        }
+        else{
+        if(getValue(''+m+'.value') == null){
+        jQuery( this.getAttribute( 'ch-target' ) ).hide();
+        }
+        }
+        if(getValue(''+m+'.value') == ''){
+        jQuery( this.getAttribute( 'ch-target' ) ).hide();
+        }
+        });
+
+        jQuery( '.titre' ).on( 'change', function() {
+
+        var m =jQuery(this).find(".master").attr("id");
+        if(getValue(''+m+'.value')&gt;0 || getValue(''+m+'.value') != null)
+        {
+        jQuery( this.getAttribute( 'ch-target' ) ).show();
+        }
+        else{
+        if(getValue(''+m+'.value') == null){
+        jQuery( this.getAttribute( 'ch-target' ) ).hide();
+        }
+
+        }
+        if(getValue(''+m+'.value') == ''){
+        jQuery( this.getAttribute( 'ch-target' ) ).hide();
+        }
+
+
+        });
+
+        });
+
+
+        <!-- Set location for consultation -->
+
+        jQuery(function() {
+        if (getValue('locationTypeValue.value') == '') {
+        setValue('locationTypeValue.value','Le site même');
+        }if (getValue('locationTypeValue.value') == '') {
+        setValue('locationTypeValue.value','Le site même');
+        }if ((getValue('locationTypeValue.value') == 'Point fixe ou satellite') || (getValue('locationTypeValue.value') == 'Clinique privée') || (getValue('locationTypeValue.value') == 'Maison privée') || (getValue('locationTypeValue.value') == 'Télémédecine')) {
+        jQuery('#locationValue').hide()
+        }
+
+        //jQuery('#locationType:not(:has(.required))').append('<span class="required">*</span>');
+        jQuery('#locationTypeValue').on( 'change', function() {
+        if (getValue('locationTypeValue.value') == 'Le site même') {
+        jQuery('#locationValue').show();
+        //jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+        } else if (getValue('locationTypeValue.value') == 'Site autre que celui du patient') {
+        jQuery('#locationValue').show();
+        //jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+        } else {
+        jQuery('#locationValue').hide()
+        }
+        });
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        var maxMembers = 10;
+        var visibleRows = [];
+
+        // Attendre que tout soit chargé (y compris les scripts OpenMRS)
+        jQuery(document).ready(function() {
+        // Petit délai pour laisser OpenMRS pré-remplir les champs
+        setTimeout(function() {
+        initFamilySection();
+        }, 500);
+        });
+
+        // Alternative: aussi écouter window.load
+        jQuery(window).on('load', function() {
+        setTimeout(function() {
+        initFamilySection();
+        }, 300);
+        });
+
+        function initFamilySection() {
+        jQuery('.family-row').each(function() {
+        var row = jQuery(this);
+        var rowNum = parseInt(row.attr('data-row'));
+        var hasData = false;
+
+        // Vérifier les inputs text
+        row.find('input[type="text"]').each(function() {
+        var val = jQuery(this).val();
+        if (val &amp;&amp; val.trim() !== '') {
+        hasData = true;
+        return false; // Break la boucle
+        }
+        });
+
+        // Vérifier les selects
+        if (!hasData) {
+        row.find('select').each(function() {
+        var val = jQuery(this).val();
+        if (val &amp;&amp; val !== '') {
+        hasData = true;
+        return false; // Break la boucle
+        }
+        });
+        }
+
+        // Vérifier aussi les inputs hidden (OpenMRS stocke parfois les valeurs là)
+        if (!hasData) {
+        row.find('input[type="hidden"]').each(function() {
+        var val = jQuery(this).val();
+        var name = jQuery(this).attr('name');
+        // Ignorer les hidden qui commencent par underscore (champs de contrôle)
+        if (val &amp;&amp; val.trim() !== '' &amp;&amp; name &amp;&amp; !name.startsWith('_')) {
+        hasData = true;
+        return false;
+        }
+        });
+        }
+
+        // Vérifier les checkboxes cochées
+        if (!hasData) {
+        row.find('input[type="checkbox"]:checked').each(function() {
+        hasData = true;
+        return false;
+        });
+        }
+
+        if (hasData) {
+        showRow(rowNum);
+        }
+        });
+
+        updateCounter();
+        }
+
+        function addFamilyMember() {
+        var added = false;
+        var i;
+
+        for (i = 1; i &lt;= maxMembers; i++) {
+        if (visibleRows.indexOf(i) === -1) {
+        showRow(i);
+        added = true;
+        break;
+        }
+        }
+
+        if (!added) {
+        alert('Maximum de ' + maxMembers + ' membres atteint');
+        }
+
+        updateCounter();
+        }
+
+        function showRow(rowNum) {
+        var row = jQuery('.family-row[data-row="' + rowNum + '"]');
+        row.addClass('visible');
+
+        if (visibleRows.indexOf(rowNum) === -1) {
+        visibleRows.push(rowNum);
+        visibleRows.sort(function(a, b) { return a - b; });
+        }
+        }
+
+        function removeFamilyMember(rowNum) {
+        var row = jQuery('.family-row[data-row="' + rowNum + '"]');
+
+        // Vider les champs
+        row.find('input[type="text"]').val('');
+        row.find('select').prop('selectedIndex', 0);
+        row.find('input[type="hidden"]').not('[name^="_"]').val('');
+
+        // Cacher la ligne
+        row.removeClass('visible');
+
+        // Retirer du tableau
+        var index = visibleRows.indexOf(rowNum);
+        if (index &gt; -1) {
+        visibleRows.splice(index, 1);
+        }
+
+        updateCounter();
+        }
+
+        function updateCounter() {
+        var count = visibleRows.length;
+        jQuery('#memberCounter').text('(' + count + '/' + maxMembers + ' membres)');
+
+        if (count &gt;= maxMembers) {
+        jQuery('#btnAddMember').prop('disabled', true);
+        } else {
+        jQuery('#btnAddMember').prop('disabled', false);
+        }
+        }
+    </script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+        // Accordéon toggle
+        jQuery('#section-eval-psy .accordion-header').on('click', function() {
+        var header = jQuery(this);
+        var content = header.next('.accordion-content');
+
+        header.toggleClass('active');
+        content.toggleClass('active');
+        });
+        });
+    </script>
+
+    <div width="98%" id="conteneur" style="height: 80vh;">
+        <div id="contenerGeneral">
+            <div id="dateVisite">
+                <div id="visiteTitle">
+                    <center>FICHE DE CONSULTATION PSYCHOSOCIALE ADULTE</center>
+                </div>
+                <table>
+                    <tr>
+                        <td>Date visite:</td>
+                        <td>
+                            <encounterDate default="today" />
+                            <br />
+                        </td>
+                        <td>
+                            <h4 style="color: #d66f08"><i class="icon-map-marker"></i>Lieu de consultation</h4>
+                            <span style="" id="locationType">
+                                <obs conceptId="CIEL:163529" answers="Le site même,Point fixe ou satellite,Clinique privée,Maison privée,Télémédecine,Site autre que celui du patient"
+                                     id="locationTypeValue" default="Le site même"/>
+                            </span>
+
+                            <div style="" id="locationValue">
+                                <encounterLocation
+                                        default="SessionAttribute:emrContext.sessionLocationId" />
+                            </div>
+                        </td>
+
+                        <td style="">
+                            <submit submitClass="confirm right" submitCode="general.save" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div1">MOTIF DE LA CONSULTATION</div>
+                </a>
+                <div id="div1" class="togglable" style="display: none;">
+                    <section>
+                        <!-- Attente new question concept replace 163145 -->
+                        <obsgroup groupingConceptId="163180">
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                                 answerLabel="Inscrit dans le programme de soins du VIH" />
+                                            <br />
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:163469"
+                                                 answerLabel="Evaluation psychologique" />
+                                            <br />
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160198"
+                                                 answerLabel="Problème psychologique" />
+                                            <br />
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:134660"
+                                                 answerLabel="Problèmes familiaux" />
+                                            <br />
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:126312"
+                                                 answerLabel="Discrimination sociale" />
+                                            <br />
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159598"
+                                                 answerLabel="Non-respect d'un traitement ou d'une thérapie" />
+                                        </td>
+                                        <td>
+                                            <br /><!-- add -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="9fb9a204-56d4-488c-9693-c067c53b593d"
+                                                 answerLabel="Initiation thérapie psychologique" />
+                                            <br /><!-- add -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="5079a471-61b4-4d0e-ad87-c08fc31162b2"
+                                                 answerLabel="Suivi psychologique en cours" />
+                                            <br /><!-- add -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="3c9afedd-4287-4f32-ac76-41410a61d5e0"
+                                                 answerLabel="Fermeture thérapie psychologique" />
+                                            <br /><!-- add -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="668726f0-8f36-4cb5-8a7d-7abee4275cbe"
+                                                 answerLabel="Difficulté scolaire" />
+                                            <br /><!-- add -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159423"
+                                                 answerLabel="Dévoilement statut" /><br/>
+                                            <obs conceptId="CIEL:163145" answerConceptId="e0520711-73e5-4490-ba34-9dc3d7e959c3"
+                                                 answerLabel="Accompagnement psychosocial pour CV > 1000" />
+                                        </td>
+                                        <!-- Attente new question concept replace 159811 -->
+                                        <td>
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                                 answerLabel="Activités Génératrice de Revenues (AGR)" />
+                                            <br />
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                                 answerLabel="Déplacés internes" />
+                                            <br/>
+                                            <!-- Attente new question concept replace 159811 -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                                 answerLabel="Dificultés par rapport au logement" />
+                                            <br />
+                                            <!-- Attente new question concept replace 159811 -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                                 answerLabel="Rencontre suivi de groupe" />
+                                            <br />
+                                            <!-- Attente new question concept replace 159811 -->
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                                 answerLabel="Rencontre suivi PIT" />
+                                            <br />
+
+                                            <!-- End -->
+
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160523"
+                                                 answerLabel="Visite de suivi, régulier" />
+                                            <br />
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </obsgroup>
+                    </section>
+                </div>
+            </div>
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div2">VIE SOCIO-ÉCONIMIQUE</div>
+                </a>
+
+
+                <div id="div2" class="togglable" style="display: none;">
+                    <br/>
+                    <table>
+                        <tr>
+                            <th>RELIGION</th>
+                            <th>CONDITIONS DE VIE MATRIMONIALE</th>
+                            <th>NIVEAU D'ÉTUDE</th>
+                            <th>SOUTIEN SOCIAL</th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td style="width:30%">
+                                    <obs conceptId="CIEL:162929"
+                                         answerConceptIds="CIEL:162930,CIEL:162931,CIEL:162932,CIEL:162933,CIEL:162934,CIEL:162935,CIEL:162936,CIEL:163098,CIEL:163125,CIEL:163124,CIEL:5622"
+                                         answerLabels="Vaudou,Catholique,Baptiste,Musulman,Pentecôtiste,Adventiste,Témoin de Jéhovah,Bouddhisme,Christianisme (non-catholique),Hindouisme,Croyant non-pratiquant" />
+                                    <br/>
+                                    <obs conceptId="CIEL:5616" answerConceptId="CIEL:5622"
+                                         answerLabel="Autre" showCommentField="true" commentFieldLabel=", Précisez" />
+                                    <br />
+                                </td>
+
+                                <td style="width: 14%;">
+                                    <!--Conditions de vie sociale: 163466<br/> -->
+                                    <obs conceptId="CIEL:1054"
+                                         answerConceptIds="CIEL:1057,CIEL:5555,CIEL:1060,CIEL:1056,CIEL:1058,CIEL:1059"
+                                         answerLabels="Célibataire,Mariés,Union Libre,Séparés,Divorcés,Veuf,Autre" />
+                                    <br/>
+                                </td>
+
+                                <td style="width: 21%;">
+                                    <obs conceptId="CIEL:1712"
+                                         answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:1067"
+                                         answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Analphabète,Inconnu" />
+                                    <br/>
+                                </td>
+
+                                <td style="width: 15%;">
+                                    <!-- Attente new question concept replace 159811 -->
+                                    <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                         answerLabel="Soutien emotionnel" />
+                                    <br />
+                                    <!-- Attente new question concept replace 159811 -->
+                                    <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                         answerLabel="Soutien informationnel" />
+                                    <br />
+                                    <!-- Attente new question concept replace 159811 -->
+                                    <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                         answerLabel="Soutien instrumental" />
+                                    <br />
+                                    <!-- Attente new question concept replace 159811 -->
+                                    <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                         answerLabel="Soutien d'évaluation ou d'estime" />
+                                    <br />
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        Commentaire :
+                        <obsgroup groupingConceptId="160593">
+                            <obs conceptId="CIEL:160618" rows="3" cols="195"/>
+                        </obsgroup>
+                    </div>
+                    <br/>
+                    <table>
+
+                        <th colspan="2">ÉVALUATION SOCIO-ÉCONOMIQUE</th>
+                        <tr>
+                            <th>PLAINTES DE NATURE SOCIO-ECONOMIQUES</th>
+                            <th>LOGEMENT</th>
+                        </tr>
+
+                        <tbody>
+                            <tr >
+                                <td style="width:20%;">
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:123801"
+                                         answerLabel="Chômeur/sans emploi" />
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:138398"
+                                         answerLabel="Faim" />
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:160100"
+                                         answerLabel="Inaccessibilité d'eau potable" />
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:160099"
+                                         answerLabel="Frais d'enterrement" />
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:160098"
+                                         answerLabel="Problème avec le domicile" />
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:160107"
+                                         answerLabel="Frais scolaires" />
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:160107"
+                                         answerLabel="Frais de transport" /> <!-- a remplacer-->
+                                    <br />
+                                    <obs conceptId="CIEL:159474" answerConceptId="CIEL:160137"
+                                         answerLabel="Frais de logement" />
+                                    <br />
+                                </td>
+                                <td style="text-align: left;">
+
+                                    <table style="text-align: top;">
+                                        <tr>
+                                            <td colspan="5">
+                                                <!-- Type de logement -->
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163576"
+                                                     answerLabel="Maison autonome" />
+
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163574"
+                                                     answerLabel="Appartement" />
+
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+                                                     answerLabel="Maison familiale" />
+
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+                                                     answerLabel="Abri provisoire" /><!-- a remplacer 163575 -->
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+                                                     answerLabel="Sans Domicile Fixe (SDF)" /><!-- a remplacer 163575 -->
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+                                                     answerLabel="Institution Penitenciaire" /><!-- a remplacer 163575 -->
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+                                                     answerLabel="Maison de Retraite" /><!-- a remplacer 163575 -->
+                                                <obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"
+                                                     answerLabel="Asile Communal" /><!-- a remplacer 163575 -->
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: #fff">
+                                            <td style="border-right: 1px solid #fff ; width:18%">
+                                                <b>Revêtement de sol</b>
+                                                <br />
+                                                <obs conceptId="CIEL:159387" answerConceptId="CIEL:1943"
+                                                     answerLabel="béton / ciment" />
+                                                <br />
+                                                <obs conceptId="CIEL:159387" answerConceptId="CIEL:1944"
+                                                     answerLabel="Terre battue" />
+                                                <br />
+                                                <obs conceptId="CIEL:159387" answerConceptId="CIEL:159691"
+                                                     answerLabel="Tapis" />
+                                                <br />
+                                                <obs conceptId="CIEL:159387" answerConceptId="CIEL:159755"
+                                                     answerLabel="Parquet bois" />
+                                                <br />
+                                                <obs conceptId="CIEL:159387" answerConceptId="CIEL:159679"
+                                                     answerLabel="Tuile en céramique" />
+                                                <br />
+                                            </td>
+
+                                            <td style="border-right: 1px solid #fff ; width:18%">
+                                                <b>Matériau de couverture</b>
+                                                <br />
+                                                <obs conceptId="CIEL:1290" answerConceptId="CIEL:159685"
+                                                     answerLabel="Bambou" />
+                                                <br />
+                                                <obs conceptId="CIEL:159387" answerConceptId="CIEL:1943"
+                                                     answerLabel="béton / ciment" />
+                                                <br />
+                                                <obs conceptId="CIEL:1290" answerConceptId="CIEL:159476"
+                                                     answerLabel="Bâche" />
+                                                <br />
+                                                <obs conceptId="CIEL:1290" answerConceptId="CIEL:1942"
+                                                     answerLabel="Pailles" />
+                                                <br />
+                                                <obs conceptId="CIEL:1290" answerConceptId="CIEL:159688"
+                                                     answerLabel="Tôle ondulée" />
+                                                <br />
+                                                <obs conceptId="CIEL:1290" answerConceptId="CIEL:1107"
+                                                     answerLabel="Aucun" />
+                                                <br />
+                                            </td>
+
+                                            <td style="border-right: 1px solid #fff ; width:18%">
+                                                <b>Transport et Communication</b>
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:159744"
+                                                     answerLabel="Moto" />
+                                                <br/>
+                                                Téléphone :
+                                                <br/>
+                                                <obs conceptId="CIEL:1824" answerConceptIds="CIEL:1049,CIEL:1050"
+                                                     answerLabels="Basique,Intelligent" style="radio" />
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:159746"
+                                                     answerLabel="Télévision" />
+                                                <br/>
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:159748"
+                                                     answerLabel="Vélo" />
+                                                <br/>
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:159748"
+                                                     answerLabel="Voiture" /> <!--A remplacer-->
+                                                <br/>
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:159750"
+                                                     answerLabel="Animal" /> <!--A remplacer-->
+                                                <br />
+                                            </td>
+                                            <td style="border-right: 1px solid #fff ; width:20%">
+                                                <b>Confort Menager</b>
+                                                <br/>
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:163572"
+                                                     answerLabel="Ordinateur" />
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:163572"
+                                                     answerLabel="Radio" /> <!-- a remplacer-->
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:163572"
+                                                     answerLabel="Téléviseur" /> <!-- a remplacer-->
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:159745"
+                                                     answerLabel="Réfrigérateur" />
+                                                <br/>
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:163571"
+                                                     answerLabel="Connexion internet" />
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:163570"
+                                                     answerLabel="Cuisinière à gaz ou à pétrole" />
+                                                <br />
+                                                <obs conceptId="CIEL:159747" answerConceptId="CIEL:163569"
+                                                     answerLabel="Lampe à gaz ou à pétrole" />
+                                                <br />
+                                                Douche :
+                                                <obs conceptId="CIEL:159389" style="yes_no" yesLabel="Oui" noLabel="Non" />  <!--a remplacer-->
+                                                <br />
+                                                Toilettes :
+                                                <obs conceptId="CIEL:159389" style="yes_no" yesLabel="Oui" noLabel="Non" />
+                                                <br />
+                                                Électricité :
+                                                <obs conceptId="CIEL:5609" answerConceptIds="CIEL:1065,CIEL:1066"
+                                                     answerLabels="Oui,Non" style="radio" />
+                                                <br />
+                                            </td>
+                                            <td>
+                                                Nombre de personne :
+                                                <obs id="" conceptId="CIEL:1474" />
+                                                <br />
+                                                Nombre de chambre :
+                                                <obs id="" conceptId="CIEL:1474" /> <!-- a remplacer-->
+                                                <br />
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                </div>
+            </div>
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div3">ANTÉCÉDENTS PATHOLOGIQUES FAMILIAUX ET / OU PERSONNELS</div>
+                </a>
+                <div id="div3" class="togglable" style="display: none;">
+                    <section headerLabel="ANTÉCÉDENTS PATHOLOGIQUES FAMILIAUX ET / OU PERSONNELS">
+                        <div class="family-section">
+                            <button type="button" class="btn-add-member" id="btnAddMember" onclick="addFamilyMember()">
+                                <span>+</span> Ajouter un membre de la famille
+                            </button>
+                            <span class="member-counter" id="memberCounter">(0/10 membres)</span>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 18%;">Nom du membre</th>
+                                        <th style="width: 8%;">Âge</th>
+                                        <th style="width: 18%;">Membre de la famille</th>
+                                        <th style="width: 12%;">Résultat VIH <sup>+</sup></th>
+                                        <th style="width: 14%;">Sous traitement</th>
+                                        <th style="width: 20%;">Code ST</th>
+                                        <th style="width: 10%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="familyTableBody">
+                                    <repeat>
+                                        <template>
+                                            <obsgroup groupingConceptId="{concept_group}">
+                                                <tr class="family-row" data-row="{num}">
+                                                    <!-- Header Mobile (visible uniquement sur mobile) -->
+                                                    <td colspan="7" class="row-header-cell" style="display:none;">
+                                                        <div class="row-header">
+                                                            <span class="member-title">Membre #{num}</span>
+                                                            <button type="button" class="btn-remove-member" onclick="removeFamilyMember({num})">
+                                                                ✕ Supprimer
+                                                            </button>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="mobile-label">Nom du membre de la famille</span>
+                                                        <obs conceptId="{concept}" />
+                                                    </td>
+                                                    <td>
+                                                        <span class="mobile-label">Âge (années)</span>
+                                                        <obs conceptId="CIEL:160617" />
+                                                    </td>
+                                                    <td>
+                                                        <span class="mobile-label">Membre de la famille</span>
+                                                        <obs conceptId="CIEL:1560" />
+                                                    </td>
+                                                    <td>
+                                                        <span class="mobile-label">Résultat VIH +</span>
+                                                        <obs conceptId="CIEL:160592"
+                                                             answerConceptIds="CIEL:138405,CIEL:1107"
+                                                             answerLabels="Oui,Non" />
+                                                    </td>
+                                                    <td>
+                                                        <span class="mobile-label">Sous traitement</span>
+                                                        <obs conceptId="CIEL:160749"
+                                                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                                             answerLabels="Oui,Non,Inconnu" />
+                                                    </td>
+                                                    <td>
+                                                        <span class="mobile-label">Code ST du membre</span>
+                                                        <obs conceptId="CIEL:160752" />
+                                                    </td>
+                                                    <td class="action-cell">
+                                                        <button type="button" class="btn-remove-member" onclick="removeFamilyMember({num})">
+                                                            ✕
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </obsgroup>
+                                        </template>
+
+                                        <render concept="CIEL:160750" num="1" concept_group="1bdf65c8-36ec-4136-a6c9-4f9f12229352" />
+                                        <render concept="CIEL:160750" num="2" concept_group="c4c62e6e-d42a-4547-81ad-51d628d21780" />
+                                        <render concept="CIEL:160750" num="3" concept_group="f251619e-216b-4bb6-9958-e13f394ae624" />
+                                        <render concept="CIEL:160750" num="4" concept_group="b7edfe16-db8e-436c-9cd5-52104e4da2b3" />
+                                        <render concept="CIEL:160750" num="5" concept_group="52ebfb85-1cf4-4781-8284-7d2684125dd7" />
+                                        <render concept="CIEL:160750" num="6" concept_group="ae57f93c-75a6-4f2b-a3f9-e7932814f1ea" />
+                                        <render concept="CIEL:160750" num="7" concept_group="38fac7ce-1f10-4f91-acea-ed1b7e2e5f03" />
+                                        <render concept="CIEL:160750" num="8" concept_group="abf1a12c-96fc-4067-83bf-0bc799e1bc4e" />
+                                        <render concept="CIEL:160750" num="9" concept_group="f741b700-11b7-4266-b088-b3b3e0f66951" />
+                                        <render concept="CIEL:160750" num="10" concept_group="7cf65c5c-f50d-4a36-aa59-8f1f67df3731" />
+                                    </repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section headerLabel="COMMENTAIRE SUR LES ANTÉCÉDENTS FAMILIAUX">
+                        <obsgroup groupingConceptId="160593">
+                            <obs conceptId="CIEL:160618" rows="10" cols="70" />
+                        </obsgroup>
+                    </section>
+                </div>
+            </div>
+            <!--		<div width="100%">-->
+            <!--				<a href="#read" class="lien">-->
+            <!--					<div class="toggle-button" data-target="#div4">ÉVALUATION SOCIO-ÉCONOMIQUE</div>-->
+            <!--				</a>-->
+            <!--				<div id="div4" class="togglable" style="display: none;">-->
+            <!--					<section headerLabel="PLAINTES DE NATURE SOCIO-ECONOMIQUES">-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:123801"-->
+            <!--							answerLabel="CHÔMEUR/SANS EMPLOI" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:138398"-->
+            <!--							answerLabel="Faim" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:160100"-->
+            <!--							answerLabel="Inaccessibilité d'eau potable" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:160099"-->
+            <!--							answerLabel="FRAIS D'ENTERREMENT" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:160098"-->
+            <!--							answerLabel="Probleme avec le domicile" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:160107"-->
+            <!--							answerLabel="FRAIS SCOLAIRES" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159474" answerConceptId="CIEL:160137"-->
+            <!--							answerLabel="FRAIS DE LOGEMENT" />-->
+            <!--						<br />-->
+            <!--					</section>-->
+            <!--					<section headerLabel="LOGEMENT">-->
+            <!--						&lt;!&ndash;Type de logement<br/> &ndash;&gt;-->
+            <!--						<obs conceptId="CIEL:163577" answerConceptId="CIEL:163576"-->
+            <!--							answerLabel="Maison autonome" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:163577" answerConceptId="CIEL:163574"-->
+            <!--							answerLabel="Apartement" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:163577" answerConceptId="CIEL:163575"-->
+            <!--							answerLabel="Maison familiale" />-->
+            <!--						<br />-->
+            <!--						NOMBRE DE PIÈCES (DANS LA MAISON)-->
+            <!--						<obs conceptId="CIEL:1475" />-->
+            <!--						<br />-->
+            <!--						<b>Revêtement de sol</b>-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159387" answerConceptId="CIEL:1943"-->
+            <!--							answerLabel="béton/ciment" />-->
+            <!--						<obs conceptId="CIEL:159387" answerConceptId="CIEL:1944"-->
+            <!--							answerLabel="Terre battue" />-->
+            <!--						<obs conceptId="CIEL:159387" answerConceptId="CIEL:159691"-->
+            <!--							answerLabel="Tapis" />-->
+            <!--						<obs conceptId="CIEL:159387" answerConceptId="CIEL:159755"-->
+            <!--							answerLabel="Parquet bois" />-->
+            <!--						<obs conceptId="CIEL:159387" answerConceptId="CIEL:159679"-->
+            <!--							answerLabel="Tuile en céramique" />-->
+            <!--						<br />-->
+            <!--						<b>Matériau de couverture</b>-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:1290"-->
+            <!--							answerConceptIds="CIEL:1107,CIEL:159685,CIEL:159476,CIEL:1942,CIEL:1291,CIEL:159688,CIEL:159689,CIEL:163573"-->
+            <!--							answerLabels="Aucun,Bambou,Bâche,Pailles,ÉTAIN,Tôle ondulée,Feuille d'amiante,Toit de bardeaux"-->
+            <!--							style="radio" />-->
+            <!--						<br />-->
+            <!--						<b>présence d'articles ménagers</b>-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:159744"-->
+            <!--							answerLabel="Moto" />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:1650"-->
+            <!--							answerLabel="TÉLÉPHONE PORTABLE" />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:159746"-->
+            <!--							answerLabel="Télévision" />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:159745"-->
+            <!--							answerLabel="Réfrigérateur" />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:159748"-->
+            <!--							answerLabel="Vélo" />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:159750"-->
+            <!--							answerLabel="radio, comme un article ménager" />-->
+            <!--						<br />-->
+            <!--						<br />-->
+            <!--						Toilettes présente:-->
+            <!--						<obs conceptId="CIEL:159389" style="yes_no" yesLabel="Oui"-->
+            <!--							noLabel="Non" />-->
+            <!--						<br />-->
+            <!--						Electricité:-->
+            <!--						<obs conceptId="CIEL:5609" answerConceptIds="CIEL:1065,CIEL:1066"-->
+            <!--							answerLabels="Oui,Non" style="radio" />-->
+            <!--						<br />-->
+            <!--						Type de téléphone:-->
+            <!--						<obs conceptId="CIEL:1824" answerConceptIds="CIEL:1049,CIEL:1050"-->
+            <!--							answerLabels="TÉLÉPHONE FIXE,TÉLÉPHONE MOBILE" style="radio" />-->
+            <!--						<br />&lt;!&ndash; To Discuss with James &ndash;&gt;-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:163572"-->
+            <!--							answerLabel="Ordinateur/Laptop" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:163571"-->
+            <!--							answerLabel="Connexion internet" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:163570"-->
+            <!--							answerLabel="Cuisinière à gaz ou à pétrole" />-->
+            <!--						<br />-->
+            <!--						<obs conceptId="CIEL:159747" answerConceptId="CIEL:163569"-->
+            <!--							answerLabel="Lampe à gaz ou à pétrole" />-->
+            <!--						<br />-->
+            <!--						NOMBRE DE PERSONNES VIVANT DANS LA MAISON, PATIENT INCLUS-->
+            <!--						<obs conceptId="CIEL:1474" />-->
+            <!--						<br />-->
+            <!--					</section>-->
+            <!--				</div>-->
+            <!--		</div>-->
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div5">MODE PROBABLE DE TRANSMISSION DU VIH ET COMPORTEMENT SEXUEL</div>
+                </a>
+                <div id="div5" class="togglable" style="display: none;">
+                    <section headerLabel="MODE PROBABLE DE TRANSMISSION DU VIH">
+                        <table width="100%">
+                            <tr>
+                                <td width="50%" valign="TOP">
+                                    <table>
+
+                                        <tr>
+                                            <td>Rapports sexuels avec un homme
+                                            </td>
+                                            <td>
+                                                <obsgroup groupingConceptId="c2b3c5cb-f1e6-4d3d-ad18-5ecf71b26dc2">
+                                                    <obs conceptId="CIEL:1061" answerConceptIds="CIEL:163290,CIEL:1066"
+                                                         answerLabels="Oui,Non" style="radio" />
+                                                </obsgroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rapports sexuels avec une femme</td>
+                                            <td>
+                                                <obsgroup groupingConceptId="0906f171-72d4-4727-8ede-97a47c2e25ee">
+                                                    <obs conceptId="CIEL:1061" answerConceptIds="CIEL:163291,CIEL:1066"
+                                                         answerLabels="Oui,Non" style="radio" />
+                                                </obsgroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Injection de drogues</td>
+                                            <td>
+                                                <obsgroup groupingConceptId="f6a51d0c-eb19-4875-8c37-85e39f0def00">
+                                                    <obs conceptId="CIEL:1061" answerConceptIds="CIEL:105,CIEL:1066"
+                                                         answerLabels="Oui,Non" style="radio" />
+                                                </obsgroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bénéficier de sang/dérivé sanguin</td>
+                                            <td>
+                                                <obsgroup groupingConceptId="92259610-b7b8-4723-b879-6e33fdd4b817">
+                                                    <obs conceptId="CIEL:1061" answerConceptIds="CIEL:1063,CIEL:1066"
+                                                         answerLabels="Oui,Non" style="radio" />
+                                                    <!-- <obs conceptId="CIEL:1063" style="yes_no" noLabel="Non"
+                                                            yesLabel="Oui" />  -->
+                                                    <obs conceptId="CIEL:163268" />
+                                                </obsgroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Transmission mère a enfant</td>
+                                            <td>
+                                                <obsgroup groupingConceptId="92259610-b7b8-4723-b879-6e33fdd4b817">
+                                                    <obs conceptId="CIEL:1061" answerConceptIds="CIEL:163273,CIEL:1066,CIEL:1067"
+                                                         answerLabels="Oui, Non, Inc" style="radio" />
+                                                </obsgroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Accident d'exposition au sang</td>
+                                            <td>
+                                                <obsgroup groupingConceptId="163288">
+                                                    <obs conceptId="CIEL:160581" answerConceptIds="CIEL:163274,CIEL:1066"
+                                                         answerLabels="Oui,Non" style="radio" />
+                                                    <obs conceptId="CIEL:162601" allowTime="false" />
+                                                </obsgroup>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%" valign="TOP">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <tr>
+                                                    <td>Rapports hétérosexuelles avec :</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>- personne SIDA/VIH+
+                                                    </td>
+                                                    <td>
+                                                        <obsgroup groupingConceptId="844017f9-8d6a-4b9a-8347-637284b43893">
+                                                            <obs conceptId="CIEL:1061" answerConceptIds="CIEL:163289,CIEL:1066,CIEL:1067"
+                                                                 answerLabels="Oui,Non,Inc" style="radio" />
+                                                        </obsgroup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>- personne qui s'injecte de la drogue</td>
+                                                    <td>
+                                                        <obsgroup groupingConceptId="d526575e-5fa1-45c6-b8ed-73a2cba0fba0">
+                                                            <obs conceptId="CIEL:1061" answerConceptIds="CIEL:105,CIEL:1066,CIEL:1067"
+                                                                 answerLabels="Oui,Non,Inc" style="radio" />
+                                                        </obsgroup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>- homme bisexuel</td>
+                                                    <td>
+                                                        <obsgroup groupingConceptId="9d6ee2a2-8547-4fa9-a2d8-301d009ca3a5">
+                                                            <obs conceptId="CIEL:1061" answerConceptIds="CIEL:163275,CIEL:1066,CIEL:1067"
+                                                                 answerLabels="Oui,Non,Inc" style="radio" />
+                                                        </obsgroup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>- bénéficier de sang/dérivé sanguin</td>
+                                                    <td>
+                                                        <obsgroup groupingConceptId="df47e128-268f-4238-9b13-f829c01ae7d8">
+                                                            <obs conceptId="CIEL:1061" answerConceptIds="CIEL:1063,CIEL:1066,1067"
+                                                                 answerLabels="Oui,Non,Inc" style="radio" />
+                                                        </obsgroup>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </section>
+                    <section headerLabel="AUTRES FACTEURS DE RISQUE">
+                        <table width="100%">
+                            <tr>
+                                <td width="40%" valign="TOP">
+                                    <table>
+                                        <obsgroup groupingConceptId="163292">
+                                            <tr>
+
+                                                <td>Histoire ou présence de syphilis</td>
+                                                <td>
+                                                    <obs conceptId="CIEL:163276" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                                         answerLabels="Oui,Non,Inc" style="radio" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Histoire ou présence d'autre IST</td>
+                                                <td>
+                                                    <obs conceptId="CIEL:156660" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                                         answerLabels="Oui,Non,Inc" style="radio" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Victime d'agression sexuelle</td>
+                                                <td>
+                                                    <obs conceptId="CIEL:123160" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                                         answerLabels="Oui,Non,Inc" style="radio" />
+                                                </td>
+                                            </tr>
+                                        </obsgroup>
+                                        <tr><td>Autre risque spécifier :</td> <td><obs conceptId="5392c31c-0432-4210-99e1-7698d4470eec" /></td></tr>
+                                        <tr><td>CoInfection</td> <td><obs conceptId="da351ae6-b482-441d-9c47-2242e5600c1d" /></td></tr>
+                                        <tr><td>Histoire ou présence de TB</td>
+                                            <td><obs conceptId="a3e61f72-6066-4af6-94e5-958458c04418" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                                     answerLabels="Oui,Non,Inc" style="radio" /></td></tr>
+                                    </table>
+                                </td>
+                                <td width="50%" valign="TOP">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <tr>
+                                                    <td>Rapports sexuels :</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        - ≥ 2 personnes dans les 3 dernières mois</td>
+                                                    <td>
+                                                        <!--  <obs conceptId="CIEL:160581" answerConceptId="CIEL:5567"
+                                                            answerLabel="" /> before -->
+                                                        <obs conceptId="CIEL:5567" style="yes_no" noLabel="Non"
+                                                             yesLabel="Oui" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>- sans préservatif</td>
+                                                    <td>
+                                                        <!-- <obs conceptId="CIEL:160581" answerConceptId="CIEL:159218"
+                                                            answerLabel="" style="radio" /> before -->
+
+                                                        <!-- <obs conceptId="CIEL:160581" answerConceptIds="CIEL:159218,CIEL:1357"
+                                                        answerLabels="Oui,Non" style="radio" />-->
+                                                        <obs conceptId="CIEL:159218" answerConceptIds="CIEL:1065,CIEL:1066"
+                                                             answerLabels="Oui,Non" style="radio" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>- par voie anale</td>
+                                                    <td>
+                                                        <obs conceptId="CIEL:163278" answerConceptIds="CIEL:1065,CIEL:1066"
+                                                             answerLabels="Oui,Non" style="radio" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span style="display: none">
+                                                            <obs conceptId="CIEL:160581" answerConceptId="CIEL:160580"
+                                                                 id="travailleur_sexe_a" answerLabel="- avec travailleur/euse de sexe" style="radio" />
+                                                        </span> - avec travailleur/euse de sexe
+                                                    </td>
+                                                    <td>
+                                                        <obs conceptId="CIEL:160580" answerConceptIds="CIEL:1065,CIEL:1066"
+                                                             id="travailleur_sexe_b" answerLabels="Oui,Non" style="radio" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span style="display: none">
+                                                            <obs conceptId="CIEL:160581" answerConceptId="CIEL:160579"
+                                                                 id="echange_sexe_a" answerLabel="- L'échange de sexe pour argent/choses" style="radio" />
+                                                        </span> - L'échange de sexe pour argent/choses
+                                                    </td>
+                                                    <td>
+                                                        <obs conceptId="CIEL:160579" answerConceptIds="CIEL:1065,CIEL:1066"
+                                                             id="echange_sexe_b" answerLabels="Oui,Non" style="radio" />
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </section>
+                    <section headerLabel="RAPPORTS SEXUELS DANS LES TROIS (3) DERNIERS MOIS">
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <obsgroup groupingConceptId="163279">
+                                        Rapports sexuels
+                                        <obs conceptId="CIEL:160109" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                             answerLabels="Oui,Non,Inconnu" style="radio" />
+                                        <br />
+                                        Si oui, rapports sexuels avec préservatif
+                                        <obs conceptId="CIEL:1357" answerConceptIds="CIEL:1358,CIEL:1090,CIEL:1067"
+                                             answerLabels="Oui,Non,Inconnu" style="radio" />
+                                    </obsgroup>
+                                </td>
+                                <td valign="TOP" style="padding-left:5%">
+                                    <obsgroup groupingConceptId="163279">
+                                        Statut sérologique du conjoint(e)
+                                        <obs conceptId="CIEL:1436" answerConceptIds="CIEL:703,CIEL:664,CIEL:1067"
+                                             answerLabels="VIH pos,VIH nég,Inconnu" style="radio" />
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <!-- FIN -->
+
+                    <section headerLabel="COMPORTEMENT SEXUEL A HAUT RISQUE" id="section-comportement-sexuel">
+                        <!--					<b>Partenaire sexuel actuel</b>-->
+                        <br />
+                        <obs conceptId="CIEL:163568" answerConceptId="CIEL:5617"
+                             answerLabel="Partenaire ou conjoint" />
+                        <br />
+                        <obs conceptId="CIEL:163568" answerConceptIds="CIEL:163566,CIEL:163567"
+                             answerLabels="Petite amie,Petit ami" style="radio" />
+                        <br />
+                        <obs conceptId="CIEL:163568" answerConceptId="CIEL:163565"
+                             answerLabel="Partenaire sexuel occasionnel" />
+                        <br />
+                        <obs conceptId="CIEL:163568" answerConceptId="CIEL:163564"
+                             answerLabel="Viol" />
+                        <br />
+                        <obs conceptId="CIEL:163568" answerConceptId="CIEL:162570"
+                             answerLabel="Refus de répondre" />
+                        <br />
+                        Le statut VIH divulguer au partenaire
+                        <obs conceptId="CIEL:159423" answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerLabels="Oui,Non" style="radio" />
+                        <br />
+                        Partenaire referré pour test VIH
+                        <obs conceptId="CIEL:159381" answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerLabels="Oui,Non" style="radio" />
+                        <br />
+                        Si oui,
+                        <obs conceptId="CIEL:159381" answerConceptIds="CIEL:163562,CIEL:163563"
+                             answerLabels="l'année dernière,il y a plus de 1 an" style="radio" />
+                        <br />
+                        Testé partenaire VIH
+                        <obs conceptId="CIEL:161557" answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerLabels="Oui,Non" style="radio" />
+                        Si oui, Statut sérologique du partenaire:
+                        <obs conceptId="CIEL:1436" answerConceptIds="CIEL:664,CIEL:703,CIEL:1067"
+                             answerLabels="HIV Négatif,HIV Positif, Inconnu" style="radio" />
+                        <br />
+                        Partenaire sur le traitement du VIH
+                        <obs conceptId="CIEL:163561" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                             answerLabels="Oui,Non, Inconnu" style="radio" />
+                        <br />
+                        <b>Services de prévention avec les services positifs reçus</b>
+                        <br />
+                        <obs conceptId="CIEL:163560" answerConceptId="CIEL:1167"
+                             answerLabel="Assistance au devoilement" />
+                        <br />
+                        <obs conceptId="CIEL:163560" answerConceptId="CIEL:161594"
+                             answerLabel="Conseil concernant l'utilisation du préservatif" />
+                        <br />
+                        <obs conceptId="CIEL:163560" answerConceptId="CIEL:159777"
+                             answerLabel="Préservatifs donnés lors de la visite" />
+                        <br />
+                        <obs conceptId="CIEL:163560" answerConceptId="CIEL:163559"
+                             answerLabel="Renvoi pour le dépistage des IST" />
+                        <br />
+                        DIVULGATION VIH ENVERS QUICONQUE, SPÉCIFIQUE
+                        <obs conceptId="CIEL:5616" answerConceptId="CIEL:5618"
+                             answerLabel="Ami" />
+                        <obs conceptId="CIEL:5616" answerConceptId="CIEL:5619"
+                             answerLabel="Fournisseur de soins de santé" />
+                        <obs conceptId="CIEL:5616" answerConceptId="CIEL:5620"
+                             answerLabel="Autre membre de la famille" />
+                        <obs conceptId="CIEL:5616" answerConceptId="CIEL:5621"
+                             answerLabel="AUTRES MEMBRES DU MENAGE" />
+                        <obs conceptId="CIEL:5616" answerConceptId="CIEL:5622"
+                             answerLabel="Autre" showCommentField="true" commentFieldLabel=" ,Préciser" />
+                        <br />
+
+                    </section>
+                </div>
+            </div>
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div6">ÉVALUATION DES BESOINS DU PATIENT</div>
+                </a>
+                <div id="div6" class="togglable" style="display: none;">
+                    <section headerLabel="Évaluation des besoins du patient">
+                        <table>
+                            <tr>
+                                <td valign="TOP"><h2><b>Situation sociale et familiale</b></h2><br/>
+                                    Statut matrimonial : <obs conceptId="CIEL:1054"
+                                                              answerConceptIds="CIEL:1057,CIEL:5555,CIEL:1060,CIEL:1056,CIEL:1058,CIEL:1059"
+                                                              answerLabels="Célibataire,Mariés,Union Libre,Séparés,Divorcés,Veuf,Autre" />
+                                    <br/>
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="5" /> <!--a remplacer-->
+                                    </obsgroup>
+                                    <br/>
+                                    Nombre d'enfants : <obs conceptId="CIEL:1825" /><br/>
+                                    <obsgroup groupingConceptId="1ff0a57d-7400-4b12-b11f-3b05e7109064">
+                                        Composition de la famille : <obs conceptId="a7014c39-eac8-44ee-ab58-d0dd416682fa"
+                                                                         answerConceptIds="CIEL:140536,97ea7918-f56b-4150-8edc-6dad1a5f8ff8,CIEL:159693,CIEL:138439"
+                                                                         answerLabels="Famille mono parentale,Bi parentale (hétérosexuelle),Recomposée,Homosexuelle" />
+                                    </obsgroup>
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="5" /> <!--a remplacer-->
+                                    </obsgroup>
+                                    <br/>
+
+                                    Statut social : <obs conceptId="36dbbb2a-7c98-4c0b-aef9-c1d7d559064f"
+                                                         answerConceptIds="79a11375-ad85-47a9-9727-71f128903dba,1cc6a52b-51be-4ec6-805a-d412dd047848,
+							b6072926-fa4a-4ce8-a90b-c28d28ba55f2"
+                                                         answerLabels="Engagement Communautaire,Rôle dans le développement de la communauté,
+							Engagement dans une lutte sociale" /><br/>
+                                    Communaute Religieuse : <obs conceptId="b7138252-def2-466c-b166-bb6d911c7a54"
+                                                                 answerConceptIds="5c687819-b24b-4a35-bcc8-2a25ad8ed589,64d8f582-f34d-4baf-9284-1237ac2589cd"
+                                                                 answerLabels="Congrégation,Degrés d’implication" />
+
+                                    <!--  (nombre de dépendants)--><br/>
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="1ff0a57d-7400-4b12-b11f-3b05e7109064">
+                                        <obs conceptId="CIEL:161011" rows="10" />
+                                    </obsgroup>
+                                </td>
+                                <td valign="TOP">
+                                    <h2><b>Niveau d’éducation et d’alphabétisation</b></h2><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0">
+                                        <obs conceptId="CIEL:1712"
+                                             answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:5622"
+                                             answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Inconnu, Autre"
+                                        /><br/>
+
+                                        <b>Préciser</b><br/>
+                                        <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                            <obs conceptId="CIEL:161011" rows="5" /> <!--a remplacer-->
+                                        </obsgroup>
+
+                                    </obsgroup><br/>
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0">
+                                        <obs conceptId="CIEL:161011" rows="3" />
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="TOP">
+                                    <h2><b>Situation actuelle (emploi, loisirs)</b></h2><br/>
+                                    <b>Situation professionnelle</b>
+                                    <obs conceptId="3d376960-3b97-4958-8c86-7626b2fd1bd0"
+                                         answerConceptIds="05a62654-4524-44f7-97cd-cfc7b52453cb,CIEL:1539,
+										72a561f7-45b8-4198-b466-657012791f5d,CIEL:165219,CIEL:160311,
+										042a6cc6-c5fb-4f93-8135-83aaf8df3328,CIEL:1540,CIEL:162944,CIEL:163127,f64471fc-dfd1-4e31-87ea-496f499e79bd,CIEL:163315,CIEL:159364,CIEL:5622"
+                                         answerLabels="Propriétaire d’entreprise,Commerce Formel,
+										Commerce Informel,Emploi à temps plein,Emploi à temps partiel,Profession Libérale,
+										Salarié,Fonctionnaire de l’état,Emploi dans le privé,Centre d’intérêt,Activité de détente,Activités physiques régulières,Autre"
+                                    /><br/>
+
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+                                    </obsgroup>
+
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="dda43aa0-39d1-4887-86d1-e3f7f66eb4d5">
+                                        <obs conceptId="CIEL:161011" rows="3" />
+                                    </obsgroup>
+                                </td>
+                                <td valign="TOP">
+                                    <h2><b>Connaissances et croyances (sur le VIH, sur le traitement)</b></h2><br/>
+                                    <b>Histoire de traitement</b><br/>
+                                    <obs conceptId="2fac6db5-1fcb-419a-84a6-17bd09a047b1"
+                                         answerConceptIds="e8ab3c4d-06d9-4289-a243-9064b55eae9e,a2ff4988-b2a9-4d19-a618-67a7a4039f36"
+                                         answerLabels="Traitement naturel informel,Traitement naturel formel" /><br/>
+                                    <b>Sentiment concernant les médicament </b><br/>
+                                    <obs conceptId="6b31605d-5987-4744-9444-b8b1f8f217da"
+                                         answerConceptIds="CIEL:703,CIEL:664,aeb34ae8-e41f-41b1-9b84-4e82d924cc2a,CIEL:114164,CIEL:5622"
+                                         answerLabels="Positif,Négatif,Aversion,Phobie,Autre"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <b>Connaissance sur le VIH</b><br/>
+                                    <obs conceptId="68c14421-1a12-470b-8cd0-500cebdb7177"
+                                         answerConceptIds="CIEL:1061,CIEL:164882,CIEL:1085,CIEL:856,CIEL:5622"
+                                         answerLabels="Mode de transmission,Moyen de prévention,Évolution de la maladie, Traitement antirétroviral, Autre"
+                                    />
+                                    <br/>
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="5" /> <!--a remplacer-->
+                                    </obsgroup>
+
+
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="7bfd2d91-c025-436d-829d-948245f1fd64">
+                                        <obs conceptId="CIEL:161011" rows="5" />
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="TOP">
+                                    <h2><b>Situation économique (situation financière, logement, alimentation)</b></h2>
+                                    <br/>
+                                    <b>Source de revenue</b><br/>
+                                    <obs conceptId="CIEL:159740"
+                                         answerConceptIds="CIEL:1540,05a62654-4524-44f7-97cd-cfc7b52453cb,CIEL:1539,CIEL:5622"
+                                         answerLabels="Salaire,Proprietaire d'entreprise,Commerce,Autre"
+                                    /><br/>
+
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="5" /> <!--a remplacer-->
+                                    </obsgroup>
+
+                                    <b>Sources d'alimentation</b><br/>
+                                    <obs conceptId="e0f3ac04-1f14-427d-b7e5-e5a06db9905e"
+                                         answerConceptIds="e1ecb553-4241-46a8-a2fa-ff11a773653b,d88d7079-4f5b-42a1-8bb5-de9b68806a2a,da138e63-e486-4bfe-956f-3c40348c8845,d744e7cb-7b9d-4602-9461-c9eb485b33ab,CIEL:163467,CIEL:5622"
+                                         answerLabels="Agriculture,Fait maison,Restauration formelle,Restauration Communautaire,Maison familiale,Autre"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <b>Qualité de l'alimentation</b><br/>
+                                    <obs conceptId="72a714d2-1183-431e-9a30-f1361aa0b177"
+                                         answerConceptIds="750fd6df-e995-4cc2-83cd-f41db35bbee9,d30a9048-1776-4c89-b4a2-f31be8e85add,CIEL:115122,CIEL:5622"
+                                         answerLabels="Équilibrée,Non Équilibrée,Sous-alimentation,Autre"
+                                    /><br/>
+
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+                                    </obsgroup>
+
+                                    <b>Type de Logement</b><br/>
+                                    <obs conceptId="CIEL:163577"
+                                         answerConceptIds="CIEL:159473,531a5af5-83c4-4bdb-82c4-77c84e7c00b2,CIEL:163575,f428d285-5ade-4cb6-b3e2-c010d3a58559,CIEL:135703,CIEL:5622"
+                                         answerLabels="Propriété privé,Loyer,Maison Familiale,Logement Communal,Institution Caricative,Autre"
+                                    /><br/>
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+                                    </obsgroup>
+
+
+                                    <b>Niveau de dépendance par rapport aux autres</b><br/>
+                                    <obs conceptId="fe556012-245c-4a30-a3bf-f0961be4aa10"
+                                         answerConceptIds="644f3c92-1014-4f1a-bb33-fb67fc1e6d74,cef18259-5010-4e48-8a74-1573ac56508c,f2b60be4-c328-4e06-887d-2f8b03966622,ab4cbc95-b15c-41ba-98f9-ff06e6ed579c,CIEL:5622"
+                                         answerLabels="Très autonome,Autonome,Interdépendant,Totalement dépendant,Autre"
+                                    /><br/>
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+                                    </obsgroup>
+
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="7f3a2f89-6d09-42a8-87ec-32484b88421f">
+                                        <obs conceptId="CIEL:161011" rows="3" />
+                                    </obsgroup>
+                                </td>
+                                <td valign="TOP">
+                                    <h2><b>État psychologique (sentiment d’auto-efficacité, estime de soi, sentiment à l’égard de sa maladie)</b></h2><br/>
+                                    <b>Réaction globale par rapport à l’infection</b> <br/>
+                                    <obs conceptId="aad7ae43-39e9-4e25-a79d-9a334b4ae5a4"
+                                         answerConceptIds="7d04d161-6ed6-4db8-8ac6-1448de72eb22,13b55b68-f550-46fe-8347-e3c03ce7beb1,fe93bc6d-2903-4a2e-b21a-5eacbb4c8a6d,CIEL:162479,CIEL:125562,CIEL:125561,CIEL:5622"
+                                         answerLabels="Questionnement,Hétéro-agressivité,Auto-agressivité,Dénégation,Planification suicidaire,Passage à l'acte suicidaire,Autre"
+                                    /><br/>
+
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="5" /> <!--a remplacer-->
+                                    </obsgroup>
+
+                                    <b>États affectifs par rapport à l’infection au VIH</b> <br/>
+                                    <obs conceptId="e2750e6b-961c-4cbd-badd-d35a60dd1b84"
+                                         answerConceptIds="CIEL:140487,18cfea41-c788-4096-9652-5c6b53eb549b,CIEL:148797,CIEL:121543,CIEL:5622"
+                                         answerLabels="Peur,Tristesse,Colère,Anxiété,Autre"
+                                    /><br/>
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+                                    </obsgroup>
+
+
+                                    <b>États affectifs par rapport à sa condition physique / médicale</b> <br/>
+                                    <obs conceptId="9f672c93-cfa2-42f9-acc9-feb16411533a"
+                                         answerConceptIds="dc3b5334-2eb8-4299-b765-56b2ecf31acb,dd4bd057-f26e-4af9-a785-71b6354838c0,1787b8f5-a007-45c3-8e4a-720dfddd89a8,a9c6bf5b-6e63-423c-b00e-00ac40ba942d,CIEL:5622"
+                                         answerLabels="Peur de mourir,Peur de dégradation physique,Envie de vivre,Confiant,Autre"
+                                    /><br/>
+
+                                    <b>Préciser</b><br/>
+                                    <obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+                                        <obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+                                    </obsgroup>
+
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="915481cd-c085-4a9c-bfaf-ca2d025bf75c">
+                                        <obs conceptId="CIEL:161011" rows="3" />
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="TOP">
+                                    <h2><b>Soutien social (famille, professionnels, amis) Annonce du statut : Stigmatisation ? <br/></b></h2>
+                                    <!--  <obs conceptId="CIEL:163108" /> -->
+                                    <br/>
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="ab30c201-df39-452e-bbc9-c718f5be98d6">
+                                        <obs conceptId="CIEL:161011" rows="3" />
+                                    </obsgroup>
+                                </td>
+                                <td valign="TOP"><h2><b>Projet de vie et motivation</b></h2>
+                                    <br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="aa170632-b8d5-454f-9659-cbe72c0d9799"
+                                         answerLabel="Projet d’étude"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="2ba0801b-d839-4174-b164-c68cb4cf5701"
+                                         answerLabel="Projet professionnel"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="369cda12-2a20-4826-af78-c7f60a34364c"
+                                         answerLabel="Projet Familial"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="eb7f7434-1046-4583-a419-b77c35ae7015"
+                                         answerLabel="Projet économique"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="a813563a-852e-4989-b41a-05bfac8403a5"
+                                         answerLabel="Aspiration personnelle"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="2df52e46-4a98-4fd2-ae43-b1a7620193be"
+                                         answerLabel="Soutien aux autres"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <obs conceptId="d4ba3c5b-7fad-4bca-8a5e-0834f1623f46"
+                                         answerConceptId="29f580d9-7263-4d0b-ab1c-14a17cb7770a"
+                                         answerLabel="Participation au développement de la communauté"
+                                         showCommentField="true" commentFieldLabel=", préciser" /><br/>
+                                    <b>BESOINS</b><br/>
+                                    <obsgroup groupingConceptId="26ebd9f2-3500-42a4-95c9-6bfac11f36b7">
+                                        <obs conceptId="CIEL:161011" rows="5" />
+                                    </obsgroup>
+
+                                </td>
+                            </tr>
+                            <!--  	<tr>
+                                    <td colspan="2">Autres maladies et autre traitement (dont IO)<br/>
+                                        <obs conceptId="d9a815e2-f1fe-44f2-b620-24715fe0623c" rows="5" cols="50" />
+                                    </td>
+                                </tr> -->
+                            <tr>
+                                <td colspan="2"><br/>
+                                    <b>Plan de Traitement</b><br/>
+                                    (Synthèse, Identification des besoins, Besoin prioritaire, Inventaire des ressources, Plan et Stategies)
+                                    <br/>
+                                    <obsgroup groupingConceptId="da28be7d-ad2a-41ca-927f-d9267cced11b">
+                                        <obs conceptId="CIEL:161011" rows="5" cols="50" />
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+            </div>
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div7">SYMPTOMATOLOGIE</div>
+                </a>
+                <div id="div7" class="togglable" style="display: none;">
+                    <section headerLabel="ÉVALUATION PSYCHOLOGIQUE SIGNES ET SYMPTÔMES" id="section-eval-psy">
+                        <br/>
+                        <div class="main-grid">
+                            <!-- ========== LIGNE 1 ========== -->
+                            <div class="main-row">
+                                <!-- Syndrome dépressif -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Syndrome dépressif</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Syndrome dépressif</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:163471" drugname="Tristesse" id="tristesse"
+                                                            conceptgroup="18cfea41-c788-4096-9652-5c6b53eb549b" color="#D8D8D8" />
+                                                    <render concept="CIEL:163474" drugname="Perte d'intérêt"
+                                                            id="perte_intérêt" conceptgroup="815c5227-1d07-41dc-b163-aa62a7970e58" color="#FFFFFF" />
+                                                    <render concept="CIEL:140501" drugname="Fatigue" id="fatigue"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="Désespoir"
+                                                            id="desespoir" conceptgroup="CIEL:140472" color="#FFFFFF" />
+                                                    <render concept="CIEL:125562" drugname="Idées suicidaire ou tendance suicidaire"
+                                                            id="suicide" conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Troubles anxieux -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Troubles anxieux</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Troubles anxieux</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:163471" drugname="Peur excessive " id="peur_exessive"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:118764" drugname="Appréhension"
+                                                            id="apprehension" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:6023" drugname="Irritabilité" id="irritabilite"
+                                                            conceptgroup="f954221c-3003-4960-b02c-89366ea4113e" color="#FFFFFF" />
+                                                    <render concept="CIEL:152330" drugname="Agitation" id="agitation"
+                                                            conceptgroup="f954221c-3003-4960-b02c-89366ea4113e" color="#FFFFFF" />
+                                                    <render concept="CIEL:112930" drugname="Troubles du sommeil" id="troubles_sommeil"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Troubles de l'adaptation -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Troubles de l'adaptation</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Troubles de l'adaptation</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:163471" drugname="Détresse significative" id="detresse_significative"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:121543" drugname="Anxiété" id="anxiete"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:135595" drugname="Perte d'appétit"
+                                                            id="perte_appetit" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:163470" drugname="Pensées négatives" id="pensees_negatives"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:156280" drugname="Difficultés interpersonnelles / relationnelles" id="diffic_interpersonnelles "
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ========== LIGNE 2 ========== -->
+                            <div class="main-row">
+                                <!-- Troubles Cognitifs / neuro-dégénératifs -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Troubles Cognitifs / neuro-dégénératifs</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Troubles Cognitifs / neuro-dégénératifs</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:163471" drugname="Problèmes de mémoire" id="problemes_memoire"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:112845" drugname="Difficultés de langage" id="difficult_langage"
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:121543" drugname="Troubles de l'attention et de la concentration" id="trouble_attention_concentration"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="Troubles du jugement" id="troubles_jugement"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:156280" drugname="Changements d'humeur et de comportement" id="changements_humeur_comportement"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Etat de stress post-traumatique (ESPT) -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Etat de stress post-traumatique (ESPT)</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Etat de stress post-traumatique (ESPT)</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:163471" drugname="Souvenirs intrusifs" id="souvenirs_intrusifs"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:118764" drugname="Détresse émotionnelle" id="detresse_motionnelle"
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:121543" drugname="Évitement des pensées et des sentiments" id="evitement_pensees"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="auto-Évitement des situations et des lieux" id="evitement_situations"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:156280" drugname="Réactions excessives" id="reactions_excessives"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Schizophrénie -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Schizophrénie</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Schizophrénie</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:139146" drugname="Hallucinations" id="hallucinations"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:119574" drugname="Délire" id="delire"
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:121543" drugname="Désorganisation de la pensée et du comportement" id="desorganisation_pensee"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="Perte de contact avec la réalité" id="perte_contact"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:137646" drugname="Discours incohérent" id="discours_incohrent"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ========== LIGNE 3 ========== -->
+                            <div class="main-row">
+                                <!-- Troubles du comportement -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Troubles du comportement</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Troubles du comportement</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:165424" drugname="Anorexie" id="Anorexie"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:118764" drugname="Boulimie" id="boulimie"
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:121543" drugname="Insomnie" id="Insomnie"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="Alcool" id="alcool"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:156280" drugname="Drogue" id="drug"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Expertise psychométrique -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Expertise psychométrique</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Expertise psychométrique</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:165424" drugname="Depression de BECK" id="depression_beck"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:118764" drugname="Index de Sévérité de l'Insomnie (ISI)" id="isi"
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:121543" drugname="PCL-5 (Posttraumatic Stress Disorder Checklist for DSM-5)" id="pcl5"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="Échelle d'Anxiété d'Hamilton" id="eah"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:156280" drugname="Mini Mental State Examination (MMSE)" id="mmse"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Approche psychothérapeutique -->
+                                <div class="main-cell">
+                                    <div class="accordion-header">
+                                        <span>Approche psychothérapeutique</span>
+                                        <span class="accordion-icon">▼</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <table class="symptom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Approche psychothérapeutique</th>
+                                                    <th>Date début</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="{conceptgroup}">
+                                                            <tr>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}"
+                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                </td>
+                                                                <td>
+                                                                    <obs conceptId="CIEL:1730" id="{id}_start" />
+                                                                </td>
+                                                            </tr>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render concept="CIEL:165424" drugname="Thérapie cognitivo- comportementale / TCC" id="therapie_cognitivo_comportementale"
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                    <render concept="CIEL:118764" drugname="Thérapie systémique familiale" id="therapie_systemique_familiale"
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                    <render concept="CIEL:121543" drugname="Thérapie brève" id="therapie_breve"
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                    <render concept="CIEL:163470" drugname="Techniques Relaxation et méditation" id="tech_relaxation_meditation"
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                    <render concept="CIEL:156280" drugname="Approche centrée sur le client" id="approche_centree_sur_client"
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                </repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                    </section>
+                </div>
+            </div>
+            <div width="100%">
+                <a href="#read" class="lien">
+                    <div class="toggle-button" data-target="#div8">IMPRESSIONS CLINIQUES / DIAGNOSTICS ET PLAN DE TRAITEMENT</div>
+                </a>
+                <div id="div8" class="togglable" style="display: none;">
+                    <section headerLabel="DIAGNOSTIC PSYCHOLOGIQUE">
+                        <table width="100%">
+                            <tr>
+                                <td valign="TOP">
+                                    <table>
+                                        <repeat>
+                                            <template>
+                                                <obsgroup groupingConceptId="159947">
+                                                    <tr>
+                                                        <td>
+                                                            <obs conceptId="CIEL:1284" answerConceptId="{concept}"
+                                                                 answerLabel="{symtomename}" id="{id}" />
+                                                        </td>
+                                                    </tr>
+                                                </obsgroup>
+                                            </template>
+                                            <render concept="CIEL:119537" symtomename="Dépression" id="depression"
+                                                    color="#D8D8D8" />
+                                            <render concept="CIEL:139545" symtomename="Trouble d'anxiété généralisée"
+                                                    id="trouble_anxiete" color="#FFFFFF" />
+                                            <render concept="CIEL:130254" symtomename="Trouble phobique"
+                                                    id="trouble_phobique" color="#D8D8D8" />
+                                            <render concept="CIEL:121131" symtomename="Trouble affectif bipolaire"
+                                                    id="trouble_bipolaire" color="#FFFFFF" />
+                                            <render concept="CIEL:113155" symtomename="Schizophrénie"
+                                                    id="schizophrenie" color="#D8D8D8" />
+                                            <render concept="CIEL:132611" symtomename="Trouble obsessionnel compulsif"
+                                                    id="trouble_obs" color="#FFFFFF" />
+                                            <render concept="CIEL:121712" symtomename="Alcoolisme"
+                                                    id="alcoolisme_diag" color="#FFFFFF" />
+                                        </repeat>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <b>Autres diagnostics</b> <br/>
+                        <table>
+                            <tr class="checkboxGroup">
+                                <td>
+                                    <b>Autre diagnostic 1</b><br/>
+                                    <obsgroup groupingConceptId="20673e3f-4aae-463e-9fe4-9995058a9776">
+                                        <span class="titre" ch-target="#cacher75" id="trigger">
+                                            <obs conceptId="CIEL:1284" class="master" id="id72"
+                                                 style="autocomplete" answerClasses="Diagnosis"
+                                                 showCommentField="true"
+                                                 commentFieldLabel="&lt;br/&gt;si autre, préciser&lt;br/&gt;" />
+                                        </span>
+                                        <br />
+                                        <span id="cacher75" class="cacher" style="display:none">
+                                            <span id="confirmation">
+                                                <obs conceptId="CIEL:159394" answerConceptIds="CIEL:159392,CIEL:159393"
+                                                     answerLabels="Confirmé,Suspecté" style="radio" />
+                                            </span>
+                                            <br />
+                                            <span id="primary">
+                                                <obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944"
+                                                     answerLabels="Primaire,Secondaire" style="radio" />
+                                            </span>
+                                        </span>
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                            <tr class="checkboxGroup">
+                                <td>
+                                    <b>Autre diagnostic 2</b><br/>
+                                    <obsgroup groupingConceptId="3a80c2bd-43cc-4697-b194-3c687d1fc49e">
+                                        <span class="titre" ch-target="#cacher76" id="trigger">
+                                            <obs conceptId="CIEL:1284" class="master" id="id73"
+                                                 style="autocomplete" answerClasses="Diagnosis"
+                                                 showCommentField="true"
+                                                 commentFieldLabel="&lt;br/&gt;si autre, préciser&lt;br/&gt;" />
+                                        </span>
+                                        <br />
+                                        <span id="cacher76" class="cacher" style="display:none">
+                                            <span id="confirmation">
+                                                <obs conceptId="CIEL:159394" answerConceptIds="CIEL:159392,CIEL:159393"
+                                                     answerLabels="Confirmé,Suspecté" style="radio" />
+                                            </span>
+                                            <br />
+                                            <span id="primary">
+                                                <obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944"
+                                                     answerLabels="Primaire,Secondaire" style="radio" />
+                                            </span>
+                                        </span>
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                            <tr class="checkboxGroup">
+                                <td>
+                                    <b>Autre diagnostic 3</b><br/>
+                                    <obsgroup groupingConceptId="b93db0f4-c573-4ef4-acd7-c6ca182f4f06">
+                                        <span class="titre" ch-target="#cacher77" id="trigger">
+                                            <obs conceptId="CIEL:1284" class="master" id="id74"
+                                                 style="autocomplete" answerClasses="Diagnosis"
+                                                 showCommentField="true"
+                                                 commentFieldLabel="&lt;br/&gt;si autre, préciser&lt;br/&gt;" />
+                                        </span>
+                                        <br />
+                                        <span id="cacher77" class="cacher" style="display:none">
+                                            <span id="confirmation">
+                                                <obs conceptId="CIEL:159394" answerConceptIds="CIEL:159392,CIEL:159393"
+                                                     answerLabels="Confirmé,Suspecté" style="radio" />
+                                            </span>
+                                            <br />
+                                            <span id="primary">
+                                                <obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944"
+                                                     answerLabels="Primaire,Secondaire" style="radio" />
+                                            </span>
+                                        </span>
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                            <tr class="checkboxGroup">
+                                <td>
+                                    <b>Autre diagnostic 4</b><br/>
+                                    <obsgroup groupingConceptId="830832d0-047e-4a59-a338-ab9d868c29ea">
+                                        <span class="titre" ch-target="#cacher78" id="trigger">
+                                            <obs conceptId="CIEL:1284" class="master" id="id75"
+                                                 style="autocomplete" answerClasses="Diagnosis"
+                                                 showCommentField="true"
+                                                 commentFieldLabel="&lt;br/&gt;si autre, préciser&lt;br/&gt;" />
+                                        </span>
+                                        <br />
+                                        <span id="cacher78" class="cacher" style="display:none">
+                                            <span id="confirmation">
+                                                <obs conceptId="CIEL:159394" answerConceptIds="CIEL:159392,CIEL:159393"
+                                                     answerLabels="Confirmé,Suspecté" style="radio" />
+                                            </span>
+                                            <br />
+                                            <span id="primary">
+                                                <obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944"
+                                                     answerLabels="Primaire,Secondaire" style="radio" />
+                                            </span>
+                                        </span>
+                                    </obsgroup>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                    <section headerLabel="PLAN DE TRAITEMENT">
+                        <obs conceptId="CIEL:163104" rows="10" cols="70" />
+                    </section>
+                </div>
+            </div>
+
+            <br />
+            Date de Prochaine Visite :
+            <obs conceptId="CIEL:5096" allowFutureDates="true" />
+            <br />
+            <br />
+            Nom d'auteur de la fiche :
+            <span style="display: none">
+                <encounterProviderAndRole encounterRole="ef0445e7-bfe6-4260-a351-09fc835b6bcd"
+                                          autocompleteProvider="true" default="currentUser" />
+            </span>
+            <obs conceptId="CIEL:1473"/>
+            <br />
+            <br/>
+            Statut de la fiche<br/>
+            <!--  &#160;<obs conceptId="CIEL:163340" answerConceptIds="CIEL:163339,CIEL:1267" answerLabels="Incomplète. A mettre à jour ultérieurement.&lt;br&#47;&gt;, Complète." defaultValue="CIEL:1267" style="radio"/>-->
+            &#160;<obs conceptId="CIEL:163340" answerConceptIds="CIEL:163339,CIEL:1267" id="form_status" answerLabels="Incomplète. A mettre à jour ultérieurement.&lt;br&#47;&gt;, Complète." required="true" style="radio"/>
+            <br/>
+            <br/>
+            <div id="sauvegarde" style="background:#e2f9ff">
+                <center>
+                    <span style="">
+                        <submit submitClass="confirm right" submitCode="general.save" />
+                    </span>
+
+                    <br />
+                </center>
+            </div>
+        </div>
+    </div>
+</htmlform>

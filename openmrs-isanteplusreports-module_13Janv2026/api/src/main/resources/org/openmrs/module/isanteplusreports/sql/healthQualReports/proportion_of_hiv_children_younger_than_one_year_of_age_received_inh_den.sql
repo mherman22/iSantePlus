@@ -1,0 +1,72 @@
+SELECT
+	p.patient_id
+FROM isanteplus.patient p
+LEFT JOIN isanteplus.patient_prescription pp
+ON p.patient_id = pp.patient_id
+LEFT JOIN isanteplus.pediatric_hiv_visit phv 
+ON p.patient_id = phv.patient_id
+WHERE
+    (p.vih_status = 1 -- HIV Positive
+    OR  p.patient_id IN ( -- Include exposed children
+      SELECT DISTINCT pv.patient_id
+        FROM isanteplus.health_qual_patient_visit pv
+        WHERE
+        pv.patient_id NOT IN (    -- Condition E
+          SELECT DISTINCT plab.patient_id
+          FROM isanteplus.patient_laboratory plab
+          WHERE
+            plab.test_done = 1
+            AND plab.test_id = 844  -- PCR
+            AND plab.test_result = 1301 -- positive
+            AND plab.date_test_done BETWEEN :startDate AND :endDate)
+        AND pv.patient_id NOT IN ( -- Condition E positive virology test
+            SELECT DISTINCT pvt.patient_id
+            FROM isanteplus.virological_tests pvt
+            WHERE answer_concept_id = 1030
+            AND test_result = 703
+            AND pvt.encounter_date BETWEEN :startDate AND :endDate)
+        AND pv.age_in_years < 14 -- An child
+        AND ( pv.patient_id IN (  -- Condition D
+            SELECT DISTINCT pp.patient_id
+            FROM isanteplus.patient_prescription pp
+            WHERE pp.rx_or_prophy = 163768 -- prophylaxis
+            AND drug_id IN (SELECT drug_id FROM isanteplus.arv_drugs))
+          OR pv.patient_id IN ( -- Condition B
+            SELECT DISTINCT patient_id
+            FROM isanteplus.pediatric_hiv_visit
+            WHERE actual_vih_status = 1405) -- HIV EXPOSED
+          OR pv.patient_id IN ( -- Condition A PCR result
+            SELECT DISTINCT plab.patient_id
+            FROM isanteplus.patient_laboratory plab
+            WHERE plab.test_done = 1
+              AND plab.test_id = 844  -- PCR
+              AND plab.test_result = 1302 -- negative
+              AND plab.date_test_done < :endDate)
+          OR pv.patient_id IN ( -- Condition A virology test
+            SELECT DISTINCT pvt.patient_id
+            FROM isanteplus.virological_tests pvt
+            WHERE answer_concept_id = 1030
+            AND test_result = 664
+            AND pvt.encounter_date  < :endDate)
+	      )
+	    ) 
+    ) 
+    AND p.patient_id IN (
+        SELECT pv.patient_id
+        FROM isanteplus.health_qual_patient_visit pv
+        WHERE
+            (
+	            pv.visit_date BETWEEN :startDate AND :endDate AND pv.encounter_type IN (9,10) -- Paeds initial and followup encounter types
+	            OR 
+	            pp.visit_date BETWEEN :startDate AND :endDate
+	            OR 
+	            phv.encounter_date BETWEEN :startDate AND :endDate
+            )
+            AND pv.is_active_tb IS FALSE -- Exclude those with Active TB 
+    		AND TIMESTAMPDIFF(MONTH, p.birthdate, pv.visit_date) <= 12
+    )
+    AND p.patient_id NOT IN (
+        SELECT discon.patient_id
+        FROM isanteplus.discontinuation_reason discon
+        WHERE discon.reason IN (159,1667,159492) -- 159-deceased, 1667- Discontinuations, 159492- Transfer
+    );

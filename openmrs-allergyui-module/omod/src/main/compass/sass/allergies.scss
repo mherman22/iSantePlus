@@ -1,0 +1,19 @@
+@import "variables";
+
+.allergyStatus {
+	font-weight: bold;
+}
+
+.allergyReaction {
+	color: $subtleText;
+}
+
+form {
+	display: inline;
+}
+
+td { 
+	max-width: 100px; 
+	text-overflow: ellipsis; 
+	overflow: hidden;
+}

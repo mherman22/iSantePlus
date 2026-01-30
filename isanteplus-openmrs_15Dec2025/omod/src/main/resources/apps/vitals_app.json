@@ -1,0 +1,21 @@
+[
+    {
+        "id": "isanteplus.vitals",
+        "description": "isanteplus.vitals.app.description",
+        "order": 11,
+        "config": {
+            "patientPageUrl": "isanteplus/vitals.page?app=isanteplus.registration"
+        },
+        "extensions": [
+            {
+                "id": "${project.parent.groupId}.${project.parent.artifactId}.activeVisitsHomepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "label": "isanteplus.vitals.app.label",
+                "url": "isanteplus/vitals.page?app=isanteplus.vitals&patientId={{patientId}}&visitId={{visitId}}",
+                "icon": "icon-ambulance",
+                "requiredPrivilege": "App: isanteplus.vitals"
+            }
+        ]
+    }
+]

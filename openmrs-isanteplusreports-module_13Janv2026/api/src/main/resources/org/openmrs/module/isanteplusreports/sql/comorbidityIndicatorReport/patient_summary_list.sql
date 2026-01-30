@@ -1,0 +1,1 @@
+select * from isanteplus.patient where patient_id in (:ids);

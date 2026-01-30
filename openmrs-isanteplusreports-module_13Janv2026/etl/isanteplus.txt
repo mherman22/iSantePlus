@@ -1,0 +1,67 @@
+
+
+Nord ---> hyP&rion!NORD2020
+Nord-Est ---> hyP&rion!NORE2020
+Nord-Ouest --->	hyP&rion!NORO2020
+Artibonite --->	hyP&rion!ARTI2021
+Centre ---> hyP&rion!CENT2021
+Ouest ---> hyP&rion!OUES2021
+Grand'Anse --->	hyP&rion!GRAN2022
+Nippes ---> hyP&rion!NIPP2022
+Sud ---> hyP&rion!SUDD2022
+Sud-Est ---> hyP&rion!SUDE2022
+
+	
+
+--1. Copy etl_2.8.2 folder to /home/isanteplus
+     sudo chmod 777 -R /home/isanteplus/etl_2.8.2
+
+--2. Backup the patient_status_arv table in isanteplus database
+     mysqldump -uroot -p'jO3!u7US&#rl' isanteplus patient_status_arv > /home/isanteplus/etl_2.8.2/patient_status_arv.sql
+     
+--3. Delete the isanteplus database
+     sudo service mysql.server restart
+     mysql -uroot -p'jO3!u7US&#rl'
+     DROP DATABASE isanteplus;
+     
+--4. Create the isanteplus database
+     CREATE DATABASE isanteplus;
+
+--5. Import the ddl, drug, flags, patient_status_arv.sql
+     mysql -uroot -p'Admin@123' < /home/jeejen/etl_2.8.2/isanteplusreportsddlscript.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/drug_lookup_isanteplus.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/openmrs_patientflags.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/psychoSocialResume.sql
+     mysql -uroot -p'Admin@123' isanteplus < /home/jeejen/etl_2.8.2/patient_status_arv.sql
+     
+--6. Run the .sh file
+     sh /home/jeejen/etl_2.8.2/etl.sh
+     
+--7. Setup the crontab
+     crontab -e
+     @reboot sh /home/isanteplus/etl_2.8.2/etl.sh > /home/isanteplus/etl_2.8.2/etl.log 2>&1
+     0 */4 * * * sh /home/isanteplus/etl_2.8.2/etl.sh > /home/isanteplus/etl_2.8.2/etl.log 2>&1
+     
+--8. Replace the isanteplus and report module
+     sudo chmod +x /home/isanteplus/etl_2.8.2/*.omod
+     sudo chown root:root /home/isanteplus/etl_2.8.2/*.omod
+     sudo mv -f /home/isanteplus/etl_2.8.2/*.omod /usr/share/tomcat7/.OpenMRS/modules/
+     sudo service tomcat7 restart
+     
+     
+--9. Change the reports module version to 0.9
+     Go to Administration systeme -> Administration avancee -> Settings -> reports
+     sudo service tomcat7 restart
+     
+-10. Import concept
+     mysql -uroot -p'jO3!u7US&#rl' openmrs < /home/isanteplus/etl_2.8.2/concept/isantePlus_concept_20230321.sql
+     
+     
+End...
+
+
+
+
+patient_id=183
+
+

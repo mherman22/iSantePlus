@@ -1,0 +1,4 @@
+org/openmrs/module/registration/page/controller/RegisterPageController.class
+org/openmrs/module/registration/web/controller/RegistrationController.class
+org/openmrs/module/registration/fragment/controller/UsersFragmentController.class
+org/openmrs/module/registration/extension/html/AdminList.class

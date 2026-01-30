@@ -1,0 +1,18 @@
+[
+    {
+        "id": "isanteplus.manageIsantePlusPatientDashboard",
+        "description": "isanteplus.description",
+        "order": 10,
+        "extensions": [
+            {
+                "id": "isanteplus.launcheManager",
+                "extensionPointId": "systemAdministration.apps",
+                "type": "link",
+                "order": 5,
+                "label": "isanteplus.manageIsantePlus",
+                "url": "isanteplus/manageIsantePlus.page",
+                "icon": "icon-dashboard"
+            }
+        ]
+    }
+]
