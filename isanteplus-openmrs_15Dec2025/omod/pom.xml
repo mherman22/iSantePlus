@@ -59,11 +59,11 @@
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>referenceapplication-omod</artifactId>
-		</dependency>
+		</dependency><!--
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>xds-sender-omod</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>coreapps-api</artifactId>

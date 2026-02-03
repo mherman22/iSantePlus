@@ -1227,73 +1227,72 @@
                 <div id="div1" class="togglable" style="display: none;">
                     <section>
                         <!-- Attente new question concept replace 163145 -->
-                        <obsgroup groupingConceptId="163180">
 
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Inscrit dans le programme de soins du VIH" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:163469"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:163469"
                                                  answerLabel="Evaluation psychologique" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160198"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:160198"
                                                  answerLabel="Problème psychologique" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:134660"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:134660"
                                                  answerLabel="Problèmes familiaux" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:126312"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:126312"
                                                  answerLabel="Discrimination sociale" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159598"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159598"
                                                  answerLabel="Non-respect d'un traitement ou d'une thérapie" />
                                         </td>
                                         <td>
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="9fb9a204-56d4-488c-9693-c067c53b593d"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="957dae3c-25e2-4f32-98df-198c343e2e20"
                                                  answerLabel="Initiation thérapie psychologique" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="5079a471-61b4-4d0e-ad87-c08fc31162b2"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="23199497-ba36-4007-a66c-dc65b1b46514"
                                                  answerLabel="Suivi psychologique en cours" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="3c9afedd-4287-4f32-ac76-41410a61d5e0"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="5a4d9e78-f3f6-403f-b4a6-c6a01c80fc77"
                                                  answerLabel="Fermeture thérapie psychologique" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="668726f0-8f36-4cb5-8a7d-7abee4275cbe"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="d3e1034b-d07e-4bb2-8063-7f44b8f8d6f1"
                                                  answerLabel="Difficulté scolaire" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159423"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159423"
                                                  answerLabel="Dévoilement statut" /><br/>
-                                            <obs conceptId="CIEL:163145" answerConceptId="e0520711-73e5-4490-ba34-9dc3d7e959c3"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="b8d52a02-c38e-4a84-a89c-c3886197a406"
                                                  answerLabel="Accompagnement psychosocial pour CV > 1000" />
                                         </td>
                                         <!-- Attente new question concept replace 159811 -->
                                         <td>
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="21a587c5-3319-4c03-96f5-8850a63d6f48"
                                                  answerLabel="Activités Génératrice de Revenues (AGR)" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="7730f5a4-e070-4ca5-af59-168a1ab27bfd"
                                                  answerLabel="Déplacés internes" />
                                             <br/>
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="570ab9b2-ff0b-424e-af61-773f4defabb8"
                                                  answerLabel="Dificultés par rapport au logement" />
                                             <br />
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="c620faf6-5136-4de6-b690-a58ddb90c85d"
                                                  answerLabel="Rencontre suivi de groupe" />
                                             <br />
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="e52bc782-77f6-4ec3-94f8-a5a273771110"
                                                  answerLabel="Rencontre suivi PIT" />
                                             <br />
 
                                             <!-- End -->
 
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160523"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:160523"
                                                  answerLabel="Visite de suivi, régulier" />
                                             <br />
                                         </td>
@@ -1302,7 +1301,6 @@
 
                                 </tbody>
                             </table>
-                        </obsgroup>
                     </section>
                 </div>
             </div>
