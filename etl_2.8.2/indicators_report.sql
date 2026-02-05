@@ -17,7 +17,7 @@ USE isanteplus;
 	encounter_id = ob.encounter_id,
 	voided = ob.voided;
 	
-	
+	# Motif Consultation SSP/ Psychosocial
 	INSERT into patient_diagnosis(patient_id,encounter_id,location_id,concept_id,answer_concept_id, encounter_date, voided)
 					
 	select distinct ob.person_id,ob.encounter_id,
@@ -25,7 +25,7 @@ USE isanteplus;
 	from openmrs.obs ob, openmrs.encounter e, openmrs.encounter_type et
 	where ob.encounter_id = e.encounter_id
 	AND e.encounter_type = et.encounter_type_id	
-	AND ob.concept_id = 159614
+	AND ob.concept_id in (159614, 509166597) 
 	AND (ob.value_coded <> '' OR ob.value_coded is not null)
 	on duplicate key update
 	encounter_id = ob.encounter_id,

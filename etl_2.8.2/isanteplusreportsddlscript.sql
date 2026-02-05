@@ -373,6 +373,23 @@ CREATE TABLE IF NOT EXISTS patient_diagnosis(
 	PRIMARY KEY (encounter_id,location_id,concept_group,concept_id,answer_concept_id)
 );
 
+/*TABLE patient_symptome, this table contains all patient syntomes*/	
+DROP TABLE IF EXISTS patient_symptome;
+CREATE TABLE IF NOT EXISTS patient_symptome(
+	patient_id int(11),
+	encounter_id int(11),
+	location_id int(11),
+	encounter_date date,
+	concept_group int(11),
+	obs_group_id int(11),
+	concept_id int(11),
+	answer_concept_id int(11),
+	value_datetime DATETIME,
+	last_updated_date DATETIME,
+	constraint pk_patient_symptome 
+	PRIMARY KEY (encounter_id,location_id,concept_group,concept_id,answer_concept_id)
+);
+
 /*Table visit_type for visit_type like : Gynécologique=160456,Prénatale=1622,
 Postnatale=1623,Planification familiale=5483 (ex: OBGYN FORM) */
 DROP TABLE IF EXISTS visit_type;
