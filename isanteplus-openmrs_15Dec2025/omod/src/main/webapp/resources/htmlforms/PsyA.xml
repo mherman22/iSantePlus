@@ -2415,15 +2415,15 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Tristesse" id="tristesse"
-                                                            conceptgroup="18cfea41-c788-4096-9652-5c6b53eb549b" color="#D8D8D8" />
+                                                            conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#D8D8D8" />
                                                     <render concept="CIEL:163474" drugname="Perte d'intérêt"
-                                                            id="perte_intérêt" conceptgroup="815c5227-1d07-41dc-b163-aa62a7970e58" color="#FFFFFF" />
+                                                            id="perte_intérêt" conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#FFFFFF" />
                                                     <render concept="CIEL:140501" drugname="Fatigue" id="fatigue"
-                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                            conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#D8D8D8" />
                                                     <render concept="CIEL:163470" drugname="Désespoir"
-                                                            id="desespoir" conceptgroup="CIEL:140472" color="#FFFFFF" />
+                                                            id="desespoir" conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#FFFFFF" />
                                                     <render concept="CIEL:125562" drugname="Idées suicidaire ou tendance suicidaire"
-                                                            id="suicide" conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                            id="suicide" conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
@@ -2460,15 +2460,15 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Peur excessive " id="peur_exessive"
-                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#D8D8D8" />
                                                     <render concept="CIEL:118764" drugname="Appréhension"
-                                                            id="apprehension" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                            id="apprehension" conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#FFFFFF" />
                                                     <render concept="CIEL:6023" drugname="Irritabilité" id="irritabilite"
-                                                            conceptgroup="f954221c-3003-4960-b02c-89366ea4113e" color="#FFFFFF" />
+                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#FFFFFF" />
                                                     <render concept="CIEL:152330" drugname="Agitation" id="agitation"
-                                                            conceptgroup="f954221c-3003-4960-b02c-89366ea4113e" color="#FFFFFF" />
+                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#FFFFFF" />
                                                     <render concept="CIEL:112930" drugname="Troubles du sommeil" id="troubles_sommeil"
-                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
@@ -2505,15 +2505,15 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Détresse significative" id="detresse_significative"
-                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#D8D8D8" />
                                                     <render concept="CIEL:121543" drugname="Anxiété" id="anxiete"
-                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#D8D8D8" />
                                                     <render concept="CIEL:135595" drugname="Perte d'appétit"
-                                                            id="perte_appetit" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                            id="perte_appetit" conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#FFFFFF" />
                                                     <render concept="CIEL:163470" drugname="Pensées négatives" id="pensees_negatives"
-                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#FFFFFF" />
                                                     <render concept="CIEL:156280" drugname="Difficultés interpersonnelles / relationnelles" id="diffic_interpersonnelles "
-                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
@@ -2553,15 +2553,15 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Problèmes de mémoire" id="problemes_memoire"
-                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
+                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#D8D8D8" />
                                                     <render concept="CIEL:112845" drugname="Difficultés de langage" id="difficult_langage"
-                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
+                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#FFFFFF" />
                                                     <render concept="CIEL:121543" drugname="Troubles de l'attention et de la concentration" id="trouble_attention_concentration"
-                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
+                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#D8D8D8" />
                                                     <render concept="CIEL:163470" drugname="Troubles du jugement" id="troubles_jugement"
-                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
+                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#FFFFFF" />
                                                     <render concept="CIEL:156280" drugname="Changements d'humeur et de comportement" id="changements_humeur_comportement"
-                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
+                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
