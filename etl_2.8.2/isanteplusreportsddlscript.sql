@@ -386,6 +386,9 @@ CREATE TABLE IF NOT EXISTS patient_symptome(
 	answer_concept_id int(11),
 	value_datetime DATETIME,
 	last_updated_date DATETIME,
+	date_created DATETIME,
+	voided TINYINT(1),
+	date_voided DATETIME,
 	constraint pk_patient_symptome 
 	PRIMARY KEY (encounter_id,location_id,concept_group,concept_id,answer_concept_id)
 );
