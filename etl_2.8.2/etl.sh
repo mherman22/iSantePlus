@@ -14,4 +14,7 @@ mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -P$MYSQL_PORT -h$MYSQL_HOST isanteplus < $
 
 mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -P$MYSQL_PORT -h$MYSQL_HOST isanteplus < $PATH_HOST/indicators_report.sql
 
+# Ce script doit executer en dernier
+mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -P$MYSQL_PORT -h$MYSQL_HOST isanteplus < $PATH_HOST/psychoSocialResume.sql
+
 

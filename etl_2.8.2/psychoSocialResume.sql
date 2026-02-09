@@ -1,5 +1,31 @@
  /*Resume iSante PsychoSocial forms*/
-	USE isanteplus;  
+	USE isanteplus;
+
+-- Ajouter la colonne encounter_type dans la table patient_diagnosis
+SET @col_exists := (
+    SELECT COUNT(*)
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = 'isanteplus'
+      AND TABLE_NAME = 'patient_diagnosis'
+      AND COLUMN_NAME = 'encounter_type'
+);
+
+SET @sql := IF(
+    @col_exists = 0,
+    'ALTER TABLE isanteplus.patient_diagnosis ADD COLUMN encounter_type INT(11);',
+    'SELECT ''Column encounter_type already exists'';'
+);
+
+ PREPARE stmt FROM @sql;
+ EXECUTE stmt;
+ DEALLOCATE PREPARE stmt;
+-- ---------------------------FIN----------------------------
+
+update isanteplus.patient_diagnosis ipd, openmrs.encounter oe
+   set ipd.encounter_type = oe.encounter_type
+ where ipd.patient_id = oe.patient_id
+   and ipd.encounter_id = oe.encounter_id;
+
 
 CREATE TABLE IF NOT EXISTS comprehension(
 comprehension_id INT(11) AUTO_INCREMENT,
@@ -26,6 +52,7 @@ OR (c.obstaclesRemarks IS NOT NULL OR c.obstaclesRemarks <> '')
 OR (c.barriersToApptsText IS NOT NULL OR c.barriersToApptsText <> '')
 OR (c.barriersToHomeVisitsText IS NOT NULL OR c.barriersToHomeVisitsText <> '')
 );
+
 
 /*insertion of all symptome in the table patient_synptome*/
 INSERT into patient_symptome(patient_id,encounter_id,location_id,concept_group,obs_group_id,concept_id,
@@ -69,16 +96,5 @@ and et.encounter_type_id
 	where uuid in ('a0d57dca-3028-4153-88b7-c67a30fde595', '51df75f7-a3de-4f82-a9df-c0bedaf5a2dd'))
 on duplicate key update
 	value_datetime = oval.value_datetime;	
+-- ----------------------------FIN------------------------------------------------------------------
 
-
-/*
-	AND ob.encounter_id = ob1.encounter_id
-	AND ob.obs_group_id = ob1.obs_id
-	AND ob.encounter_id = e.encounter_id
-	AND e.encounter_type = et.encounter_type_id	
-	AND ob.concept_id = 1284
-	AND (ob.value_coded <> '' OR ob.value_coded is not null)
-	on duplicate key update
-	encounter_id = ob.encounter_id,
-	voided = ob.voided;
-*/

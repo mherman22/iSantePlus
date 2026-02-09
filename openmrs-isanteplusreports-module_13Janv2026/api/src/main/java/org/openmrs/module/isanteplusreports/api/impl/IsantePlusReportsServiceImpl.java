@@ -595,36 +595,8 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
         for (Map<String, Object> row : list) {
             org.openmrs.module.isanteplusreports.comorbidity.model.PatientSummary patient = new org.openmrs.module.isanteplusreports.comorbidity.model.PatientSummary();
 
-            if (row.get("identifier") != null)
-                patient.setIdentifier(row.get("identifier").toString());
-            if (row.get("st_id") != null)
-                patient.setStId(row.get("st_id").toString());
-            if (row.get("national_id") != null)
-                patient.setNationalId(row.get("national_id").toString());
-            if (row.get("isante_id") != null)
-                patient.setIsanteId(row.get("isante_id").toString());
             if (row.get("patient_id") != null)
                 patient.setId(Integer.parseInt(row.get("patient_id").toString()));
-            if (row.get("location_id") != null)
-                patient.setLocationId(Integer.parseInt(row.get("location_id").toString()));
-            if (row.get("site_code") != null)
-                patient.setSiteCode(row.get("site_code").toString());
-            if (row.get("given_name") != null)
-                patient.setGivenName(row.get("given_name").toString());
-            if (row.get("family_name") != null)
-                patient.setFamilyName(row.get("family_name").toString());
-            if (row.get("gender") != null)
-                patient.setGender(row.get("gender").toString());
-            if (row.get("birthdate") != null)
-                patient.setBirthdate(getDateFormat(row.get("birthdate").toString()));
-            if (row.get("telephone") != null)
-                patient.setTelephone(row.get("telephone").toString());
-            if (row.get("last_address") != null)
-                patient.setLastAddress(row.get("last_address").toString());
-            if (row.get("vih_status") != null)
-                patient.setVihStatus(Integer.parseInt(row.get("vih_status").toString()));
-            if (row.get("arv_status") != null)
-                patient.setArvStatus(Integer.parseInt(row.get("arv_status").toString()));
 
             patientList.add(patient);
         }
@@ -646,39 +618,13 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
         List<Map<String, Object>> list = query.list();
         List<org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary> patientList = new ArrayList<>();
 
+        System.out.println("list :::::::::::: "+list.get(0).toString());
+
         for (Map<String, Object> row : list) {
             org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary patient = new org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary();
 
-            if (row.get("identifier") != null)
-                patient.setIdentifier(row.get("identifier").toString());
-            if (row.get("st_id") != null)
-                patient.setStId(row.get("st_id").toString());
-            if (row.get("national_id") != null)
-                patient.setNationalId(row.get("national_id").toString());
-            if (row.get("isante_id") != null)
-                patient.setIsanteId(row.get("isante_id").toString());
             if (row.get("patient_id") != null)
                 patient.setId(Integer.parseInt(row.get("patient_id").toString()));
-            if (row.get("location_id") != null)
-                patient.setLocationId(Integer.parseInt(row.get("location_id").toString()));
-            if (row.get("site_code") != null)
-                patient.setSiteCode(row.get("site_code").toString());
-            if (row.get("given_name") != null)
-                patient.setGivenName(row.get("given_name").toString());
-            if (row.get("family_name") != null)
-                patient.setFamilyName(row.get("family_name").toString());
-            if (row.get("gender") != null)
-                patient.setGender(row.get("gender").toString());
-            if (row.get("birthdate") != null)
-                patient.setBirthdate(getDateFormat(row.get("birthdate").toString()));
-            if (row.get("telephone") != null)
-                patient.setTelephone(row.get("telephone").toString());
-            if (row.get("last_address") != null)
-                patient.setLastAddress(row.get("last_address").toString());
-            if (row.get("vih_status") != null)
-                patient.setVihStatus(Integer.parseInt(row.get("vih_status").toString()));
-            if (row.get("arv_status") != null)
-                patient.setArvStatus(Integer.parseInt(row.get("arv_status").toString()));
 
             patientList.add(patient);
         }

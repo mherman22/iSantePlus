@@ -1,0 +1,24 @@
+mysqldump -uroot -p'jO3!u7US&#rl' openmrs \
+concept \
+concept_answer \
+concept_attribute \
+concept_attribute_type \
+concept_class \
+concept_complex \
+concept_datatype \
+concept_description \
+concept_map_type \
+concept_name \
+concept_name_tag \
+concept_name_tag_map \
+concept_numeric \
+concept_proposal \
+concept_proposal_tag_map \
+concept_reference_map \
+concept_reference_source \
+concept_reference_term \
+concept_reference_term_map \
+concept_set \
+concept_state_conversion \
+concept_stop_word \
+> concept_tables_dump.sql
