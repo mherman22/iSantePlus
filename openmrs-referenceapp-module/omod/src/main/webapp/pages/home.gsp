@@ -52,7 +52,7 @@
     .button.app.big i {
         font-size: 24px;
         display: inline-block;
-        color: #4f46e5;
+        color: #333e62;
     }
 
     .app-icon {
@@ -73,10 +73,9 @@
     }
 
     .app-title {
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 16px;
         line-height: 1.3;
-        color: #111827;
+        color: #333e62;
         white-space: normal;
         overflow-wrap: break-word;
         word-break: break-word;
