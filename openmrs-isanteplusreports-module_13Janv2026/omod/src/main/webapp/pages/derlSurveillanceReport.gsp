@@ -651,7 +651,7 @@ td.clickable a {
                         <thead>
                         <tr>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
-                            <th colspan="53" style="text-align: center; background: #084068; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
+                            <th colspan="53" style="text-align: center; background: #3b5674; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
 
                         </tr>
@@ -671,7 +671,7 @@ td.clickable a {
                         <thead>
                         <tr>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
-                            <th colspan="53" style="text-align: center; background: #084068; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
+                            <th colspan="53" style="text-align: center; background: #3b5674; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
 
                         </tr>
@@ -691,7 +691,7 @@ td.clickable a {
                         <thead>
                         <tr>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
-                            <th colspan="12" style="text-align: center; background: #084068; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Répartition mensuelle des déclarations pour l’année 2026 (Janvier–Décembre)</th>
+                            <th colspan="12" style="text-align: center; background: #3b5674; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Répartition mensuelle des déclarations pour l’année 2026 (Janvier–Décembre)</th>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
 
                         </tr>
