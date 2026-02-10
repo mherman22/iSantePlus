@@ -618,8 +618,6 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
         List<Map<String, Object>> list = query.list();
         List<org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary> patientList = new ArrayList<>();
 
-        System.out.println("list :::::::::::: "+list.get(0).toString());
-
         for (Map<String, Object> row : list) {
             org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary patient = new org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary();
 
@@ -631,6 +629,47 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
 
         return patientList;
     }
+
+    @Override
+    public List<org.openmrs.module.isanteplusreports.derlSurveillance.model.Indicator> getDerlSurveillanceReport(String sqlFile, Date startDate, Date endDate) {
+        String sql = loadSqlFile(sqlFile);
+
+        SQLQuery query = dao.getSessionFactoryResult().createSQLQuery(sql);
+
+        query.setDate("startDate", startDate);
+        query.setDate("endDate", endDate);
+        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+        List<Map<String, Object>> list = query.list();
+        List<org.openmrs.module.isanteplusreports.derlSurveillance.model.Indicator> indicatorList = new ArrayList<>();
+
+        for (Map<String, Object> row : list) {
+            org.openmrs.module.isanteplusreports.derlSurveillance.model.Indicator indicator = new org.openmrs.module.isanteplusreports.derlSurveillance.model.Indicator();
+
+            if (row.get("indicatorId") != null)
+                indicator.setIndicatorId(((Number) row.get("indicatorId")).intValue());
+
+            if (row.get("indicatorTypeId") != null)
+                indicator.setIndicatorTypeId(((Number) row.get("indicatorTypeId")).intValue());
+
+            if (row.get("patientId") != null)
+                indicator.setPatientId(((Number) row.get("patientId")).intValue());
+
+            if (row.get("locationId") != null)
+                indicator.setLocationId(((Number) row.get("locationId")).intValue());
+
+            if (row.get("encounterId") != null)
+                indicator.setEncounterId(((Number) row.get("encounterId")).intValue());
+
+            if (row.get("indicatorDate") != null)
+                indicator.setIndicatorDate(getDateTimeFormat(row.get("indicatorDate").toString()));
+
+            indicatorList.add(indicator);
+        }
+
+        return indicatorList;
+    }
+
 
     @Override
     public List<PatientSummary> getPatientsByIdentifiersComorbidity(String sqlFile, String ids) {
@@ -752,9 +791,77 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
         return patientList;
     }
 
+    @Override
+    public List<org.openmrs.module.isanteplusreports.derlSurveillance.model.PatientSummary> getPatientsByIdentifiersDerlSurveillance(String sqlFile, String ids) {
+
+        String sql = loadSqlFile(sqlFile);
+
+        SQLQuery query = dao.getSessionFactoryResult().createSQLQuery(sql);
+
+        List<Integer> idList = Arrays.stream(ids.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        query.setParameterList("ids", idList);
+
+        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+        List<Map<String, Object>> list = query.list();
+        List<org.openmrs.module.isanteplusreports.derlSurveillance.model.PatientSummary> patientList = new ArrayList<>();
+
+        for (Map<String, Object> row : list) {
+            org.openmrs.module.isanteplusreports.derlSurveillance.model.PatientSummary patient = new org.openmrs.module.isanteplusreports.derlSurveillance.model.PatientSummary();
+
+            if (row.get("identifier") != null)
+                patient.setIdentifier(row.get("identifier").toString());
+            if (row.get("st_id") != null)
+                patient.setStId(row.get("st_id").toString());
+            if (row.get("national_id") != null)
+                patient.setNationalId(row.get("national_id").toString());
+            if (row.get("isante_id") != null)
+                patient.setIsanteId(row.get("isante_id").toString());
+            if (row.get("patient_id") != null)
+                patient.setId(Integer.parseInt(row.get("patient_id").toString()));
+            if (row.get("location_id") != null)
+                patient.setLocationId(Integer.parseInt(row.get("location_id").toString()));
+            if (row.get("site_code") != null)
+                patient.setSiteCode(row.get("site_code").toString());
+            if (row.get("given_name") != null)
+                patient.setGivenName(row.get("given_name").toString());
+            if (row.get("family_name") != null)
+                patient.setFamilyName(row.get("family_name").toString());
+            if (row.get("gender") != null)
+                patient.setGender(row.get("gender").toString());
+            if (row.get("birthdate") != null)
+                patient.setBirthdate(getDateFormat(row.get("birthdate").toString()));
+            if (row.get("telephone") != null)
+                patient.setTelephone(row.get("telephone").toString());
+            if (row.get("last_address") != null)
+                patient.setLastAddress(row.get("last_address").toString());
+            if (row.get("vih_status") != null)
+                patient.setVihStatus(Integer.parseInt(row.get("vih_status").toString()));
+            if (row.get("arv_status") != null)
+                patient.setArvStatus(Integer.parseInt(row.get("arv_status").toString()));
+
+            patientList.add(patient);
+        }
+
+        return patientList;
+    }
+
     private LocalDate getDateFormat(String date) {
         if (date == null)
             return null;
+        return LocalDate.parse(date);
+    }
+
+    private LocalDate getDateTimeFormat(String date) {
+        if (date == null) return null;
+        if (date.contains(" ")) {
+            date = date.split(" ")[0];
+        }
         return LocalDate.parse(date);
     }
 

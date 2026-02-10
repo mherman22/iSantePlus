@@ -1,5 +1,14 @@
-/*13 : Rougeole/rubeole suspecte*/
-SELECT ind.patient_id FROM isanteplus.indicators ind
-WHERE ind.indicator_id = 13
-AND ind.indicator_type_id = 13
-AND ind.indicator_date between :startDate AND :endDate;
+SELECT
+    indicator_id        AS indicatorId,
+    indicator_type_id   AS indicatorTypeId,
+    patient_id          AS patientId,
+    location_id         AS locationId,
+    encounter_id        AS encounterId,
+    indicator_date      AS indicatorDate,
+    voided              AS voided,
+    created_date        AS createdDate,
+    last_updated_date   AS lastUpdatedDate
+FROM isanteplus.indicators
+WHERE indicator_id = 13
+  AND indicator_type_id = 13
+  AND indicator_date between :startDate and :endDate

@@ -1,390 +1,642 @@
 <%
     ui.decorateWith("appui", "standardEmrPage")
-    ui.includeJavascript("isanteplusreports", "healthQualExportToExcel.js")
 %>
+<script>
+    var cohortIndicatorList1 = ${ui.toJson(cohortIndicators1)};
+    var cohortIndicatorList2 = ${ui.toJson(cohortIndicators2)};
+    var cohortIndicatorList3 = ${ui.toJson(cohortIndicators3)};
+</script>
 
 <script type="text/javascript" charset="UTF-8">
     var breadcrumbs = [
         {icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm'},
-        {label: "${ ui.message("isanteplusreports.derl.surveillance.report") }", link: '${ ui.thisUrl() }'}
+        {icon: "icon-dashboard", label: "${ ui.message("isanteplusreports.derl.surveillance.report") }", link: '${ ui.thisUrl() }'}
     ];
 
     var jq = jQuery;
 
     jq(document).ready(function () {
 
-        // runReport();
+        const tabs = document.querySelectorAll(".tab");
+        const contents = document.querySelectorAll(".content");
 
-        // jq('#indicatorsForm').ready(function(event) {
-        //     runReport();
-        // });
 
-        jq('#indicatorsForm').submit(function (event) {
-            runReport();
-        });
-        jq('#buttonToPdf').click(function (event) {
-            event.preventDefault();
-            savePdf();
-        });
-        jq('#buttonToExcel').click(function (event) {
-            event.preventDefault();
-            saveExcel();
-        });
+        for (let i = 0; i < cohortIndicatorList1.length; i++) {
 
-        var checkBox = document.getElementById("check");
-        jq('#check').change(function (event) {
+            var indicatorList = cohortIndicatorList1[i].indicatorList;
 
-            if (checkBox.checked == true) {
-                jq('.opts').prop("checked", true);
-            } else {
-                jq('.opts').prop("checked", false);
+            if(indicatorList.length>0) {
+                for (let j = 0; j < indicatorList.length; j++) {
+                    var indicator = indicatorList[j];
+
+                    console.log("indicator ::: ", indicator)
+
+                    var item = indicator.indicatorDate;
+                    var jsDate = new Date(item.year, item.monthValue - 1, item.dayOfMonth);
+
+                    // Formater en yyyy-MM-DD
+                    var yyyy = jsDate.getFullYear();
+                    var mm = String(jsDate.getMonth() + 1).padStart(2, '0'); // mois 2 chiffres
+                    var dd = String(jsDate.getDate()).padStart(2, '0');        // jour 2 chiffre
+
+                    indicator.indicatorDate = yyyy + '-' + mm + '-' + dd;
+                }
             }
+        }
+
+        for (let i = 0; i < cohortIndicatorList2.length; i++) {
+
+            var indicatorList = cohortIndicatorList2[i].indicatorList;
+
+            if(indicatorList.length>0) {
+                for (let j = 0; j < indicatorList.length; j++) {
+                    var indicator = indicatorList[j];
+
+                    console.log("indicator ::: ", indicator)
+
+                    var item = indicator.indicatorDate;
+                    var jsDate = new Date(item.year, item.monthValue - 1, item.dayOfMonth);
+
+                    // Formater en yyyy-MM-DD
+                    var yyyy = jsDate.getFullYear();
+                    var mm = String(jsDate.getMonth() + 1).padStart(2, '0'); // mois 2 chiffres
+                    var dd = String(jsDate.getDate()).padStart(2, '0');        // jour 2 chiffre
+
+                    indicator.indicatorDate = yyyy + '-' + mm + '-' + dd;
+                }
+            }
+        }
+
+        for (let i = 0; i < cohortIndicatorList3.length; i++) {
+
+            var indicatorList = cohortIndicatorList3[i].indicatorList;
+
+            if(indicatorList.length>0) {
+                for (let j = 0; j < indicatorList.length; j++) {
+                    var indicator = indicatorList[j];
+
+                    console.log("indicator ::: ", indicator)
+
+                    var item = indicator.indicatorDate;
+                    var jsDate = new Date(item.year, item.monthValue - 1, item.dayOfMonth);
+
+                    // Formater en yyyy-MM-DD
+                    var yyyy = jsDate.getFullYear();
+                    var mm = String(jsDate.getMonth() + 1).padStart(2, '0'); // mois 2 chiffres
+                    var dd = String(jsDate.getDate()).padStart(2, '0');        // jour 2 chiffre
+
+                    indicator.indicatorDate = yyyy + '-' + mm + '-' + dd;
+                }
+            }
+        }
+
+
+        function getWeekNumber(date) {
+            const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            const dayNum = d.getUTCDay() || 7; // Dimanche -> 7
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum); // Aller au jeudi de la semaine
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return weekNo;
+        }
+
+        function groupIndicatorsByWeek(indicators) {
+            const weekMap = {};
+
+            indicators.forEach(ind => {
+                const date = new Date(ind.indicatorDate);
+                const week = getWeekNumber(date);
+
+                if (!weekMap[week]) {
+                    weekMap[week] = {
+                        count: 0,
+                        patients: []
+                    };
+                }
+
+                weekMap[week].count++;
+                weekMap[week].patients.push(ind.patientId);
+            });
+
+            return weekMap;
+        }
+
+
+        function reportTable(tableHeaderID, tableBodyID, columnCount, indicatorList) {
+
+            const tableHeader = document.getElementById(tableHeaderID);
+            const tableBody = document.getElementById(tableBodyID);
+
+            // 🟦 En-tête semaines
+            for (let w = 1; w <= columnCount; w++) {
+                const th = document.createElement("th");
+                th.textContent = "" + w;
+                th.style.textAlign = "center"
+                tableHeader.appendChild(th);
+            }
+
+            // ➕ En-tête Total
+            const thTotal = document.createElement("th");
+            thTotal.textContent = "Total";
+            thTotal.style.width = "20px";
+            thTotal.style.backgroundColor = "#718daf";
+            thTotal.style.color = "#fff";
+            thTotal.style.borderColor = "#fff";
+            thTotal.style.borderRadius = "0px 8px 0px 0px";
+            tableHeader.appendChild(thTotal);
+
+            // 🟩 Lignes indicateurs
+            indicatorList.forEach(indicator => {
+                const tr = document.createElement("tr");
+                tr.style.backgroundColor = "#fff";
+
+                // Colonne label
+                const th = document.createElement("th");
+                th.textContent = indicator.label;
+                th.classList.add("sticky-col");
+                tr.appendChild(th);
+
+                // Regroupement par semaine
+                const weekData = groupIndicatorsByWeek(indicator.indicatorList);
+
+                let total = 0;
+                let allPatients = [];
+
+                for (let w = 1; w <= columnCount; w++) {
+                    const td = document.createElement("td");
+
+                    if (weekData[w]) {
+                        total += weekData[w].count;
+                        allPatients.push(...weekData[w].patients);
+
+                        const patientIds = weekData[w].patients.join(",");
+                        const link = document.createElement("a");
+
+                        link.href = "/" + OPENMRS_CONTEXT_PATH +
+                            "/isanteplusreports/derlSurveillanceReportPatientList.page" +
+                            "?ids=" + encodeURIComponent(patientIds);
+
+                        link.textContent = weekData[w].count;
+                        link.classList.add("openDetached");
+                        link.style.fontWeight = "bold";
+                        link.style.fontSize = "14px";
+
+                        td.appendChild(link);
+                        td.classList.add("clickable");
+
+                    } else {
+                        td.textContent = "";
+                    }
+
+                    tr.appendChild(td);
+                }
+
+                // 🟨 Colonne Totale (MÊME COMPORTEMENT QUE LES SEMAINES)
+                const tdTotal = document.createElement("td");
+
+                // 👉 dédoublonnage recommandé
+                const allPatientIds = [...new Set(allPatients)].join(",");
+
+                const totalLink = document.createElement("a");
+                totalLink.href = "/" + OPENMRS_CONTEXT_PATH +
+                    "/isanteplusreports/derlSurveillanceReportPatientList.page" +
+                    "?ids=" + encodeURIComponent(allPatientIds);
+
+                totalLink.textContent = total;
+                totalLink.classList.add("openDetached");
+                totalLink.style.fontWeight = "bold";
+                totalLink.style.fontSize = "14px";
+
+                if (!allPatientIds) {
+                    totalLink.style.pointerEvents = "none";
+                    totalLink.style.color = "#8d8d8d";
+                }
+
+                tdTotal.style.backgroundColor = "#f5fbfe";
+                tdTotal.style.width = "20px";
+
+                tdTotal.appendChild(totalLink);
+                tdTotal.classList.add("clickable");
+
+                tr.appendChild(tdTotal);
+
+                tableBody.appendChild(tr);
+            });
+        }
+
+
+        function groupIndicatorsByMonth(indicatorList) {
+            const monthData = {};
+
+            indicatorList.forEach(item => {
+                const date = new Date(item.indicatorDate); // adapte le champ si besoin
+                const month = date.getMonth() + 1; // 1 = JANVIER, 12 = DÉCEMBRE
+
+                if (!monthData[month]) {
+                    monthData[month] = {
+                        count: 0,
+                        patients: []
+                    };
+                }
+
+                monthData[month].count++;
+                monthData[month].patients.push(item.patientId); // ou item.patient
+            });
+
+            return monthData;
+        }
+
+        function reportTableMonth(tableHeaderID, tableBodyID, indicatorList) {
+
+            const tableHeader = document.getElementById(tableHeaderID);
+            const tableBody = document.getElementById(tableBodyID);
+
+            const tableMonth = [
+                "JANVIER",
+                "FÉVRIER",
+                "MARS",
+                "AVRIL",
+                "MAI",
+                "JUIN",
+                "JUILLET",
+                "AOÛT",
+                "SEPTEMBRE",
+                "OCTOBRE",
+                "NOVEMBRE",
+                "DÉCEMBRE"
+            ];
+
+            // 🟦 En-tête mois
+            for (let w = 0; w < tableMonth.length; w++) {
+                const th = document.createElement("th");
+                th.textContent = tableMonth[w];
+                th.style.textAlign = "center";
+                tableHeader.appendChild(th);
+            }
+
+            // ➕ En-tête Total
+            const thTotal = document.createElement("th");
+            thTotal.textContent = "Total";
+            thTotal.style.width = "20px";
+            thTotal.style.backgroundColor = "#718daf";
+            thTotal.style.color = "#fff";
+            thTotal.style.borderColor = "#fff";
+            thTotal.style.borderRadius = "0px 8px 0px 0px";
+            tableHeader.appendChild(thTotal);
+
+            // 🟩 Lignes indicateurs
+            indicatorList.forEach(indicator => {
+                const tr = document.createElement("tr");
+                tr.style.backgroundColor = "#fff";
+
+                // Colonne label
+                const th = document.createElement("th");
+                th.textContent = indicator.label;
+                th.classList.add("sticky-col");
+                tr.appendChild(th);
+
+                // Regroupement par mois
+                const monthData = groupIndicatorsByMonth(indicator.indicatorList);
+
+                let total = 0;
+                let allPatients = [];
+
+                for (let w = 1; w <= tableMonth.length; w++) {
+                    const td = document.createElement("td");
+
+                    if (monthData[w]) {
+                        total += monthData[w].count;
+                        allPatients.push(...monthData[w].patients);
+
+                        const patientIds = monthData[w].patients.join(",");
+                        const link = document.createElement("a");
+
+                        link.href = "/" + OPENMRS_CONTEXT_PATH +
+                            "/isanteplusreports/derlSurveillanceReportPatientList.page" +
+                            "?ids=" + encodeURIComponent(patientIds);
+
+                        link.textContent = monthData[w].count;
+                        link.classList.add("openDetached");
+                        link.style.fontWeight = "bold";
+                        link.style.fontSize = "14px";
+
+                        td.appendChild(link);
+                        td.classList.add("clickable");
+                    } else {
+                        td.textContent = "";
+                    }
+
+                    tr.appendChild(td);
+                }
+
+                // 🟨 Colonne Totale (MÊME COMPORTEMENT QUE LES MOIS)
+                const tdTotal = document.createElement("td");
+
+                // 👉 dédoublonnage
+                const allPatientIds = [...new Set(allPatients)].join(",");
+
+                const totalLink = document.createElement("a");
+                totalLink.href = "/" + OPENMRS_CONTEXT_PATH +
+                    "/isanteplusreports/derlSurveillanceReportPatientList.page" +
+                    "?ids=" + encodeURIComponent(allPatientIds);
+
+                totalLink.textContent = total;
+                totalLink.classList.add("openDetached");
+                totalLink.style.fontWeight = "bold";
+                totalLink.style.fontSize = "14px";
+
+                if (!allPatientIds) {
+                    totalLink.style.pointerEvents = "none";
+                    totalLink.style.color = "#8d8d8d";
+                }
+
+                tdTotal.style.backgroundColor = "#f5fbfe";
+                tdTotal.style.width = "20px";
+
+                tdTotal.appendChild(totalLink);
+                tdTotal.classList.add("clickable");
+
+                tr.appendChild(tdTotal);
+                tableBody.appendChild(tr);
+            });
+        }
+
+
+
+        function enableCrossPartialHover(tableId) {
+            const table = document.getElementById(tableId);
+            const rows = table.tBodies[0].rows;
+
+            Array.from(rows).forEach((row, rowIndex) => {
+                Array.from(row.cells).forEach((cell, colIndex) => {
+
+                    // Ignore la colonne label si besoin
+                    if (cell.tagName !== "TD") return;
+
+                    cell.addEventListener("mouseenter", () => {
+
+                        // 🔵 Ligne : de 0 → colonne courante
+                        for (let c = 0; c <= colIndex; c++) {
+                            row.cells[c]?.classList.add("cross-hover");
+                        }
+
+                        // 🟢 Colonne : de 0 → ligne courante
+                        for (let r = 0; r <= rowIndex; r++) {
+                            rows[r].cells[colIndex]?.classList.add("cross-hover");
+                        }
+
+                        // ⭐ cellule courante
+                        cell.classList.add("current-cell");
+                    });
+
+                    cell.addEventListener("mouseleave", () => {
+
+                        // Nettoyage total
+                        Array.from(rows).forEach(r =>
+                            Array.from(r.cells).forEach(c =>
+                                c.classList.remove("cross-hover", "current-cell")
+                            )
+                        );
+                    });
+                });
+            });
+        }
+
+        reportTable("tableHeaderImmediate", "tableBodyImmediate", 53, cohortIndicatorList1);
+        reportTable("tableHeaderWeek", "tableBodyWeek", 53, cohortIndicatorList2);
+        reportTableMonth("tableHeaderMonth", "tableBodyMonth", cohortIndicatorList3);
+
+        enableCrossPartialHover("indicatorTable1");
+        enableCrossPartialHover("indicatorTable2");
+        enableCrossPartialHover("indicatorTable3");
+
+        jq(document).on("click", "a.openDetached", function (e) {
+            e.preventDefault();
+
+            var url = jq(this).attr("href");
+
+            if (!url) return;
+
+            window.open(
+                url,
+                "_blank",
+                "width=1500,height=700,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no"
+            );
+        });
+
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                // Retirer active partout
+                tabs.forEach(t => t.classList.remove("active"));
+                contents.forEach(c => c.classList.remove("active"));
+
+                // Activer l'onglet cliqué
+                tab.classList.add("active");
+                const target = tab.getAttribute("data-tab");
+                document.getElementById(target).classList.add("active");
+            });
         });
 
     });
 
-    <% if (pdfResult != null) { %>
 
-    function savePdf() {
-        var link = document.createElement('a');
-        link.setAttribute('href', 'data:application/pdf;base64, <%= pdfResult %>');
-        link.setAttribute('download', generatePdfName());
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
-    <% } %>
-
-    function saveExcel() {
-        var worksheet = "";
-        jq("#divWithReportTables").find("table").each(function (i, table) {
-            worksheet += jq(this).html();
-            worksheet += "<tr></tr>"; // table separation
-        });
-
-        saveToExcel(worksheet, 'workbenchName', generateExcelName());
-    }
-
-    function generateExcelName() {
-        return "DerlReport" + formatDate(new Date()) + ".xls";
-    }
-
-    function generatePdfName() {
-        return "DerlReport" + formatDate(new Date()) + ".pdf";
-    }
-
-    function formatDate(date) {
-        return jq.datepicker.formatDate('yy-mm-dd', date) + '_' + date.toLocaleTimeString();
-    }
-
-    function runReport() {
-        var form = jq('#indicatorsForm');
-        var indicators = parseIndicators(form);
-
-        jq("#codedIndicators").remove();    // if it exists
-        form.append("<input id='codedIndicators' type='hidden' name='indicatorList' value='" + JSON.stringify(indicators) + "'/>");
-    }
-
-    function parseIndicators(form) {
-        var parsedIndicators = [];
-        var indicators = form.find(".indicator");
-
-        indicators.each(function () {
-            var indicator = jq(this);
-            if (indicator.find("[name=selection]").prop('checked') === true) {
-                var map = new Object();
-                indicator.find('[name=options]').each(function () {
-                    map[indicator.find('[name=options] :selected').attr('name')] = indicator.find('[name=options] :selected').val();
-                });
-                parsedIndicators.push(
-                    createIndicator(
-                        indicator.attr('id'),
-                        map
-                    )
-                );
-            }
-        });
-        return parsedIndicators;
-    }
-
-    function createIndicator(uuidValue, optionValue) {
-        return {
-            uuid: uuidValue,
-            options: optionValue
-        };
-    }
-
-    function openCity(evt, cityName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
-
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-
-    if (jQuery) {
-        jQuery(document).ready(function () {
-            openCity(event, 'immediate');
-            document.getElementById('')
-        });
-    }
 </script>
 
 <style type="text/css">
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+body {
+    font-family: Arial, sans-serif;
 }
 
-.indicatorsHeader {
-    text-align: center;
-    background-color: #fefad3;
-    font-style: italic;
+/*body {*/
+/*    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;*/
+/*    background: #f7f8fa;*/
+/*    color: #0f172a;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+
+.tabs {
+    width: 100%;
+    margin: 15px auto;
 }
 
-#indicators thead th {
-    background-color: #fdf59a;
+.tab-list {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    padding: 6px;
+    margin: 0 0 10px 0;
+    background: #f4f6f8;
+    border-radius: 10px;
 }
 
-#divWithReportTables th, #divWithReportTables td {
-    padding: 5pt;
-    border-color: #dddddd;
-    border-style: solid;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 0px;
-    border-bottom-width: 0px;
-    text-align: center;
-}
-
-#divWithReportTables th:last-child, #divWithReportTables td:last-child {
-    border-right-width: 1px;
-}
-
-#divWithReportTables tr:last-child th, #divWithReportTables tr:last-child td {
-    border-bottom-width: 1px;
-}
-
-#divWithReportTables th, #divWithReportTables td {
-    white-space: normal;
-}
-
-#divWithReportTables td:hover {
-    white-space: normal;
-    background-color: #e6ffe9;
-}
-
-#divWithReportTables th {
-    white-space: normal;
-    background: #f5f5f5;
-    height: 40px;
-    /*width: 100px;*/
-    font-size: 14px;
-    /*overflow: auto;*/
-}
-
-#divWithReportTables td {
-    white-space: normal;
-    background: #fff;
-    width: 100px;
-    font-size: 14px;
-}
-
-.indicatorLabel {
-    text-align: center;
-    color: #393683;
-    font-weight: bold;
-    font-size: large;
-}
-
-.label {
-    text-align: center;
-}
-
-.total {
-    color: blue;
-}
-
-#divWithReportTables table {
-    border-collapse: separate;
-    border-spacing: 0;
-    empty-cells: hide;
-    margin: 30pt auto;
-}
-
-#result_container {
-    /*height: 500px;*/
-    /*overflow: scroll;*/
-    /*border: 1px solid silver;*/
-    text-align: justify;
-    padding: 0px;
-    margin: 0px;
-    margin-top: 10px;
-}
-
-/* Style the tab */
 .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    background-color: #f2f2f2;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
+    padding: 10px 20px;
     cursor: pointer;
-    padding: 14px 16px;
-    /*transition: 0.1s;*/
-    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    border-radius: 8px;
+    transition: all 0.25s ease;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-    background-color: #fff;
-    border-top: 2px solid #393683;
-    border-bottom: none;
-    height: 50px;
-    position: relative;
-    height: 50px;
-    margin-bottom: -10px;
-    /*font-size: 16px;*/
+.tab:hover {
+    background: #e1e6eb;
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-    background-color: #fff;
-    border-top: 2px solid #393683;
-    border-bottom: none;
-    height: 50px;
-    position: relative;
-    height: 50px;
-    margin-bottom: -10px;
-    font-size: 16px;
+.tab.active {
+    background: #7a98bd;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.20);
 }
 
-/* Style the tab content */
-.tabcontent {
+.tab-content {
+    padding: 20px;
+    border: 1px solid #e2e6ea;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.content {
     display: none;
-    padding: 6px 15px;
-    border: 1px solid #ccc;
-    border-top: none;
 }
 
-.loader {
-    float: right;
-    border: 3px solid #dddddd; /* Light grey */
-    border-top: 3px solid #393683; /* Blue */
-    border-right: 3px solid #393683; /* Blue */
-    border-bottom: 3px solid #393683; /* Blue */
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    animation: spin 0.6s linear infinite;
+.content.active {
+    display: block;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+
+/*-----------------------------------------------*/
+
+table {
+    border-collapse: collapse;
+    width: 100%; /* prend toute la largeur écran */
+    table-layout: fixed; /* 🔑 force les colonnes à se partager l’espace */
+    height: 70vh;
 }
+
+th, td {
+    border: 1px solid #999;
+    padding: 2px 4px; /* padding réduit */
+    font-size: 13px; /* texte compact */
+    text-align: center;
+
+}
+
+th {
+    background-color: #f5fbfe;
+}
+
+/* Colonne indicateurs (gauche) */
+.sticky-col {
+    width: 160px; /* largeur fixe lisible */
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Colonnes semaines ultra fines */
+
+
+td.clickable a {
+    cursor: pointer;
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+/* ligne */
+.row-hover td,
+.row-hover th {
+    background-color: #fff3cd;
+}
+
+.cross-hover {
+    background-color: #fff3cd;
+}
+
+.current-cell {
+    background-color: #eccf80;
+}
+
+
 
 </style>
 
 
-<div style="">
-    <h1><i class="icon-dashboard"></i> ${ui.message("isanteplusreports.derl.surveillance.report")}</h1>
-
+<div>
     <div class="running-reports">
 
-        <form id="indicatorsForm" name="indicatorsForm" class="clearfix" method="post">
-            <div id="div4" class="togglable" style="display: none">
+        <div class="tabs">
+            <ul class="tab-list">
+                <li class="tab active" data-tab="tab1">Déclaration Immédiate</li>
+                <li class="tab" data-tab="tab2">Déclaration Hebdomadaire</li>
+                <li class="tab" data-tab="tab3">Déclaration mensuelle</li>
+            </ul>
 
-                <fieldset id="run-report" style="float:right; min-width: 450px; margin-left: 10px;">
-                    <legend>
-                        ${ui.message("reportingui.runReport.run.legend")}
-                    </legend>
+            <div class="tab-content">
+                <div id="tab1" class="content active">
+                    <h3>Déclaration Immediate</h3>
 
-                    <p><input type="checkbox" id="check"
-                              name="check">${ui.message("isanteplusreports.pnls.select.all")}</input></p><br/>
+                    <table id="indicatorTable1">
+                        <thead>
+                        <tr>
+                            <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
+                            <th colspan="53" style="text-align: center; background: #084068; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
+                            <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
 
-                    <p><input type="checkbox" id="check_submit" name="check_submit"> check </input></p>
-
-                    <p id="parameterSection">
-                        ${ui.includeFragment("uicommons", "field/datetimepicker", ["id": "startDateField", "label": "From Date", "formFieldName": "startDate", "defaultDate": startDate, "useTime": false])}
-                        ${ui.includeFragment("uicommons", "field/datetimepicker", ["id": "endDateField", "label": "To Date", "formFieldName": "endDate", "defaultDate": endDate, "useTime": false])}
-                    <p>
-
-                </fieldset>
-
-                <table id="indicators" style="display:block; width: 100%; padding-top: 11px;">
-                    <thead>
-                    <tr>
-                        <th style="width:100%">${ui.message("isanteplusreports.healthqual.indicator.label")}</th>
-                        <th>${ui.message("isanteplusreports.healthqual.selection.label")}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th class="indicatorsHeader" colspan="2">
-                            ${ui.message("isanteplusreports.derl.surveillance.report")}
-                        </th>
-                    </tr>
-                    <% manager.derlIndicators.each { indicator -> %>
-                    ${ui.includeFragment("isanteplusreports", "derlIndicatorReport", [indicator: indicator])}
-                    <% } %>
-                    </tbody>
-                </table>
-            </div>
-            <button id="submit" type="submit" style="font-size: small; padding: 8px 6px;">
-                ${ui.message("reportingui.runButtonLabel")}&nbsp;
-                <i class="icon-repeat"></i>
-            </button>&nbsp;
-        </form>
-
-        <% if (htmlResult != null) { %>
-        <div style="position: relative; display: inline-block; float: right; margin-top: -37px;">
-            <button style="font-size: small; padding: 8px 6px" type='button' id='buttonToPdf' value="PDF"><i
-                    class="icon-download-alt"></i> PDF</button>&nbsp;
-            <button style="font-size: small; padding: 8px 6px" type='button' id='buttonToExcel' value="Excel"><i
-                    class="icon-download-alt"></i> Excel</button>
-        </div>
-
-        <div id="result_container" style="margin-top: 10px">
-            <div id="divWithReportTables">
-                <div id="tab" class="tab">
-                    <button id="tab1" class="tablinks active"
-                            onclick="openCity(event, 'immediate')">Déclaration Immédiate</button>
-                    <button style="border-left: 1px solid silver; border-right: 1px solid silver;" class="tablinks"
-                            onclick="openCity(event, 'hebdomadaire')">Déclaration Hebdomadaire</button>
-                    <button class="tablinks" onclick="openCity(event, 'mensuel')">Déclaration mensuelle</button>
+                        </tr>
+                        <tr id="tableHeaderImmediate">
+                            <th  style="background: #7a98bd; color: #fff; font-size: 18px; border-color: white; border-radius: 8px 0px 0px 0px;" class="sticky-col">Indicateurs</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableBodyImmediate">
+                        </tbody>
+                    </table>
                 </div>
-                <%= htmlResult %>
+
+                <div id="tab2" class="content">
+                    <h3>Déclaration Hebdomadaire</h3>
+
+                    <table id="indicatorTable2">
+                        <thead>
+                        <tr>
+                            <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
+                            <th colspan="53" style="text-align: center; background: #084068; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
+                            <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
+
+                        </tr>
+                        <tr id="tableHeaderWeek">
+                            <th  style="background: #7a98bd; color: #fff; font-size: 18px; border-color: white; border-radius: 8px 0px 0px 0px;" class="sticky-col">Indicateurs</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableBodyWeek">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab3" class="content">
+                    <h3>Déclaration mensuelle</h3>
+
+                    <table id="indicatorTable3">
+                        <thead>
+                        <tr>
+                            <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
+                            <th colspan="12" style="text-align: center; background: #084068; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Répartition mensuelle des déclarations pour l’année 2026 (Janvier–Décembre)</th>
+                            <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
+
+                        </tr>
+                        <tr id="tableHeaderMonth">
+                            <th  style="background: #7a98bd; color: #fff; font-size: 18px; border-color: white; border-radius: 8px 0px 0px 0px;" class="sticky-col">Indicateurs</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableBodyMonth"></tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
-        <% } %>
+
     </div>
 
 </div>
+

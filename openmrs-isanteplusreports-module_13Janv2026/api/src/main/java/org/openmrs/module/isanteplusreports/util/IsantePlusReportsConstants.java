@@ -20,6 +20,7 @@ public class IsantePlusReportsConstants {
 	
 	public static final String ALERTPRECOCE_REPORT_RESOURCE_PATH = REPORTS_SQL_PATH + "alertePrecoceReports/";
 	public static final String COMORBIDITY_RESOURCE_PATH = REPORTS_SQL_PATH + "comorbidityIndicatorReport/";
+	public static final String DERL_RESOURCE_PATH = REPORTS_SQL_PATH + "surveillanceIndicatorReport/";
 	public static final String PSYCHOSOCIAL_RESOURCE_PATH = REPORTS_SQL_PATH + "psychoSocialReport/";
 
 }

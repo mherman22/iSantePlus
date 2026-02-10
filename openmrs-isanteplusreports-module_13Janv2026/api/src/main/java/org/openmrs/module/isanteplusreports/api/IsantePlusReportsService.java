@@ -110,7 +110,11 @@ public interface IsantePlusReportsService extends OpenmrsService {
 
 	List<org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary> getPsychosocialReport(String sqlFile, Date startDate, Date endDate);
 
+	List<org.openmrs.module.isanteplusreports.derlSurveillance.model.Indicator> getDerlSurveillanceReport(String sqlFile, Date startDate, Date endDate);
+
 	List<org.openmrs.module.isanteplusreports.comorbidity.model.PatientSummary> getPatientsByIdentifiersComorbidity(String sqlFile, String ids);
 
 	List<org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary> getPatientsByIdentifiersPsychosocial(String sqlFile, String ids);
+
+	List<org.openmrs.module.isanteplusreports.derlSurveillance.model.PatientSummary> getPatientsByIdentifiersDerlSurveillance(String sqlFile, String ids);
 }
