@@ -100,20 +100,6 @@ ${ui.includeFragment("referenceapplication", "infoAndErrorMessages")}
     });
 </script>
 
-<header style="background: #566a8b; margin-top: -11px">
-    <div class="logo" >
-        <div style="float: left; height: 30px; margin-top: 10px; margin-bottom: 10px"> <a href="${ui.pageLink("referenceapplication", "home")}">
-            <% if (enableIsantePlusUI) { %>
-            <!-- isantePlus changed logo in the next line -->
-            <img src="${ui.resourceLink("isanteplus", "images/isanteplus_logo_120x30.png")}"/>
-            <% } else { %>
-            <img src="${ui.resourceLink("referenceapplication", "images/openMrsLogo.png")}"/>
-            <% } %>
-        </a></div>
-        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.7</span></div>
-    </div>
-</header>
-
 <header>
     <div class="logo" >
         <div style="float: left; height: 30px; margin-top: 10px; margin-bottom: 10px"> <a href="${ui.pageLink("referenceapplication", "home")}">
@@ -128,7 +114,21 @@ ${ui.includeFragment("referenceapplication", "infoAndErrorMessages")}
     </div>
 </header>
 
-<div id="body-wrapper" style="background: #fff">
+<header>
+    <div class="logo" >
+        <div style="float: left; height: 30px; margin-top: 10px; margin-bottom: 10px"> <a href="${ui.pageLink("referenceapplication", "home")}">
+            <% if (enableIsantePlusUI) { %>
+            <!-- isantePlus changed logo in the next line -->
+            <img src="${ui.resourceLink("isanteplus", "images/isanteplus_logo_120x30.png")}"/>
+            <% } else { %>
+            <img src="${ui.resourceLink("referenceapplication", "images/openMrsLogo.png")}"/>
+            <% } %>
+        </a></div>
+        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.6</span></div>
+    </div>
+</header>
+
+<div id="body-wrapper" style="">
     <div id="content">
         <form id="login-form" method="post" autocomplete="off">
             <fieldset>

@@ -37,6 +37,11 @@
 
     jq(function () {
 
+        // Toggle hamburger menu on mobile
+        jq('.hamburger-menu').click(function() {
+            jq('.user-options').toggleClass('open');
+        });
+
         ko.applyBindings(sessionLocationModel, jq('.change-location').get(0));
         sessionLocationModel.id(${ sessionContext.sessionLocationId });
         sessionLocationModel.text("${ ui.format(sessionContext.sessionLocation) }");
@@ -100,12 +105,115 @@
 
 </script>
 
-<header class="container" style="background: #566a8b; margin-top: -11px">
+<style type="text/css">
+    header.isante-header {
+        background: #566a8b;
+        margin-top: -11px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 15px;
+        position: sticky;
+        top: 0;
+        z-index: 1001;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius:0px;
+    }
+
+    header.isante-header .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    header.isante-header .logo div {
+        float: none !important;
+    }
+
+    header.isante-header .user-options {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header.isante-header .user-options li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    header.isante-header .user-options li.logout {
+        margin-left: 30px;
+    }
+
+    header.isante-header .hamburger-menu {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+        margin-left: auto;
+    }
+
+    @media (max-width: 768px) {
+        header.isante-header {
+            flex-direction: column;
+            padding-bottom: 10px;
+        }
+
+        header.isante-header .logo {
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        header.isante-header .hamburger-menu {
+            display: block;
+        }
+
+        header.isante-header .user-options {
+            display: none; /* Hide by default on mobile */
+            width: 100%;
+            flex-direction: column;
+            background: rgba(86, 106, 139, 0.95);
+            margin-top: 10px;
+            padding: 10px 0;
+            border-top: 1px solid #4a5c7a;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        header.isante-header .user-options.open {
+            display: flex;
+        }
+        
+        header.isante-header .user-options li {
+            margin: 10px 0;
+            width: 100%;
+            justify-content: center;
+            border-radius: 0 !important;
+        }
+
+        header.isante-header .user-options li.logout {
+            margin: 10px 0;
+            margin-left: 0;
+        }
+    }
+</style>
+
+<header class="container isante-header">
     <div class="logo" >
-       <div style="float: left; "><a href="${ logoLinkUrl }" >
+       <div><a href="${ logoLinkUrl }" >
            <img src="${ logoIconUrl }" />
        </a></div>
-        <div style="float: right;  height: 15px; margin-top: 15px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 17px;  font-size:small;">v2.8.5</span></div>
+        <div style="margin-left: 10px; display: flex; align-items: center;"><span style="font-size:small;">v2.8.5</span></div>
+        <div class="hamburger-menu">
+            &#9776; <!-- Hamburger Icon -->
+        </div>
     </div>
     <% if (context.authenticated) { %>
     <ul class="user-options">

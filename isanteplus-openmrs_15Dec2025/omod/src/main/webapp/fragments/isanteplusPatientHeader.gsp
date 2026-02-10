@@ -12,6 +12,24 @@
 <script type="text/javascript">
     var addMessage = "${ ui.message("coreapps.patient.identifier.add") }";
     jq(document).ready(function () {
+        jq(window).scroll(function() {
+            var scroll = jq(window).scrollTop();
+            var headerElement = jq(".patient-header");
+            if (headerElement.length) {
+                var headerBottom = headerElement.offset().top + headerElement.outerHeight();
+                if (scroll > headerBottom) {
+                    var stickyHeader = jq("#sticky-patient-header");
+                    if (!stickyHeader.is(":visible")) {
+                        var mainHeaderHeight = jq("header.isante-header").outerHeight() || 0;
+                        stickyHeader.css("top", mainHeaderHeight + "px");
+                        stickyHeader.fadeIn(200);
+                    }
+                } else {
+                    jq("#sticky-patient-header").fadeOut(200);
+                }
+            }
+        });
+
         createEditPatientIdentifierDialog(${patient.id});
         jq("#patientIdentifierValue").keyup(function(event){
             var oldValue = jq("#patientIdentifierValue").val();
@@ -73,13 +91,199 @@
 </script>
 
 <style type="text/css">
-#container
-{
-    font-size: small;
-}
+    #container {
+        font-family: "OpenSans", Arial, sans-serif;
+        color: #363463;
+        font-size: small;
+    }
+
+    .sticky-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 9999;
+        padding: 10px 20px;
+        display: none;
+        box-sizing: border-box;
+    }
+
+    .patient-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        margin-bottom: 10px;
+    }
+
+    .demographics {
+        flex: 2;
+        min-width: 300px;
+        margin-right: 20px;
+    }
+
+    .demographics .name {
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #00463f;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+    }
+    
+    .demographics .name > span {
+        margin-right: 10px;
+    }
+
+    .demographics .gender-age {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.8em;
+        color: #555;
+        font-weight: normal;
+    }
+
+    .patient-data-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .patient-data-item {
+        font-size: 0.95em;
+        line-height: 1.5;
+        background: white;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .patient-data-item i {
+        font-weight: 600;
+        color: #566a8b;
+        font-style: normal;
+        display: block;
+        font-size: 0.85em;
+        margin-bottom: 2px;
+    }
+
+    .patient-data-item b {
+        color: #333;
+        font-weight: 500;
+    }
+
+    .identifiers {
+        flex: 1;
+        min-width: 200px;
+        background: #eef2f5;
+        padding: 15px;
+        border-radius: 4px;
+        border-right: 4px solid #566a8b;
+        height: fit-content;
+    }
+
+    .identifiers em {
+        display: block;
+        font-weight: bold;
+        color: #566a8b;
+        margin-bottom: 3px;
+        font-style: normal;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        letter-spacing: 0.5px;
+    }
+
+    .identifiers span {
+        display: block;
+        font-size: 1.1em;
+        margin-bottom: 12px;
+        font-family: "Courier New", monospace;
+        color: #333;
+        font-weight: 600;
+    }
+    
+    .identifiers .add-id {
+        margin-top: 5px;
+    }
+
+    .secondLineFragments {
+        width: 100%;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: flex-start;
+    }
+
+    @media (max-width: 768px) {
+        .patient-header {
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .demographics {
+            margin-right: 0;
+            margin-bottom: 20px;
+            min-width: 100%;
+        }
+        
+        .demographics .name {
+            font-size: 1.3em;
+        }
+
+        .patient-data-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        .identifiers {
+            width: 100%;
+            box-sizing: border-box;
+            border-left: none;
+            border-top: 4px solid #566a8b;
+        }
+
+        .secondLineFragments {
+            flex-direction: column;
+        }
+    }
 </style>
 
 <div id="container">
+    <div id="sticky-patient-header" class="sticky-header">
+        <div class="sticky-content">
+            <span class="sticky-name">
+                <% patientNames?.each { %>
+                <span>${ ui.encodeHtmlContent(it.value) }</span>
+                <% } %>
+            </span>
+            <span class="sticky-info">
+                ${ui.message("coreapps.gender." + ui.encodeHtml(patient.gender))} &bull;
+                <% if (patient.birthdate) { %>
+                    <% if (patient.age > 0) { %>
+                    ${ui.message("coreapps.ageYears", patient.age)}
+                    <% } else if (patient.ageInMonths > 0) { %>
+                    ${ui.message("coreapps.ageMonths", patient.ageInMonths)}
+                    <% } else { %>
+                    ${ui.message("coreapps.ageDays", patient.ageInDays)}
+                    <% } %>
+                <% } %>
+            </span>
+        </div>
+    </div>
+
     <div class="patient-header <% if (patient.patient.dead) { %>dead<% } %>">
 
         <% if (patient.patient.dead) { %>
@@ -138,54 +342,59 @@
                     ${ ui.includeFragment("coreapps", "patientdashboard/contactInfoInline", [ patient: config.patient, contextModel: appContextModel ]) }
                 </div>
             </h1>
-            <table width="100%" border="0">
-                <div id="arv">
-                    <tr>
-                        <td>
-                            <% if (config.patientRecordingDate != null) { %> <i> ${ ui.message("isanteplus.patientRecordingDate") } : </i> <b>${config.patientRecordingDate}</b> <% } %>
-                        </td>
-                        <td>
-                            <% if (config.artInitiationDate != null) { %> <i> ${ ui.message("isanteplus.artInitiationDate") } : </i> <b>${config.artInitiationDate}</b> <% } %>
+            <div class="patient-data-grid">
+                <% if (config.patientRecordingDate != null) { %>
+                <div class="patient-data-item">
+                    <i>${ ui.message("isanteplus.patientRecordingDate") }</i>
+                    <b>${config.patientRecordingDate}</b>
+                </div>
+                <% } %>
 
-                        <% if (config.artInitiationDate == null) { %>
-                        <% if (config.columnsArtInitiationDate != null ) { %>
+                <% if (config.artInitiationDate != null) { %>
+                <div class="patient-data-item">
+                    <i>${ ui.message("isanteplus.artInitiationDate") }</i>
+                    <b>${config.artInitiationDate}</b>
+                </div>
+                <% } %>
 
+                <% if (config.artInitiationDate == null) { %>
+                    <% if (config.columnsArtInitiationDate != null ) { %>
                         <% config.columnsvaluesart.each { %>
+                            <% config.columnsArtInitiationDate.each { colNam -> %>
+                            <div class="patient-data-item">
+                                <i>${ui.format(colNam)}</i>
+                                ${ui.format(it.columnValues[colNam])}
+                            </div>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                <% } %>
 
-                        <% config.columnsArtInitiationDate.each { colNam -> %>
-                            <i>${ui.format(colNam)} :</i> ${ui.format(it.columnValues[colNam])}
-                        <% } %>
-
-                        <% } %>
-                        <% } %>
-                        <% } %>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <% if (config.latestNextVisitDate != null) { %> <i> ${ ui.message("isanteplus.nextVisitDate") } : </i> <b>${config.latestNextVisitDate}</b> <% } %>
-                        </td>
-                        <td>
-                            <% if (config.latestNextDispensationDate != null) { %> <i> ${ ui.message("isanteplus.nextDispensationDate") } : </i> <b>${config.latestNextDispensationDate}</b>  <% } %>
-                        </td>
-                    </tr>
+                <% if (config.latestNextVisitDate != null) { %>
+                <div class="patient-data-item">
+                    <i>${ ui.message("isanteplus.nextVisitDate") }</i>
+                    <b>${config.latestNextVisitDate}</b>
                 </div>
-                <div>
-                    <tr>
-                        <% if (config.columns != null ) { %>
+                <% } %>
 
-                        <% config.columnsvalues.each { %>
+                <% if (config.latestNextDispensationDate != null) { %>
+                <div class="patient-data-item">
+                    <i>${ ui.message("isanteplus.nextDispensationDate") }</i>
+                    <b>${config.latestNextDispensationDate}</b>
+                </div>
+                <% } %>
 
+                <% if (config.columns != null ) { %>
+                    <% config.columnsvalues.each { %>
                         <% config.columns.each { colName -> %>
-                        <td>	<i>${ui.format(colName)} :</i> ${ui.format(it.columnValues[colName])}</td>
+                        <div class="patient-data-item">
+                            <i>${ui.format(colName)}</i>
+                            ${ui.format(it.columnValues[colName])}
+                        </div>
                         <% } %>
-
-                        <% } %>
-                        <% } %>
-                    </tr>
-                </div>
-            </table>
+                    <% } %>
+                <% } %>
+            </div>
         </div>
 
         <div class="identifiers">

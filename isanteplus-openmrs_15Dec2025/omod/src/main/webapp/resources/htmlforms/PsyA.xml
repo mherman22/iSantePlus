@@ -10,15 +10,15 @@
     </macros>
 
     <script>
-        (function () {
-        if (!document.querySelector('meta[name="viewport"]')) {
-        var meta = document.createElement('meta');
-        meta.name = "viewport";
-        meta.content = "width=device-width, initial-scale=1";
-        document.head.appendChild(meta);
-        }
-        })();
-    </script>
+		(function () {
+			if (!document.querySelector('meta[name="viewport"]')) {
+			var meta = document.createElement('meta');
+			meta.name = "viewport";
+			meta.content = "width=device-width, initial-scale=1";
+			document.head.appendChild(meta);
+			}
+		})();
+	</script>
 
     <style>
         .section {
@@ -86,12 +86,12 @@
         padding-top:5px;
         }
         #visiteTitle{
-        width: 100%;
-        text-align: left;
-        padding: 1rem;
-        background:#c1e5f1;
-        font-weight: bold;
-        }
+			width: 100%;
+			text-align: left;
+			padding: 1rem;
+			background:#c1e5f1;
+			font-weight: bold;
+		}
         #scroll{
         width: 99%;
         margin-right:1%;
@@ -155,760 +155,762 @@
         }
 
         @media (max-width: 800px) {
-        *, *::before, *::after {
-        box-sizing: border-box;
+            *, *::before, *::after {
+				box-sizing: border-box;
+			}
+
+            html, body {
+				overflow-x: hidden !important;
+				max-width: 100vw !important;
+			}
+
+            #conteneur {
+				overflow-x: hidden !important;
+			}
+
+            #conteneur td label {
+				white-space: normal !important;
+				word-wrap: break-word !important;
+				overflow-wrap: break-word !important;
+				max-width: 100%;
+			}
+
+            #conteneur table td {
+				white-space: normal !important;
+				word-wrap: break-word !important;
+				overflow-wrap: break-word !important;
+			}
+
+            #conteneur textarea,
+			#conteneur input[type="text"] {
+				max-width: 100% !important;
+				word-wrap: break-word !important;
+			}
+
+            .section td {
+				overflow-wrap: break-word !important;
+				word-break: break-word !important;
+			}
+
+            .sectionHeader {
+				white-space: normal !important;
+				word-wrap: break-word !important;
+			}
+
+            #conteneur label[for] {
+				display: inline-block !important;
+				white-space: normal !important;
+				vertical-align: middle;
+				max-width: calc(100% - 30px); /* Espace pour checkbox */
+			}
+
+            #conteneur .checkboxGroup {
+				display: flex !important;
+				align-items: flex-start !important;
+				gap: 6px;
+				flex-wrap: nowrap !important; /* IMPORTANT: ne pas wrap */
+			}
+
+            #conteneur .checkboxGroup input[type="checkbox"],
+			#conteneur .checkboxGroup input[type="radio"] {
+				flex-shrink: 0 !important;
+				margin-top: 2px; /* Alignement avec première ligne texte */
+			}
+
+            #conteneur .checkboxGroup label,
+			#conteneur td label {
+				flex: 1;
+				min-width: 0;
+				word-wrap: break-word !important;
+			}
+
+            #conteneur table {
+				width: 100%;
+				border-collapse: collapse;
+			}
+
+            #conteneur table tr {
+				display: block;
+				margin-bottom: 12px;
+				background: #fafafa;
+				border: 1px solid #ddd;
+				border-radius: 6px;
+				padding: 8px;
+			}
+            #conteneur table td {
+				display: block;
+				width: 100%;
+				padding: 6px 0;
+				border: none !important;
+			}
+
+			#conteneur td[width],
+			#conteneur td[width="50%"] {
+				width: 100% !important;
+			}
+
+			#conteneur input:not([type="radio"]):not([type="checkbox"]),
+			#conteneur select,
+			#conteneur textarea {
+				width: 100%;
+				max-width: 100%;
+				margin: 4px 0;
+			}
+
+			#conteneur label,
+			#conteneur .checkboxGroup {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				white-space: normal;
+			}
+
+			#conteneur input[type="radio"],
+			#conteneur input[type="checkbox"] {
+				flex-shrink: 0;
+				margin: 0;
+			}
+
+			#conteneur label span {
+				white-space: normal;
+			}
+
+			#conteneur td input[type="radio"],
+			#conteneur td input[type="checkbox"] {
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0 4px 0 0;
+			}
+
+			#conteneur td label {
+				display: inline;
+				vertical-align: middle;
+				margin-right: 12px;
+				white-space: nowrap;
+				text-wrap: auto;
+			}
+
+			#conteneur td {
+				word-break: normal;
+				overflow-wrap: normal;
+			}
+
+			#conteneur td > br {
+				display: block;
+				margin-bottom: 6px;
+			}
+
+            .section > .sectionHeader {
+				display: block;
+			}
+
+            .section > .sectionHeader + table {
+				width: 100%;
+			}
+
+            /* Supprimer les en-têtes desktop */
+			.section > .sectionHeader + table tr:first-child,
+			.section > .sectionHeader + table tr:nth-child(2) {
+				display: none;
+			}
+
+            .section > .sectionHeader + table,
+			.section > .sectionHeader + table tbody {
+				display: block;
+				width: 100%;
+			}
+
+            .section > .sectionHeader + table tr {
+				display: block;
+				margin-bottom: 16px;
+				padding: 12px;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				background: #fafafa;
+			}
+
+            .section > .sectionHeader + table td {
+				display: block;
+				width: 100% !important;
+				border: none !important;
+				padding: 6px 0;
+			}
+
+			.section input[type="text"] {
+				width: 100% !important;
+				max-width: 100%;
+			}
+
+            .obs-field {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				flex-wrap: wrap;
+			}
+
+            .section > .sectionHeader + table tr td:nth-child(n+4) {
+				display: inline-flex;
+				width: 48%;
+				align-items: center;
+				justify-content: flex-start;
+				gap: 6px;
+				margin-bottom: 6px;
+			}
+
+            .section input[type="checkbox"] {
+				margin: 0;
+				flex-shrink: 0;
+			}
+
+            .section > .sectionHeader + table tr td:first-child label {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+            .section table:last-of-type,
+			.section table:last-of-type tr,
+			.section table:last-of-type td {
+				display: block;
+				width: 100%;
+				border: none;
+			}
+
+            #div2 > table:first-of-type th {
+                display: none !important; /* cache l'entête */
+            }
+
+            /* === 2️⃣ Les cellules deviennent verticales === */
+            #div2  table td {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 18px;
+            }
+
+            /* === 3️⃣ Titres mobiles injectés === */
+            #div2 > table:first-of-type td:nth-child(1)::before {
+                content: "Religion";
+            }
+
+            #div2 > table:first-of-type td:nth-child(2)::before {
+                content: "Conditions de vie matrimoniale";
+            }
+
+            #div2 > table:first-of-type td:nth-child(3)::before {
+                content: "Niveau d’étude";
+            }
+
+            #div2 > table:first-of-type td:nth-child(4)::before {
+                content: "Soutien social";
+            }
+
+            #div2 > table:first-of-type td::before {
+                display: block;
+                font-weight: bold;
+                font-size: 1.05em;
+                margin-bottom: 6px;
+                padding-bottom: 4px;
+                border-bottom: 2px solid #333;
+            }
+
+             /*  Cibler la 2e table directe de #div2 */
+            #div2 > table:nth-of-type(2) {
+                width: 100%;
+            }
+
+            /*MASQUER L’ENTÊTE (1er tbody uniquement) */
+            #div2 > table:nth-of-type(2) > tbody:first-of-type {
+                display: none !important;
+            }
+
+            /* Transformer le tbody de contenu */
+            #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 24px;
+            }
+
+            /* Injecter titres mobiles */
+            #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(1)::before {
+                content: "Plaintes de nature socio-économiques";
+            }
+
+            #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(2)::before {
+                content: "Logement";
+            }
+
+            /* Style titres injectés */
+            #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td::before {
+                display: block;
+                font-weight: bold;
+                font-size: 1.05em;
+                margin-bottom: 8px;
+                padding-bottom: 4px;
+                border-bottom: 2px solid #333;
+            }
+
+            /* Sécuriser formulaires */
+            #div2 > table:nth-of-type(2) input[type="checkbox"],
+            #div2 > table:nth-of-type(2) input[type="radio"] {
+                margin-right: 6px;
+            }
+
+            #div2 > table:nth-of-type(2) label {
+                white-space: normal !important;
+            }
+
+            #div2 > table:nth-of-type(2) input[type="text"] {
+                width: 100% !important;
+                margin-top: 6px;
+            }
+
+            #div1, #div2, #div3 , #div4 , #div5 , #div6 , #div7 , #div8 {
+				height: 460px;
+				overflow-y: scroll;
+			}
+
+            .toggle-button.mobile-sticky {
+				position: sticky;
+				top: 0;
+				z-index: 999 !important;
+				<!-- background: inherit !important; -->
+			}
+
+            #dateVisite{
+				margin-bottom: 5% !important;
+			}
+
+            #visiteTitle{
+				width: 100%;
+				text-align: center;
+				padding: 1rem;
+				<!-- background:#81BEF7; -->
+				font-weight: bold;
+			}
+
         }
 
-        html, body {
-        overflow-x: hidden !important;
-        max-width: 100vw !important;
-        }
-
-        #conteneur {
-        overflow-x: hidden !important;
-        }
-
-        #conteneur td label {
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        max-width: 100%;
-        }
-
-        #conteneur table td {
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        }
-
-        #conteneur textarea,
-        #conteneur input[type="text"] {
-        max-width: 100% !important;
-        word-wrap: break-word !important;
-        }
-
-        .section td {
-        overflow-wrap: break-word !important;
-        word-break: break-word !important;
-        }
-
-        .sectionHeader {
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        }
-
-        #conteneur label[for] {
-        display: inline-block !important;
-        white-space: normal !important;
-        vertical-align: middle;
-        max-width: calc(100% - 30px); /* Espace pour checkbox */
-        }
-
-        #conteneur .checkboxGroup {
-        display: flex !important;
-        align-items: flex-start !important;
-        gap: 6px;
-        flex-wrap: nowrap !important; /* IMPORTANT: ne pas wrap */
-        }
-
-        #conteneur .checkboxGroup input[type="checkbox"],
-        #conteneur .checkboxGroup input[type="radio"] {
-        flex-shrink: 0 !important;
-        margin-top: 2px; /* Alignement avec première ligne texte */
-        }
-
-        #conteneur .checkboxGroup label,
-        #conteneur td label {
-        flex: 1;
-        min-width: 0;
-        word-wrap: break-word !important;
-        }
-
-        #conteneur table {
-        width: 100%;
-        border-collapse: collapse;
-        }
-
-        #conteneur table tr {
-        display: block;
-        margin-bottom: 12px;
-        background: #fafafa;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        padding: 8px;
-        }
-        #conteneur table td {
-        display: block;
-        width: 100%;
-        padding: 6px 0;
-        border: none !important;
-        }
-
-        #conteneur td[width],
-        #conteneur td[width="50%"] {
-        width: 100% !important;
-        }
-
-        #conteneur input:not([type="radio"]):not([type="checkbox"]),
-        #conteneur select,
-        #conteneur textarea {
-        width: 100%;
-        max-width: 100%;
-        margin: 4px 0;
-        }
-
-        #conteneur label,
-        #conteneur .checkboxGroup {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: normal;
-        }
-
-        #conteneur input[type="radio"],
-        #conteneur input[type="checkbox"] {
-        flex-shrink: 0;
-        margin: 0;
-        }
-
-        #conteneur label span {
-        white-space: normal;
-        }
-
-        #conteneur td input[type="radio"],
-        #conteneur td input[type="checkbox"] {
-        display: inline-block;
-        vertical-align: middle;
-        margin: 0 4px 0 0;
-        }
-
-        #conteneur td label {
-        display: inline;
-        vertical-align: middle;
-        margin-right: 12px;
-        white-space: nowrap;
-        text-wrap: auto;
-        }
-
-        #conteneur td {
-        word-break: normal;
-        overflow-wrap: normal;
-        }
-
-        #conteneur td > br {
-        display: block;
-        margin-bottom: 6px;
-        }
-
-        .section > .sectionHeader {
-        display: block;
-        }
-
-        .section > .sectionHeader + table {
-        width: 100%;
-        }
-
-        /* Supprimer les en-têtes desktop */
-        .section > .sectionHeader + table tr:first-child,
-        .section > .sectionHeader + table tr:nth-child(2) {
-        display: none;
-        }
-
-        .section > .sectionHeader + table,
-        .section > .sectionHeader + table tbody {
-        display: block;
-        width: 100%;
-        }
-
-        .section > .sectionHeader + table tr {
-        display: block;
-        margin-bottom: 16px;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background: #fafafa;
-        }
-
-        .section > .sectionHeader + table td {
-        display: block;
-        width: 100% !important;
-        border: none !important;
-        padding: 6px 0;
-        }
-
-        .section input[type="text"] {
-        width: 100% !important;
-        max-width: 100%;
-        }
-
-        .obs-field {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        flex-wrap: wrap;
-        }
-
-        .section > .sectionHeader + table tr td:nth-child(n+4) {
-        display: inline-flex;
-        width: 48%;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 6px;
-        margin-bottom: 6px;
-        }
-
-        .section input[type="checkbox"] {
-        margin: 0;
-        flex-shrink: 0;
-        }
-
-        .section > .sectionHeader + table tr td:first-child label {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        }
-
-        .section table:last-of-type,
-        .section table:last-of-type tr,
-        .section table:last-of-type td {
-        display: block;
-        width: 100%;
-        border: none;
-        }
-
-        #div2 > table:first-of-type th {
-        display: none !important; /* cache l'entête */
-        }
-
-        /* === 2️⃣ Les cellules deviennent verticales === */
-        #div2  table td {
-        display: block !important;
-        width: 100% !important;
-        margin-bottom: 18px;
-        }
-
-        /* === 3️⃣ Titres mobiles injectés === */
-        #div2 > table:first-of-type td:nth-child(1)::before {
-        content: "Religion";
-        }
-
-        #div2 > table:first-of-type td:nth-child(2)::before {
-        content: "Conditions de vie matrimoniale";
-        }
-
-        #div2 > table:first-of-type td:nth-child(3)::before {
-        content: "Niveau d’étude";
-        }
-
-        #div2 > table:first-of-type td:nth-child(4)::before {
-        content: "Soutien social";
-        }
-
-        #div2 > table:first-of-type td::before {
-        display: block;
-        font-weight: bold;
-        font-size: 1.05em;
-        margin-bottom: 6px;
-        padding-bottom: 4px;
-        border-bottom: 2px solid #333;
-        }
-
-        /*  Cibler la 2e table directe de #div2 */
-        #div2 > table:nth-of-type(2) {
-        width: 100%;
-        }
-
-        /*MASQUER L’ENTÊTE (1er tbody uniquement) */
-        #div2 > table:nth-of-type(2) > tbody:first-of-type {
-        display: none !important;
-        }
-
-        /* Transformer le tbody de contenu */
-        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td {
-        display: block !important;
-        width: 100% !important;
-        margin-bottom: 24px;
-        }
-
-        /* Injecter titres mobiles */
-        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(1)::before {
-        content: "Plaintes de nature socio-économiques";
-        }
-
-        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(2)::before {
-        content: "Logement";
-        }
-
-        /* Style titres injectés */
-        #div2 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td::before {
-        display: block;
-        font-weight: bold;
-        font-size: 1.05em;
-        margin-bottom: 8px;
-        padding-bottom: 4px;
-        border-bottom: 2px solid #333;
-        }
-
-        /* Sécuriser formulaires */
-        #div2 > table:nth-of-type(2) input[type="checkbox"],
-        #div2 > table:nth-of-type(2) input[type="radio"] {
-        margin-right: 6px;
-        }
-
-        #div2 > table:nth-of-type(2) label {
-        white-space: normal !important;
-        }
-
-        #div2 > table:nth-of-type(2) input[type="text"] {
-        width: 100% !important;
-        margin-top: 6px;
-        }
-
-        #div1, #div2, #div3 , #div4 , #div5 , #div6 , #div7 , #div8 {
-        height: 460px;
-        overflow-y: scroll;
-        }
-
-        .toggle-button.mobile-sticky {
-        position: sticky;
-        top: 0;
-        z-index: 999 !important;
-        <!-- background: inherit !important; -->
-        }
-
-        #dateVisite{
-        margin-bottom: 5% !important;
-        }
-
-        #visiteTitle{
-        width: 100%;
-        text-align: center;
-        padding: 1rem;
-        background:#81BEF7;
-        font-weight: bold;
-        }
-
-        }
-
-        /* ========== STYLES COMMUNS ========== */
+/* ========== STYLES COMMUNS ========== */
         .family-section {
-        width: 100%;
+            width: 100%;
         }
-
+        
         .family-section table {
-        width: 100%;
-        border-collapse: collapse;
+            width: 100%;
+            border-collapse: collapse;
         }
-
+        
         .family-section th {
-        background-color: #2c3e50;
-        color: white;
-        font-size: 12px;
-        padding: 10px 8px;
-        text-align: left;
+            background-color: #2c3e50;
+            color: white;
+            font-size: 12px;
+            padding: 10px 8px;
+            text-align: left;
         }
-
+        
         .family-section td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        vertical-align: top;
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: top;
         }
-
+        
         .family-section input[type="text"],
         .family-section select {
-        width: 100%;
-        padding: 6px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
-
+        
         /* Bouton Ajouter */
-        .btn-add-member {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-        margin: 10px 0;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
+        #btnAddMember {
+            background-color: #28a745 !important;
+            color: white !important;
+            border: none !important;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn-add-member:hover {
-        background-color: #218838;
+        #btnAddMember:hover {
+            background-color: #218838 !important;
         }
 
+        #btnAddMember:disabled,
         .btn-add-member:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
+            background-color: #ccc !important;  /* GRIS */
+            color: #666 !important;
+            cursor: not-allowed !important;
         }
-
+        
         /* Bouton Supprimer */
         .btn-remove-member {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 3px;
-        cursor: pointer;
-        font-size: 12px;
+            background-color: #dc3545 !important;
+            color: white !important;
+            border: none !important;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
         }
 
         .btn-remove-member:hover {
-        background-color: #c82333;
+            background-color: #c82333 !important;
         }
-
+        
         /* Ligne cachée par défaut - IMPORTANT */
         .family-row {
-        display: none !important;
+            display: none !important;
         }
-
+        
         /* Ligne visible sur Desktop */
         .family-row.visible {
-        display: table-row !important;
+            display: table-row !important;
         }
-
+        
         /* Labels cachés sur desktop */
         .mobile-label {
-        display: none;
-        font-weight: bold;
-        font-size: 12px;
-        color: #555;
-        margin-bottom: 5px;
+            display: none;
+            font-weight: bold;
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 5px;
         }
-
+        
         /* Compteur */
         .member-counter {
-        font-size: 14px;
-        color: #666;
-        margin-left: 15px;
+            font-size: 14px;
+            color: #666;
+            margin-left: 15px;
         }
-
+        
         /* Header mobile caché sur desktop */
         .row-header-cell {
-        display: none;
+            display: none;
         }
-
+        
         /* ========== VERSION MOBILE ========== */
         @media screen and (max-width: 768px) {
-        .family-section thead {
-        display: none;
+            .family-section thead {
+                display: none;
+            }
+            
+            .family-section table,
+            .family-section tbody {
+                display: block;
+                width: 100%;
+            }
+            
+            /* IMPORTANT: Garder caché par défaut sur mobile aussi */
+            .family-section .family-row {
+                display: none !important;
+                border: 2px solid #2c3e50;
+                border-radius: 10px;
+                margin-bottom: 15px;
+                padding: 15px;
+                background-color: #f8f9fa;
+            }
+            
+            /* Visible sur mobile = flex */
+            .family-section .family-row.visible {
+                display: flex !important;
+                flex-direction: column;
+            }
+            
+            .family-section td {
+                display: block;
+                border: none;
+                padding: 8px 0;
+            }
+            
+            .mobile-label {
+                display: block;
+            }
+            
+            /* Header de la carte mobile */
+            .family-row.visible .row-header-cell {
+                display: block;
+            }
+            
+            .row-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid #2c3e50;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .member-title {
+                font-weight: bold;
+                font-size: 16px;
+                color: #2c3e50;
+            }
+            
+            /* Cacher la colonne action sur mobile (bouton dans le header) */
+            .family-row td.action-cell {
+                display: none;
+            }
+            
+            .btn-add-member {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
-        .family-section table,
-        .family-section tbody {
-        display: block;
-        width: 100%;
-        }
-
-        /* IMPORTANT: Garder caché par défaut sur mobile aussi */
-        .family-section .family-row {
-        display: none !important;
-        border: 2px solid #2c3e50;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        padding: 15px;
-        background-color: #f8f9fa;
-        }
-
-        /* Visible sur mobile = flex */
-        .family-section .family-row.visible {
-        display: flex !important;
-        flex-direction: column;
-        }
-
-        .family-section td {
-        display: block;
-        border: none;
-        padding: 8px 0;
-        }
-
-        .mobile-label {
-        display: block;
-        }
-
-        /* Header de la carte mobile */
-        .family-row.visible .row-header-cell {
-        display: block;
-        }
-
-        .row-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #2c3e50;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        }
-
-        .member-title {
-        font-weight: bold;
-        font-size: 16px;
-        color: #2c3e50;
-        }
-
-        /* Cacher la colonne action sur mobile (bouton dans le header) */
-        .family-row td.action-cell {
-        display: none;
-        }
-
-        .btn-add-member {
-        width: 100%;
-        justify-content: center;
-        }
-        }
-
-        /* ========== STYLES POUR SECTION COMPORTEMENT SEXUEL ========== */
-
+         /* ========== STYLES POUR SECTION COMPORTEMENT SEXUEL ========== */
+        
         #section-comportement-sexuel {
-        padding: 10px;
+            padding: 10px;
         }
-
+        
         /* Sous-titres en gras */
         #section-comportement-sexuel b {
-        display: block;
-        margin-top: 20px;
-        margin-bottom: 10px;
-        padding: 8px;
-        background-color: #2c3e50;
-        color: white;
-        border-radius: 3px;
-        font-size: 14px;
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 3px;
+            font-size: 14px;
         }
-
+        
         /* Checkboxes et radios */
         #section-comportement-sexuel input[type="checkbox"],
         #section-comportement-sexuel input[type="radio"] {
-        margin-right: 5px;
-        vertical-align: middle;
+            margin-right: 5px;
+            vertical-align: middle;
         }
-
+        
         #section-comportement-sexuel label {
-        margin-right: 15px;
-        vertical-align: middle;
+            margin-right: 15px;
+            vertical-align: middle;
         }
-
+        
         /* Champ texte "Préciser" */
         #section-comportement-sexuel input[type="text"] {
-        padding: 6px 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        min-width: 200px;
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 200px;
         }
-
+        
         /* Espacement des lignes */
         #section-comportement-sexuel br + br {
-        display: none;
+            display: none;
         }
-
+        
         /* ========== VERSION MOBILE ========== */
         @media screen and (max-width: 768px) {
-        #section-comportement-sexuel {
-        padding: 5px;
-        }
-
-        /* Forcer retour à la ligne après chaque label */
-        #section-comportement-sexuel label {
-        display: inline-block;
-        margin-bottom: 8px;
-        }
-
-        /* Sous-titres */
-        #section-comportement-sexuel b {
-        font-size: 12px;
-        padding: 6px;
-        }
-
-        /* Champ texte pleine largeur */
-        #section-comportement-sexuel input[type="text"] {
-        width: 100%;
-        min-width: unset;
-        margin-top: 5px;
-        box-sizing: border-box;
-        }
-
-        /* Meilleur espacement vertical */
-        #section-comportement-sexuel br {
-        display: block;
-        content: "";
-        margin-top: 5px;
-        }
+            #section-comportement-sexuel {
+                padding: 5px;
+            }
+            
+            /* Forcer retour à la ligne après chaque label */
+            #section-comportement-sexuel label {
+                display: inline-block;
+                margin-bottom: 8px;
+            }
+            
+            /* Sous-titres */
+            #section-comportement-sexuel b {
+                font-size: 12px;
+                padding: 6px;
+            }
+            
+            /* Champ texte pleine largeur */
+            #section-comportement-sexuel input[type="text"] {
+                width: 100%;
+                min-width: unset;
+                margin-top: 5px;
+                box-sizing: border-box;
+            }
+            
+            /* Meilleur espacement vertical */
+            #section-comportement-sexuel br {
+                display: block;
+                content: "";
+                margin-top: 5px;
+            }
         }
 
         /* ========== STYLES DESKTOP ========== */
         #section-eval-psy {
-        padding: 10px;
+            padding: 10px;
         }
-
+        
         #section-eval-psy .main-grid {
-        display: table;
-        width: 100%;
-        border-collapse: collapse;
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
         }
-
+        
         #section-eval-psy .main-row {
-        display: table-row;
+            display: table-row;
         }
-
+        
         #section-eval-psy .main-cell {
-        display: table-cell;
-        vertical-align: top;
-        padding: 5px;
-        width: 33.33%;
+            display: table-cell;
+            vertical-align: top;
+            padding: 5px;
+            width: 33.33%;
         }
-
+        
         #section-eval-psy .symptom-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 15px;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
         }
-
+        
         #section-eval-psy .symptom-table thead th {
-        background-color: #2c3e50;
-        color: white;
-        padding: 8px;
-        font-size: 12px;
-        text-align: left;
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px;
+            font-size: 12px;
+            text-align: left;
         }
-
+        
         #section-eval-psy .symptom-table tbody td {
-        padding: 6px;
-        border-bottom: 1px solid #eee;
-        vertical-align: middle;
+            padding: 6px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
         }
-
+        
         #section-eval-psy .symptom-table input[type="checkbox"] {
-        margin-left: 5px;
-        vertical-align: middle;
+            margin-left: 5px;
+            vertical-align: middle;
         }
-
+        
         #section-eval-psy .symptom-table label {
-        vertical-align: middle;
-        font-size: 13px;
+            vertical-align: middle;
+            font-size: 13px;
         }
-
+        
         #section-eval-psy .symptom-table input[type="text"] {
-        width: 100%;
-        padding: 4px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-sizing: border-box;
-        font-size: 12px;
+            width: 100%;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 12px;
         }
-
+        
         /* Accordéon header - caché sur desktop */
         #section-eval-psy .accordion-header {
-        display: none;
+            display: none;
         }
-
+        
         /* ========== VERSION MOBILE ========== */
         @media screen and (max-width: 992px) {
-        #section-eval-psy .main-grid,
-        #section-eval-psy .main-row,
-        #section-eval-psy .main-cell {
-        display: block;
-        width: 100%;
-        }
-
-        #section-eval-psy .main-cell {
-        margin-bottom: 10px;
-        padding: 0;
-        }
-
-        /* Cacher le thead sur mobile */
-        #section-eval-psy .symptom-table thead {
-        display: none;
-        }
-
-        /* Accordéon header visible sur mobile */
-        #section-eval-psy .accordion-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #2c3e50;
-        color: white;
-        padding: 12px 15px;
-        font-size: 14px;
-        font-weight: bold;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-bottom: 0;
-        }
-
-        #section-eval-psy .accordion-header:hover {
-        background-color: #34495e;
-        }
-
-        #section-eval-psy .accordion-header .accordion-icon {
-        font-size: 18px;
-        transition: transform 0.3s ease;
-        }
-
-        #section-eval-psy .accordion-header.active .accordion-icon {
-        transform: rotate(180deg);
-        }
-
-        /* Contenu accordéon */
-        #section-eval-psy .accordion-content {
-        display: none;
-        border: 2px solid #2c3e50;
-        border-top: none;
-        border-radius: 0 0 8px 8px;
-        padding: 10px;
-        background-color: #f9f9f9;
-        margin-bottom: 10px;
-        }
-
-        #section-eval-psy .accordion-content.active {
-        display: block;
-        }
-
-        #section-eval-psy .symptom-table {
-        margin-bottom: 0;
-        }
-
-        #section-eval-psy .symptom-table tbody tr {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px 0;
-        border-bottom: 1px solid #ddd;
-        }
-
-        #section-eval-psy .symptom-table tbody tr:last-child {
-        border-bottom: none;
-        }
-
-        #section-eval-psy .symptom-table tbody td {
-        display: block;
-        width: 100%;
-        padding: 4px 0;
-        border: none;
-        }
-
-        #section-eval-psy .symptom-table tbody td:first-child {
-        font-weight: normal;
-        }
-
-        #section-eval-psy .symptom-table tbody td:last-child {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        }
-
-        #section-eval-psy .symptom-table tbody td:last-child::before {
-        content: "Date:";
-        font-size: 12px;
-        color: #666;
-        min-width: 35px;
-        }
-
-        #section-eval-psy .symptom-table input[type="text"] {
-        flex: 1;
-        }
+            #section-eval-psy .main-grid,
+            #section-eval-psy .main-row,
+            #section-eval-psy .main-cell {
+                display: block;
+                width: 100%;
+            }
+            
+            #section-eval-psy .main-cell {
+                margin-bottom: 10px;
+                padding: 0;
+            }
+            
+            /* Cacher le thead sur mobile */
+            #section-eval-psy .symptom-table thead {
+                display: none;
+            }
+            
+            /* Accordéon header visible sur mobile */
+            #section-eval-psy .accordion-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #2c3e50;
+                color: white;
+                padding: 12px 15px;
+                font-size: 14px;
+                font-weight: bold;
+                border-radius: 8px;
+                cursor: pointer;
+                margin-bottom: 0;
+            }
+            
+            #section-eval-psy .accordion-header:hover {
+                background-color: #34495e;
+            }
+            
+            #section-eval-psy .accordion-header .accordion-icon {
+                font-size: 18px;
+                transition: transform 0.3s ease;
+            }
+            
+            #section-eval-psy .accordion-header.active .accordion-icon {
+                transform: rotate(180deg);
+            }
+            
+            /* Contenu accordéon */
+            #section-eval-psy .accordion-content {
+                display: none;
+                border: 2px solid #2c3e50;
+                border-top: none;
+                border-radius: 0 0 8px 8px;
+                padding: 10px;
+                background-color: #f9f9f9;
+                margin-bottom: 10px;
+            }
+            
+            #section-eval-psy .accordion-content.active {
+                display: block;
+            }
+            
+            #section-eval-psy .symptom-table {
+                margin-bottom: 0;
+            }
+            
+            #section-eval-psy .symptom-table tbody tr {
+                display: flex;
+                flex-wrap: wrap;
+                padding: 10px 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            #section-eval-psy .symptom-table tbody tr:last-child {
+                border-bottom: none;
+            }
+            
+            #section-eval-psy .symptom-table tbody td {
+                display: block;
+                width: 100%;
+                padding: 4px 0;
+                border: none;
+            }
+            
+            #section-eval-psy .symptom-table tbody td:first-child {
+                font-weight: normal;
+            }
+            
+            #section-eval-psy .symptom-table tbody td:last-child {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            #section-eval-psy .symptom-table tbody td:last-child::before {
+                content: "Date:";
+                font-size: 12px;
+                color: #666;
+                min-width: 35px;
+            }
+            
+            #section-eval-psy .symptom-table input[type="text"] {
+                flex: 1;
+            }
 
         }
 
@@ -935,40 +937,40 @@
     <script type="text/javascript">
         jQuery(function ($) {
 
-        $('.toggle-button').on('click', function (e) {
-        e.preventDefault();
+			$('.toggle-button').on('click', function (e) {
+				e.preventDefault();
 
-        var targetSelector = this.getAttribute('data-target');
-        var $target = $(targetSelector);
-        var $btn = $(this);
-        var isMobile = window.matchMedia('(max-width: 800px)').matches;
-        var isVisible = $target.is(':visible');
+				var targetSelector = this.getAttribute('data-target');
+				var $target = $(targetSelector);
+				var $btn = $(this);
+				var isMobile = window.matchMedia('(max-width: 800px)').matches;
+				var isVisible = $target.is(':visible');
 
-        $('.togglable').stop(true, true);
+				$('.togglable').stop(true, true);
 
-        $('.togglable').not(targetSelector).hide('slow');
+				$('.togglable').not(targetSelector).hide('slow');
 
-        $('.toggle-button').removeClass('mobile-sticky');
+				$('.toggle-button').removeClass('mobile-sticky');
 
-        if (isVisible) {
-        $target.hide('slow');
-        return;
-        }
+				if (isVisible) {
+					$target.hide('slow');
+					return;
+				}
 
-        $target.show('slow', function () {
+				$target.show('slow', function () {
 
-        if (isMobile) {
-        $btn.addClass('mobile-sticky');
+					if (isMobile) {
+						$btn.addClass('mobile-sticky');
 
-        $('html, body').animate({
-        scrollTop: $btn.offset().top
-        }, 250);
-        }
+						$('html, body').animate({
+							scrollTop: $btn.offset().top
+						}, 250);
+					}
 
-        });
-        });
+				});
+			});
 
-        });
+		});
     </script>
     <script type="text/javascript">
         jQuery(function() {
@@ -1043,148 +1045,181 @@
     <script type="text/javascript">
         var maxMembers = 10;
         var visibleRows = [];
-
+        var styleInterval;
+        
         // Attendre que tout soit chargé (y compris les scripts OpenMRS)
         jQuery(document).ready(function() {
-        // Petit délai pour laisser OpenMRS pré-remplir les champs
-        setTimeout(function() {
-        initFamilySection();
-        }, 500);
-        });
+            styleInterval = setInterval(function() {
+                forceGreenButton();
+            }, 100);
 
+            setTimeout(function() {
+                clearInterval(styleInterval);
+            }, 3000);
+            
+            // Petit délai pour laisser OpenMRS pré-remplir les champs
+            setTimeout(function() {
+                initFamilySection();
+            }, 500);
+        });
+        
         // Alternative: aussi écouter window.load
         jQuery(window).on('load', function() {
-        setTimeout(function() {
-        initFamilySection();
-        }, 300);
+            forceGreenButton();
+            setTimeout(function() {
+                initFamilySection();
+            }, 300);
         });
 
+        function forceGreenButton() {
+            var btn = jQuery('#btnAddMember');
+            var count = visibleRows.length;
+            
+            // Seulement si pas au maximum
+            if (count &lt; maxMembers) {
+                btn.prop('disabled', false);
+                btn.removeAttr('disabled');
+                btn.attr('style', 'background-color: #28a745 !important; color: white !important; border: none !important; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; margin: 10px 0;');
+            }
+        }
+
+        function forceRedButtons() {
+            jQuery('.btn-remove-member').each(function() {
+                jQuery(this).attr('style', 'background-color: #dc3545 !important; color: white !important; border: none !important; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;');
+            });
+        }
+        
         function initFamilySection() {
-        jQuery('.family-row').each(function() {
-        var row = jQuery(this);
-        var rowNum = parseInt(row.attr('data-row'));
-        var hasData = false;
-
-        // Vérifier les inputs text
-        row.find('input[type="text"]').each(function() {
-        var val = jQuery(this).val();
-        if (val &amp;&amp; val.trim() !== '') {
-        hasData = true;
-        return false; // Break la boucle
+            forceGreenButton();
+            forceRedButtons();
+            jQuery('.family-row').each(function() {
+                var row = jQuery(this);
+                var rowNum = parseInt(row.attr('data-row'));
+                var hasData = false;
+                
+                // Vérifier les inputs text
+                row.find('input[type="text"]').each(function() {
+                    var val = jQuery(this).val();
+                    if (val &amp;&amp; val.trim() !== '') {
+                        hasData = true;
+                        return false;
+                    }
+                });
+                
+                // Vérifier les selects
+                if (!hasData) {
+                    row.find('select').each(function() {
+                        var val = jQuery(this).val();
+                        if (val &amp;&amp; val !== '') {
+                            hasData = true;
+                            return false;
+                        }
+                    });
+                }
+                
+                // Vérifier aussi les inputs hidden
+                if (!hasData) {
+                    row.find('input[type="hidden"]').each(function() {
+                        var val = jQuery(this).val();
+                        var name = jQuery(this).attr('name');
+                        if (val &amp;&amp; val.trim() !== '' &amp;&amp; name &amp;&amp; !name.startsWith('_')) {
+                            hasData = true;
+                            return false;
+                        }
+                    });
+                }
+                
+                // Vérifier les checkboxes cochées
+                if (!hasData) {
+                    row.find('input[type="checkbox"]:checked').each(function() {
+                        hasData = true;
+                        return false;
+                    });
+                }
+                
+                if (hasData) {
+                    showRow(rowNum);
+                }
+            });
+            
+            updateCounter();
         }
-        });
-
-        // Vérifier les selects
-        if (!hasData) {
-        row.find('select').each(function() {
-        var val = jQuery(this).val();
-        if (val &amp;&amp; val !== '') {
-        hasData = true;
-        return false; // Break la boucle
-        }
-        });
-        }
-
-        // Vérifier aussi les inputs hidden (OpenMRS stocke parfois les valeurs là)
-        if (!hasData) {
-        row.find('input[type="hidden"]').each(function() {
-        var val = jQuery(this).val();
-        var name = jQuery(this).attr('name');
-        // Ignorer les hidden qui commencent par underscore (champs de contrôle)
-        if (val &amp;&amp; val.trim() !== '' &amp;&amp; name &amp;&amp; !name.startsWith('_')) {
-        hasData = true;
-        return false;
-        }
-        });
-        }
-
-        // Vérifier les checkboxes cochées
-        if (!hasData) {
-        row.find('input[type="checkbox"]:checked').each(function() {
-        hasData = true;
-        return false;
-        });
-        }
-
-        if (hasData) {
-        showRow(rowNum);
-        }
-        });
-
-        updateCounter();
-        }
-
+        
         function addFamilyMember() {
-        var added = false;
-        var i;
-
-        for (i = 1; i &lt;= maxMembers; i++) {
-        if (visibleRows.indexOf(i) === -1) {
-        showRow(i);
-        added = true;
-        break;
+            var added = false;
+            var i;
+            
+            for (i = 1; i &lt;= maxMembers; i++) {
+                if (visibleRows.indexOf(i) === -1) {
+                    showRow(i);
+                    added = true;
+                    break;
+                }
+            }
+            
+            if (!added) {
+                alert('Maximum de ' + maxMembers + ' membres atteint');
+            }
+            
+            updateCounter();
         }
-        }
-
-        if (!added) {
-        alert('Maximum de ' + maxMembers + ' membres atteint');
-        }
-
-        updateCounter();
-        }
-
+        
         function showRow(rowNum) {
-        var row = jQuery('.family-row[data-row="' + rowNum + '"]');
-        row.addClass('visible');
-
-        if (visibleRows.indexOf(rowNum) === -1) {
-        visibleRows.push(rowNum);
-        visibleRows.sort(function(a, b) { return a - b; });
+            var row = jQuery('.family-row[data-row="' + rowNum + '"]');
+            row.addClass('visible');
+            
+            if (visibleRows.indexOf(rowNum) === -1) {
+                visibleRows.push(rowNum);
+                visibleRows.sort(function(a, b) { return a - b; });
+            }
         }
-        }
-
+        
         function removeFamilyMember(rowNum) {
-        var row = jQuery('.family-row[data-row="' + rowNum + '"]');
-
-        // Vider les champs
-        row.find('input[type="text"]').val('');
-        row.find('select').prop('selectedIndex', 0);
-        row.find('input[type="hidden"]').not('[name^="_"]').val('');
-
-        // Cacher la ligne
-        row.removeClass('visible');
-
-        // Retirer du tableau
-        var index = visibleRows.indexOf(rowNum);
-        if (index &gt; -1) {
-        visibleRows.splice(index, 1);
+            var row = jQuery('.family-row[data-row="' + rowNum + '"]');
+            
+            // Vider les champs
+            row.find('input[type="text"]').val('');
+            row.find('select').prop('selectedIndex', 0);
+            row.find('input[type="hidden"]').not('[name^="_"]').val('');
+            
+            // Cacher la ligne
+            row.removeClass('visible');
+            
+            // Retirer du tableau
+            var index = visibleRows.indexOf(rowNum);
+            if (index &gt; -1) {
+                visibleRows.splice(index, 1);
+            }
+            
+            updateCounter();
         }
-
-        updateCounter();
-        }
-
+        
         function updateCounter() {
-        var count = visibleRows.length;
-        jQuery('#memberCounter').text('(' + count + '/' + maxMembers + ' membres)');
-
-        if (count &gt;= maxMembers) {
-        jQuery('#btnAddMember').prop('disabled', true);
-        } else {
-        jQuery('#btnAddMember').prop('disabled', false);
-        }
+            var count = visibleRows.length;
+            jQuery('#memberCounter').text('(' + count + '/' + maxMembers + ' membres)');
+            var btn = jQuery('#btnAddMember');
+            
+            if (count &gt;= maxMembers) {
+                btn.prop('disabled', true);
+                btn.attr('style', 'background-color: #ccc !important; color: #666 !important; border: none !important; padding: 10px 20px; border-radius: 5px; cursor: not-allowed; font-size: 14px; margin: 10px 0;');
+            } else {
+                btn.prop('disabled', false);
+                btn.removeAttr('disabled');
+                btn.attr('style', 'background-color: #28a745 !important; color: white !important; border: none !important; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; margin: 10px 0;');
+            }
         }
     </script>
 
-    <script type="text/javascript">
+     <script type="text/javascript">
         jQuery(document).ready(function() {
-        // Accordéon toggle
-        jQuery('#section-eval-psy .accordion-header').on('click', function() {
-        var header = jQuery(this);
-        var content = header.next('.accordion-content');
-
-        header.toggleClass('active');
-        content.toggleClass('active');
-        });
+            // Accordéon toggle
+            jQuery('#section-eval-psy .accordion-header').on('click', function() {
+                var header = jQuery(this);
+                var content = header.next('.accordion-content');
+                
+                header.toggleClass('active');
+                content.toggleClass('active');
+            });
         });
     </script>
 
@@ -1227,72 +1262,73 @@
                 <div id="div1" class="togglable" style="display: none;">
                     <section>
                         <!-- Attente new question concept replace 163145 -->
+                        <obsgroup groupingConceptId="163180">
 
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
                                                  answerLabel="Inscrit dans le programme de soins du VIH" />
                                             <br />
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:163469"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:163469"
                                                  answerLabel="Evaluation psychologique" />
                                             <br />
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:160198"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160198"
                                                  answerLabel="Problème psychologique" />
                                             <br />
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:134660"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:134660"
                                                  answerLabel="Problèmes familiaux" />
                                             <br />
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:126312"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:126312"
                                                  answerLabel="Discrimination sociale" />
                                             <br />
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159598"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159598"
                                                  answerLabel="Non-respect d'un traitement ou d'une thérapie" />
                                         </td>
                                         <td>
                                             <br /><!-- add -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="957dae3c-25e2-4f32-98df-198c343e2e20"
+                                            <obs conceptId="CIEL:163145" answerConceptId="9fb9a204-56d4-488c-9693-c067c53b593d"
                                                  answerLabel="Initiation thérapie psychologique" />
                                             <br /><!-- add -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="23199497-ba36-4007-a66c-dc65b1b46514"
+                                            <obs conceptId="CIEL:163145" answerConceptId="5079a471-61b4-4d0e-ad87-c08fc31162b2"
                                                  answerLabel="Suivi psychologique en cours" />
                                             <br /><!-- add -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="5a4d9e78-f3f6-403f-b4a6-c6a01c80fc77"
+                                            <obs conceptId="CIEL:163145" answerConceptId="3c9afedd-4287-4f32-ac76-41410a61d5e0"
                                                  answerLabel="Fermeture thérapie psychologique" />
                                             <br /><!-- add -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="d3e1034b-d07e-4bb2-8063-7f44b8f8d6f1"
+                                            <obs conceptId="CIEL:163145" answerConceptId="668726f0-8f36-4cb5-8a7d-7abee4275cbe"
                                                  answerLabel="Difficulté scolaire" />
                                             <br /><!-- add -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159423"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159423"
                                                  answerLabel="Dévoilement statut" /><br/>
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="b8d52a02-c38e-4a84-a89c-c3886197a406"
+                                            <obs conceptId="CIEL:163145" answerConceptId="e0520711-73e5-4490-ba34-9dc3d7e959c3"
                                                  answerLabel="Accompagnement psychosocial pour CV > 1000" />
                                         </td>
                                         <!-- Attente new question concept replace 159811 -->
                                         <td>
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="21a587c5-3319-4c03-96f5-8850a63d6f48"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
                                                  answerLabel="Activités Génératrice de Revenues (AGR)" />
                                             <br />
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="7730f5a4-e070-4ca5-af59-168a1ab27bfd"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
                                                  answerLabel="Déplacés internes" />
                                             <br/>
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="570ab9b2-ff0b-424e-af61-773f4defabb8"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
                                                  answerLabel="Dificultés par rapport au logement" />
                                             <br />
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="c620faf6-5136-4de6-b690-a58ddb90c85d"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
                                                  answerLabel="Rencontre suivi de groupe" />
                                             <br />
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="e52bc782-77f6-4ec3-94f8-a5a273771110"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
                                                  answerLabel="Rencontre suivi PIT" />
                                             <br />
 
                                             <!-- End -->
 
-                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:160523"
+                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160523"
                                                  answerLabel="Visite de suivi, régulier" />
                                             <br />
                                         </td>
@@ -1301,6 +1337,7 @@
 
                                 </tbody>
                             </table>
+                        </obsgroup>
                     </section>
                 </div>
             </div>
@@ -1566,90 +1603,85 @@
                 </a>
                 <div id="div3" class="togglable" style="display: none;">
                     <section headerLabel="ANTÉCÉDENTS PATHOLOGIQUES FAMILIAUX ET / OU PERSONNELS">
-                        <div class="family-section">
-                            <button type="button" class="btn-add-member" id="btnAddMember" onclick="addFamilyMember()">
-                                <span>+</span> Ajouter un membre de la famille
-                            </button>
-                            <span class="member-counter" id="memberCounter">(0/10 membres)</span>
-
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th style="width: 18%;">Nom du membre</th>
-                                        <th style="width: 8%;">Âge</th>
-                                        <th style="width: 18%;">Membre de la famille</th>
-                                        <th style="width: 12%;">Résultat VIH <sup>+</sup></th>
-                                        <th style="width: 14%;">Sous traitement</th>
-                                        <th style="width: 20%;">Code ST</th>
-                                        <th style="width: 10%;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="familyTableBody">
-                                    <repeat>
-                                        <template>
-                                            <obsgroup groupingConceptId="{concept_group}">
-                                                <tr class="family-row" data-row="{num}">
-                                                    <!-- Header Mobile (visible uniquement sur mobile) -->
-                                                    <td colspan="7" class="row-header-cell" style="display:none;">
-                                                        <div class="row-header">
-                                                            <span class="member-title">Membre #{num}</span>
-                                                            <button type="button" class="btn-remove-member" onclick="removeFamilyMember({num})">
-                                                                ✕ Supprimer
-                                                            </button>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <span class="mobile-label">Nom du membre de la famille</span>
-                                                        <obs conceptId="{concept}" />
-                                                    </td>
-                                                    <td>
-                                                        <span class="mobile-label">Âge (années)</span>
-                                                        <obs conceptId="CIEL:160617" />
-                                                    </td>
-                                                    <td>
-                                                        <span class="mobile-label">Membre de la famille</span>
-                                                        <obs conceptId="CIEL:1560" />
-                                                    </td>
-                                                    <td>
-                                                        <span class="mobile-label">Résultat VIH +</span>
-                                                        <obs conceptId="CIEL:160592"
-                                                             answerConceptIds="CIEL:138405,CIEL:1107"
-                                                             answerLabels="Oui,Non" />
-                                                    </td>
-                                                    <td>
-                                                        <span class="mobile-label">Sous traitement</span>
-                                                        <obs conceptId="CIEL:160749"
-                                                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                                                             answerLabels="Oui,Non,Inconnu" />
-                                                    </td>
-                                                    <td>
-                                                        <span class="mobile-label">Code ST du membre</span>
-                                                        <obs conceptId="CIEL:160752" />
-                                                    </td>
-                                                    <td class="action-cell">
-                                                        <button type="button" class="btn-remove-member" onclick="removeFamilyMember({num})">
-                                                            ✕
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </obsgroup>
-                                        </template>
-
-                                        <render concept="CIEL:160750" num="1" concept_group="1bdf65c8-36ec-4136-a6c9-4f9f12229352" />
-                                        <render concept="CIEL:160750" num="2" concept_group="c4c62e6e-d42a-4547-81ad-51d628d21780" />
-                                        <render concept="CIEL:160750" num="3" concept_group="f251619e-216b-4bb6-9958-e13f394ae624" />
-                                        <render concept="CIEL:160750" num="4" concept_group="b7edfe16-db8e-436c-9cd5-52104e4da2b3" />
-                                        <render concept="CIEL:160750" num="5" concept_group="52ebfb85-1cf4-4781-8284-7d2684125dd7" />
-                                        <render concept="CIEL:160750" num="6" concept_group="ae57f93c-75a6-4f2b-a3f9-e7932814f1ea" />
-                                        <render concept="CIEL:160750" num="7" concept_group="38fac7ce-1f10-4f91-acea-ed1b7e2e5f03" />
-                                        <render concept="CIEL:160750" num="8" concept_group="abf1a12c-96fc-4067-83bf-0bc799e1bc4e" />
-                                        <render concept="CIEL:160750" num="9" concept_group="f741b700-11b7-4266-b088-b3b3e0f66951" />
-                                        <render concept="CIEL:160750" num="10" concept_group="7cf65c5c-f50d-4a36-aa59-8f1f67df3731" />
-                                    </repeat>
-                                </tbody>
-                            </table>
-                        </div>
+                                                <div class="family-section">
+                                <input type="button" class="btn-add-member" id="btnAddMember" 
+                                    style="background-color: #28a745 !important; color: white !important;" onclick="addFamilyMember()" value="+ Ajouter un membre de la famille" />
+                                <span class="member-counter" id="memberCounter">(0/10 membres)</span>
+                                
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 18%;">Nom du membre</th>
+                                            <th style="width: 8%;">Âge</th>
+                                            <th style="width: 18%;">Membre de la famille</th>
+                                            <th style="width: 12%;">Résultat VIH <sup>+</sup></th>
+                                            <th style="width: 14%;">Sous traitement</th>
+                                            <th style="width: 20%;">Code ST</th>
+                                            <th style="width: 10%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="familyTableBody">
+                                        <repeat>
+                                            <template>
+                                                <obsgroup groupingConceptId="{concept_group}">
+                                                    <tr class="family-row" data-row="{num}">
+                                                        <!-- Header Mobile (visible uniquement sur mobile) -->
+                                                        <td colspan="7" class="row-header-cell" style="display:none;">
+                                                            <div class="row-header">
+                                                                <span class="member-title">Membre #{num}</span>
+                                                                <input type="button" class="btn-remove-member" onclick="removeFamilyMember({num})" value="✕ Supprimer" />
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <span class="mobile-label">Nom du membre de la famille</span>
+                                                            <obs conceptId="{concept}" />
+                                                        </td>
+                                                        <td>
+                                                            <span class="mobile-label">Âge (années)</span>
+                                                            <obs conceptId="CIEL:160617" />
+                                                        </td>
+                                                        <td>
+                                                            <span class="mobile-label">Membre de la famille</span>
+                                                            <obs conceptId="CIEL:1560" />
+                                                        </td>
+                                                        <td>
+                                                            <span class="mobile-label">Résultat VIH +</span>
+                                                            <obs conceptId="CIEL:160592" 
+                                                                answerConceptIds="CIEL:138405,CIEL:1107"
+                                                                answerLabels="Oui,Non" />
+                                                        </td>
+                                                        <td>
+                                                            <span class="mobile-label">Sous traitement</span>
+                                                            <obs conceptId="CIEL:160749" 
+                                                                answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                                                answerLabels="Oui,Non,Inconnu" />
+                                                        </td>
+                                                        <td>
+                                                            <span class="mobile-label">Code ST du membre</span>
+                                                            <obs conceptId="CIEL:160752" />
+                                                        </td>
+                                                        <td class="action-cell">
+                                                            <input type="button" class="btn-remove-member" onclick="removeFamilyMember({num})" value="✕ Supprimer" />
+                                                        </td>
+                                                    </tr>
+                                                </obsgroup>
+                                            </template>
+                                            
+                                            <render concept="CIEL:160750" num="1" concept_group="1bdf65c8-36ec-4136-a6c9-4f9f12229352" />
+                                            <render concept="CIEL:160750" num="2" concept_group="c4c62e6e-d42a-4547-81ad-51d628d21780" />
+                                            <render concept="CIEL:160750" num="3" concept_group="f251619e-216b-4bb6-9958-e13f394ae624" />
+                                            <render concept="CIEL:160750" num="4" concept_group="b7edfe16-db8e-436c-9cd5-52104e4da2b3" />
+                                            <render concept="CIEL:160750" num="5" concept_group="52ebfb85-1cf4-4781-8284-7d2684125dd7" />
+                                            <render concept="CIEL:160750" num="6" concept_group="ae57f93c-75a6-4f2b-a3f9-e7932814f1ea" />
+                                            <render concept="CIEL:160750" num="7" concept_group="38fac7ce-1f10-4f91-acea-ed1b7e2e5f03" />
+                                            <render concept="CIEL:160750" num="8" concept_group="abf1a12c-96fc-4067-83bf-0bc799e1bc4e" />
+                                            <render concept="CIEL:160750" num="9" concept_group="f741b700-11b7-4266-b088-b3b3e0f66951" />
+                                            <render concept="CIEL:160750" num="10" concept_group="7cf65c5c-f50d-4a36-aa59-8f1f67df3731" />
+                                        </repeat>
+                                    </tbody>
+                                </table>
+                            </div>
                     </section>
                     <section headerLabel="COMMENTAIRE SUR LES ANTÉCÉDENTS FAMILIAUX">
                         <obsgroup groupingConceptId="160593">
@@ -2406,7 +2438,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2415,21 +2447,21 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Tristesse" id="tristesse"
-                                                            conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#D8D8D8" />
+                                                            conceptgroup="18cfea41-c788-4096-9652-5c6b53eb549b" color="#D8D8D8" />
                                                     <render concept="CIEL:163474" drugname="Perte d'intérêt"
-                                                            id="perte_intérêt" conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#FFFFFF" />
+                                                            id="perte_intérêt" conceptgroup="815c5227-1d07-41dc-b163-aa62a7970e58" color="#FFFFFF" />
                                                     <render concept="CIEL:140501" drugname="Fatigue" id="fatigue"
-                                                            conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#D8D8D8" />
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
                                                     <render concept="CIEL:163470" drugname="Désespoir"
-                                                            id="desespoir" conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#FFFFFF" />
+                                                            id="desespoir" conceptgroup="CIEL:140472" color="#FFFFFF" />
                                                     <render concept="CIEL:125562" drugname="Idées suicidaire ou tendance suicidaire"
-                                                            id="suicide" conceptgroup="b96f7c8d-263e-4754-ad1a-c908df9ed788" color="#D8D8D8" />
+                                                            id="suicide" conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
+                                
                                 <!-- Troubles anxieux -->
                                 <div class="main-cell">
                                     <div class="accordion-header">
@@ -2451,7 +2483,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2460,21 +2492,21 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Peur excessive " id="peur_exessive"
-                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#D8D8D8" />
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
                                                     <render concept="CIEL:118764" drugname="Appréhension"
-                                                            id="apprehension" conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#FFFFFF" />
+                                                            id="apprehension" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
                                                     <render concept="CIEL:6023" drugname="Irritabilité" id="irritabilite"
-                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#FFFFFF" />
-                                                    <render concept="CIEL:152330" drugname="Agitation" id="agitation"
-                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#FFFFFF" />
-                                                    <render concept="CIEL:112930" drugname="Troubles du sommeil" id="troubles_sommeil"
-                                                            conceptgroup="f1eea875-72a3-4f0a-b0c7-bd5e42f3b2eb" color="#D8D8D8" />
+                                                            conceptgroup="f954221c-3003-4960-b02c-89366ea4113e" color="#FFFFFF" />
+                                                    <render concept="CIEL:152330" drugname="Agitation" id="agitation" 
+                                                            conceptgroup="f954221c-3003-4960-b02c-89366ea4113e" color="#FFFFFF" />
+                                                    <render concept="CIEL:112930" drugname="Troubles du sommeil" id="troubles_sommeil" 
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
+                                
                                 <!-- Troubles de l'adaptation -->
                                 <div class="main-cell">
                                     <div class="accordion-header">
@@ -2496,7 +2528,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2505,22 +2537,22 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Détresse significative" id="detresse_significative"
-                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#D8D8D8" />
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
                                                     <render concept="CIEL:121543" drugname="Anxiété" id="anxiete"
-                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#D8D8D8" />
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
                                                     <render concept="CIEL:135595" drugname="Perte d'appétit"
-                                                            id="perte_appetit" conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#FFFFFF" />
+                                                            id="perte_appetit" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
                                                     <render concept="CIEL:163470" drugname="Pensées négatives" id="pensees_negatives"
-                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#FFFFFF" />
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
                                                     <render concept="CIEL:156280" drugname="Difficultés interpersonnelles / relationnelles" id="diffic_interpersonnelles "
-                                                            conceptgroup="74b3a436-7687-43db-ab4f-9090c52f76f2" color="#D8D8D8" />
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <!-- ========== LIGNE 2 ========== -->
                             <div class="main-row">
                                 <!-- Troubles Cognitifs / neuro-dégénératifs -->
@@ -2544,7 +2576,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2553,21 +2585,21 @@
                                                         </obsgroup>
                                                     </template>
                                                     <render concept="CIEL:163471" drugname="Problèmes de mémoire" id="problemes_memoire"
-                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#D8D8D8" />
+                                                            conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
                                                     <render concept="CIEL:112845" drugname="Difficultés de langage" id="difficult_langage"
-                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#FFFFFF" />
+                                                            conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
                                                     <render concept="CIEL:121543" drugname="Troubles de l'attention et de la concentration" id="trouble_attention_concentration"
-                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#D8D8D8" />
+                                                            conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
                                                     <render concept="CIEL:163470" drugname="Troubles du jugement" id="troubles_jugement"
-                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#FFFFFF" />
+                                                            conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
                                                     <render concept="CIEL:156280" drugname="Changements d'humeur et de comportement" id="changements_humeur_comportement"
-                                                            conceptgroup="effb0b32-efbb-4797-9e3c-6a48ae76098f" color="#D8D8D8" />
+                                                            conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
                                                 </repeat>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
+                                
                                 <!-- Etat de stress post-traumatique (ESPT) -->
                                 <div class="main-cell">
                                     <div class="accordion-header">
@@ -2589,7 +2621,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2612,7 +2644,7 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                
                                 <!-- Schizophrénie -->
                                 <div class="main-cell">
                                     <div class="accordion-header">
@@ -2634,7 +2666,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2658,7 +2690,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <!-- ========== LIGNE 3 ========== -->
                             <div class="main-row">
                                 <!-- Troubles du comportement -->
@@ -2682,7 +2714,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2705,7 +2737,7 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                
                                 <!-- Expertise psychométrique -->
                                 <div class="main-cell">
                                     <div class="accordion-header">
@@ -2727,7 +2759,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2750,7 +2782,7 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                
                                 <!-- Approche psychothérapeutique -->
                                 <div class="main-cell">
                                     <div class="accordion-header">
@@ -2772,7 +2804,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1728" answerConceptId="{concept}"
-                                                                         answerLabel="{drugname}" id="{id}" />
+                                                                        answerLabel="{drugname}" id="{id}" />
                                                                 </td>
                                                                 <td>
                                                                     <obs conceptId="CIEL:1730" id="{id}_start" />
@@ -2797,7 +2829,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <br/>
                     </section>
                 </div>

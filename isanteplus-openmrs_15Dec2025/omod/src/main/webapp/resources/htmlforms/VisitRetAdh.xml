@@ -2,6 +2,18 @@
 	formName="Retention et Adhesion au TAR" formVersion="1.0"
 	formEncounterType="f02f3267-02f3-4586-8341-4a03a42874e9"
 	formDescription="Saisie Retention et Adhesion aun TAR">
+
+	<script>
+		(function () {
+			if (!document.querySelector('meta[name="viewport"]')) {
+			var meta = document.createElement('meta');
+			meta.name = "viewport";
+			meta.content = "width=device-width, initial-scale=1";
+			document.head.appendChild(meta);
+			}
+		})();
+	</script>
+
 	<style>
 		.section {
 		border: 1px solid $headerColor;
@@ -27,7 +39,9 @@
 		.toggle-button{
 		height:auto; background:#132959; border:1px solid #FFFFFF;
 		color:#FFFAF4;
-		width:100%";
+		width:100%;
+		padding:10px !important;
+		margin-top:5px !important;
 		}
 		.contener
 		{
@@ -49,23 +63,22 @@
 		table.baseline-aligned td {
 		vertical-align: baseline;
 		}
-		#sauvegarde
-		{
-		background:#c1e5f1;
-		position:relative;
-		bottom:0px;
-		width:100%;
-		margin:0px;
-		padding-top:0px;
-		padding-bottom:5px;
-		padding-left:0px;
-		padding-right:0px;
-		height:50px;
+		#sauvegarde {
+			background: #c1e5f1;
+			position: relative;
+			bottom: 0px;
+			width: 100%;
+			margin: 0px;
+			padding: 1rem;
+			height: 50px;
+			font-weight: bold;
+			text-align: center;
 		}
-		#dateVisite{
-		background:#c1e5f1;
-		top:0px;
-		width:100%;
+
+		#dateVisite {
+			top: 0px;
+			width: 100%;
+			padding-top: 5px;
 		}
 		#scroll{
 		width: 99%;
@@ -161,18 +174,728 @@
 		.locationRightAlign {
 			margin-left: auto;
 			margin-right: 0px;
-		},
+		}
+
+		@media (max-width: 800px) {
+
+			*, *::before, *::after {
+				box-sizing: border-box;
+			}
+
+			html, body {
+				overflow-x: hidden !important;
+				max-width: 100vw !important;
+			}
+			
+			#contenerGeneral {
+				overflow-x: hidden !important;
+				padding: 8px;
+			}
+
+			/* ===== EN-TÊTE DATEVISITE ===== */
+			#dateVisite {
+				margin-bottom: 5% !important;
+			}
+
+			#sauvegarde {
+				width: 100%;
+				text-align: center;
+				padding: 1rem;
+				font-weight: bold;
+			}
+
+			#dateVisite > table {
+				width: 100% !important;
+				display: block !important;
+			}
+
+			#dateVisite > table tr,
+			#dateVisite > table td {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			#dateVisite .display-flex {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			/* Date visite - sans bordure */
+			#dateVisite td.display-flex > div:first-child {
+				display: block !important;
+				margin-bottom: 15px !important;
+				padding: 5px 0 !important;
+			}
+
+			#dateVisite td.display-flex > div:first-child p {
+				margin: 0 0 5px 0 !important;
+				font-weight: normal !important;
+			}
+
+			/* Lieu de consultation - sans bordure */
+			#dateVisite .locationRightAlign {
+				display: block !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				margin-bottom: 12px !important;
+			}
+
+			#dateVisite .locationRightAlign h5 {
+				margin-bottom: 10px !important;
+			}
+
+			#dateVisite #locationType,
+			#dateVisite #locationValue,
+			#dateVisite #locationTypeValue {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 10px !important;
+			}
+
+			#dateVisite #locationType select,
+			#dateVisite #locationValue select,
+			#dateVisite #locationTypeValue select,
+			#dateVisite .locationRightAlign select {
+				width: 100% !important;
+				padding: 10px !important;
+				font-size: 1em !important;
+				border: 1px solid #ccc !important;
+				border-radius: 4px !important;
+				background: white !important;
+				margin-bottom:5px;
+			}
+
+			/* Bouton Sauvegarder */
+			#dateVisite .locationRightAlign > span:last-child {
+				display: block !important;
+				width: 100% !important;
+				margin-top: 15px !important;
+			}
+
+			#dateVisite .locationRightAlign .confirm,
+			#dateVisite .locationRightAlign input[type="submit"],
+			#dateVisite .locationRightAlign button {
+				width: 100% !important;
+				padding: 12px 20px !important;
+				font-size: 1em !important;
+				font-weight: bold !important;
+				background: #132959 !important;
+				color: white !important;
+				border: none !important;
+				border-radius: 6px !important;
+			}
+
+			#dateVisite .mr-5,
+			#dateVisite .mr-15 {
+				margin-right: 0 !important;
+			}
+
+			/* ===== TABLES GÉNÉRALES ===== */
+			#contenerGeneral table,
+			.section table {
+				width: 100% !important;
+				display: block !important;
+			}
+
+			#contenerGeneral table tbody,
+			.section table tbody {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			#contenerGeneral table tr,
+			.section table tr {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 12px;
+				padding: 10px;
+				background: #fafafa;
+				border: 1px solid #ddd;
+				border-radius: 6px;
+			}
+
+			#contenerGeneral table td,
+			.section table td {
+				display: block !important;
+				width: 100% !important;
+				padding: 8px 0 !important;
+				border: none !important;
+			}
+
+			/* ===== CHECKBOXES ET RADIOS ===== */
+			#contenerGeneral input[type="checkbox"],
+			#contenerGeneral input[type="radio"],
+			.section input[type="checkbox"],
+			.section input[type="radio"] {
+				display: inline-block !important;
+				vertical-align: top !important;
+				margin: 3px 6px 3px 0 !important;
+				flex-shrink: 0 !important;
+				float: none !important;
+			}
+
+			#contenerGeneral label,
+			.section label {
+				display: inline !important;
+				vertical-align: top !important;
+				word-wrap: break-word !important;
+				overflow-wrap: break-word !important;
+				white-space: normal !important;
+			}
+
+			/* ===== TEXTAREA ET INPUTS TEXTE ===== */
+			#contenerGeneral textarea,
+			#contenerGeneral input[type="text"],
+			.section textarea,
+			.section input[type="text"] {
+				width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+			}
+
+
+			 /* Cibler les tables qui contiennent les groupes de barrières */
+			#section-retention > table:nth-of-type(2),
+			#section-adhesion > table:nth-of-type(2) {
+				display: block !important;
+			}
+
+			#section-retention > table:nth-of-type(2) tbody,
+			#section-adhesion > table:nth-of-type(2) tbody {
+				display: block !important;
+			}
+
+			#section-retention > table:nth-of-type(2) tr,
+			#section-adhesion > table:nth-of-type(2) tr {
+				display: block !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				background: transparent !important;
+				border: none !important;
+			}
+
+			/* CACHER la ligne des en-têtes (première tr) */
+			#section-retention > table:nth-of-type(2) > tbody > tr:first-child,
+			#section-adhesion > table:nth-of-type(2) > tbody > tr:first-child {
+				display: none !important;
+			}
+
+			/* Style pour chaque TD de la deuxième tr (groupes de checkboxes) */
+			#section-retention > table:nth-of-type(2) > tbody > tr:nth-child(2) > td,
+			#section-adhesion > table:nth-of-type(2) > tbody > tr:nth-child(2) > td {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 20px !important;
+				padding: 15px 12px 12px 12px !important;
+				background: #ffffff !important;
+				border: 1px solid #ddd !important;
+				border-radius: 8px !important;
+				position: relative !important;
+				box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+			}
+
+			/* ===== EN-TÊTES RECRÉÉS AVEC ::before ===== */
+
+			/* Groupe 1: Barrières structurelles - VERT */
+			#section-retention > table:nth-of-type(2) > tbody > tr:nth-child(2) > td:nth-child(1)::before,
+			#section-adhesion > table:nth-of-type(2) > tbody > tr:nth-child(2) > td:nth-child(1)::before {
+				content: "Barrières structurelles";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #155724 !important;
+				background: #d4edda !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #28a745 !important;
+			}
+
+			/* Groupe 2: Barrières personnelles - JAUNE */
+			#section-retention > table:nth-of-type(2) > tbody > tr:nth-child(2) > td:nth-child(2)::before,
+			#section-adhesion > table:nth-of-type(2) > tbody > tr:nth-child(2) > td:nth-child(2)::before {
+				content: "Barrières personnelles et interpersonnelles";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #856404 !important;
+				background: #fff3cd !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #ffc107 !important;
+			}
+
+			/* Groupe 3: Obstacles communautaires - ROUGE */
+			#section-retention > table:nth-of-type(2) > tbody > tr:nth-child(2) > td:nth-child(3)::before,
+			#section-adhesion > table:nth-of-type(2) > tbody > tr:nth-child(2) > td:nth-child(3)::before {
+				content: "Obstacles « communautaires » ou liés aux établissements de santé";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #721c24 !important;
+				background: #f8d7da !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #dc3545 !important;
+			}
+
+			/* ========================================= */
+			/* PREMIÈRE TABLE DES QUESTIONS OUI/NON     */
+			/* ========================================= */
+			#section-retention > table:first-of-type > tbody > tr > td,
+			#section-adhesion > table:first-of-type > tbody > tr > td {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 15px !important;
+				padding: 15px !important;
+				background: #f0f8ff !important;
+				border: 1px solid #b0c4de !important;
+				border-radius: 8px !important;
+			}
+
+			/* ========================================= */
+			/* OBSGROUP (Autre raison, Raison refus)    */
+			/* ========================================= */
+			.section obsgroup,
+			#section-retention obsgroup,
+			#section-adhesion obsgroup {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			/* ========================================= */
+			/* CACHER ÉLÉMENTS CACHÉS ET ERREURS        */
+			/* ========================================= */
+			input[type="hidden"],
+			.error.field-error {
+				display: none !important;
+			}
+
+			#div1, #div2, #div3, #div4, #div5, #div6, #div7 {
+				height: auto !important;
+				max-height: 500px;
+				overflow-y: auto;
+			}
+
+			/* Forcer tous les selects à respecter la largeur */
+			.section select,
+			#section-retention select,
+			#section-adhesion select {
+				width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+				padding: 10px !important;
+				border: 1px solid #ccc !important;
+				border-radius: 4px !important;
+				margin-top: 5px !important;
+				overflow: hidden !important;
+				text-overflow: ellipsis !important;
+				white-space: nowrap !important;
+			}
+
+			/* Conteneur des TD ne doit pas déborder */
+			.section table td,
+			#section-retention table td,
+			#section-adhesion table td {
+				display: block !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				overflow-x: hidden !important;
+				box-sizing: border-box !important;
+				padding: 10px !important;
+				border: none !important;
+				background: #f9f9f9 !important;
+				border-radius: 6px !important;
+				margin-bottom: 10px !important;
+			}
+
+			/* S'assurer que le conteneur de section ne déborde pas */
+			.section {
+				margin: 0 10px 15px 10px !important;
+				padding: 10px !important;
+				overflow-x: hidden !important;
+				max-width: calc(100vw - 20px) !important;
+				box-sizing: border-box !important;
+				word-wrap: break-word !important;
+			}
+
+			/* Forcer la table à ne pas déborder */
+			.section table {
+				width: 100% !important;
+				max-width: 100% !important;
+				display: block !important;
+				overflow-x: hidden !important;
+				table-layout: fixed !important;
+			}
+
+			/* Première table de la section adhesion */
+			#section-adhesion > table:first-of-type {
+				width: 100% !important;
+				max-width: 100% !important;
+			}
+
+			#section-adhesion > table:first-of-type td {
+				width: 100% !important;
+				max-width: 100% !important;
+				overflow-x: hidden !important;
+			}
+
+			/* Cibler spécifiquement le select dans section-adhesion */
+			#section-adhesion select,
+			#section-adhesion table select {
+				width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+				display: block !important;
+			}
+
+			/* Input text également */
+			.section input[type="text"],
+			#section-retention input[type="text"],
+			#section-adhesion input[type="text"] {
+				width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+				padding: 10px !important;
+				border: 1px solid #ccc !important;
+				border-radius: 4px !important;
+			}
+
+			/* Textarea */
+			.section textarea,
+			#section-retention textarea,
+			#section-adhesion textarea {
+				width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+				padding: 10px !important;
+				border: 1px solid #ccc !important;
+				border-radius: 4px !important;
+				resize: vertical !important;
+			}
+
+			#div1 {
+				padding: 10px !important;
+				margin: 0 10px !important;
+			}
+
+			#div1 table {
+				width: 100% !important;
+				display: block !important;
+				border: none !important;
+			}
+
+			#div1 table tbody {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			#div1 table tr {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 0 !important;
+				padding: 0 !important;
+				background: transparent !important;
+				border: none !important;
+			}
+
+			#div1 table td,
+			#div1 table th {
+				display: block !important;
+				width: 100% !important;
+				box-sizing: border-box !important;
+				border: none !important;
+			}
+
+
+			#div1 th {
+				display: none !important;
+			}
+
+
+			/* Cacher la ligne des en-têtes (tr avec th) */
+			#div1 > table:first-of-type > tbody > tr:first-child {
+				display: none !important;
+			}
+
+			/* Style des cellules de contenu */
+			#div1 > table:first-of-type > tbody > tr:nth-child(2) > td {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 15px !important;
+				padding: 15px 12px 12px 12px !important;
+				background: #ffffff !important;
+				border: 1px solid #ddd !important;
+				border-radius: 8px !important;
+				position: relative !important;
+				box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+			}
+
+			/* En-tête Niveau d'étude - BLEU */
+			#div1 > table:first-of-type > tbody > tr:nth-child(2) > td:nth-child(1)::before {
+				content: "Niveau d'étude";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #004085 !important;
+				background: #cce5ff !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #007bff !important;
+			}
+
+			/* En-tête Sécurité alimentaire - ORANGE */
+			#div1 > table:first-of-type > tbody > tr:nth-child(2) > td:nth-child(2)::before {
+				content: "Sécurité alimentaire";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #856404 !important;
+				background: #fff3cd !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #ffc107 !important;
+			}
+
+			/* Cacher le PREMIER tbody (contient les th) */
+			#div1 > table:nth-of-type(2) > tbody:first-of-type {
+				display: none !important;
+			}
+
+			/* Afficher le DEUXIÈME tbody (contient les td) */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr {
+				display: block !important;
+				width: 100% !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				background: transparent !important;
+				border: none !important;
+			}
+
+			/* Style des TD dans le deuxième tbody */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td {
+				display: block !important;
+				width: 100% !important;
+				margin-bottom: 15px !important;
+				padding: 15px 12px 12px 12px !important;
+				background: #ffffff !important;
+				border: 1px solid #ddd !important;
+				border-radius: 8px !important;
+				position: relative !important;
+				box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+			}
+
+			#div1 > table:first-of-type > tbody > tr:nth-child(2) > td input[type="radio"] {
+				display: inline-block !important;
+				vertical-align: middle !important;
+				margin: 0 8px 0 0 !important;
+				width: 18px !important;
+				height: 18px !important;
+			}
+
+			#div1 > table:first-of-type > tbody > tr:nth-child(2) > td label::after {
+				content: "" !important;
+				display: block !important;
+				margin-bottom: 10px !important;
+			}
+
+			#div1 > table:first-of-type > tbody > tr:nth-child(2) > td label:last-of-type::after {
+				margin-bottom: 0 !important;
+			}
+
+
+			/* En-tête Type de logement - VERT */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(1)::before {
+				content: "Type de logement du patient";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #155724 !important;
+				background: #d4edda !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #28a745 !important;
+			}
+
+			/* En-tête Revêtement de sol - CYAN */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(2)::before {
+				content: "Revêtement de sol";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #0c5460 !important;
+				background: #d1ecf1 !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #17a2b8 !important;
+			}
+
+			/* En-tête Toiture de logement - GRIS */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(3)::before {
+				content: "Toiture de logement";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #383d41 !important;
+				background: #e2e3e5 !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #6c757d !important;
+			}
+
+			/* En-tête Autres informations - VIOLET */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(4)::before {
+				content: "Autres informations";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #6f42c1 !important;
+				background: #e2d5f1 !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #6f42c1 !important;
+			}
+
+			/* En-tête Statut Marital - ROSE */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(5)::before {
+				content: "Statut Marital";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #721c24 !important;
+				background: #f8d7da !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #dc3545 !important;
+			}
+
+			/* En-tête Comportements à risque - ORANGE FONCÉ */
+			#div1 > table:nth-of-type(2) > tbody:nth-of-type(2) > tr > td:nth-child(6)::before {
+				content: "Comportements à risque ou indésirables";
+				display: block !important;
+				font-weight: bold !important;
+				font-size: 0.95em !important;
+				color: #d63600 !important;
+				background: #ffe4cc !important;
+				padding: 10px 12px !important;
+				margin: -15px -12px 15px -12px !important;
+				border-radius: 8px 8px 0 0 !important;
+				border-bottom: 2px solid #fd7e14 !important;
+			}
+
+			#div1 input[type="checkbox"],
+			#div1 input[type="radio"] {
+				display: inline-block !important;
+				vertical-align: top !important;
+				margin: 4px 8px 4px 0 !important;
+				flex-shrink: 0 !important;
+				width: 18px !important;
+				height: 18px !important;
+			}
+
+			#div1 label {
+				display: inline !important;
+				vertical-align: top !important;
+				word-wrap: break-word !important;
+				white-space: normal !important;
+				line-height: 1.5 !important;
+			}
+
+			#div1 td br {
+				display: block !important;
+				margin-bottom: 8px !important;
+			}
+
+
+			#div1 input[type="text"],
+			#div1 select,
+			#div1 textarea {
+				width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+				padding: 10px !important;
+				border: 1px solid #ccc !important;
+				border-radius: 4px !important;
+				margin-top: 5px !important;
+				margin-bottom: 10px !important;
+			}
+
+			#div1 .sansbordure {
+				border: none !important;
+			}
+
+			#div1, #div2, #div3 , #div4 , #div5 , #div6 , #div7{
+				height: 460px;
+				overflow-y: scroll;
+			}
+
+			.toggle-button.mobile-sticky {
+				position: sticky;
+				top: 0;
+			}
+
+			#sauvegarde{
+				width: 100%;
+				text-align: center;
+				padding: 1rem;
+				font-weight: bold;
+			}
+
+
+		}
+
 	</style>
 
 	<script type="text/javascript">
-		jQuery(function() {
-		jQuery( '.toggle-button' ).on( 'click', function() {
-		// À décommenter si tu veux masquer toutes les autres div
-		jQuery( '.togglable' ).not( this.getAttribute( 'data-target' ) ).hide( 'slow'
-		);
+		jQuery(function ($) {
 
-		jQuery( this.getAttribute( 'data-target' ) ).toggle( 'slow' );
-		});
+			$('.toggle-button').on('click', function (e) {
+				e.preventDefault();
+
+				var targetSelector = this.getAttribute('data-target');
+				var $target = $(targetSelector);
+				var $btn = $(this);
+				var isMobile = window.matchMedia('(max-width: 800px)').matches;
+				var isVisible = $target.is(':visible');
+
+				$('.togglable').stop(true, true);
+
+				$('.togglable').not(targetSelector).hide('slow');
+
+				$('.toggle-button').removeClass('mobile-sticky');
+
+				if (isVisible) {
+					$target.hide('slow');
+					return;
+				}
+
+				$target.show('slow', function () {
+
+					if (isMobile) {
+						$btn.addClass('mobile-sticky');
+
+						$('html, body').animate({
+							scrollTop: $btn.offset().top
+						}, 250);
+					}
+
+				});
+			});
+
 		});
 	</script>
 
@@ -240,9 +963,9 @@
 	</ifMode>
 	<div id="contenerGeneral">
 		<div id="dateVisite">
-			<b align="center" id="sauvegarde" >
+			<div align="center" id="sauvegarde" >
 					<center style="padding: 5px !important;">Fiche de Retention et Adhesion aun TAR</center>
-			</b>
+			</div>
 			<table>
 				<tr>
 					<td class="display-flex">
@@ -314,7 +1037,7 @@
 				<div class="toggle-button" data-target="#div6">ÉVALUATION DE LA RÉTENTION EN SOINS</div>
 			</a>
 			<div id="div6" class="togglable" style="display: none;">
-				<section headerLabel="">
+				<section headerLabel="" id="section-retention">
 					<table>
 						<br/>
 						<tr>
@@ -447,7 +1170,7 @@
 			</a>
 			<div id="div3" class="togglable" style="display: none;">
 
-				<section headerLabel="">
+				<section headerLabel="" id="section-adhesion">
 					<br/>
 					<table>
 						<tr>
@@ -554,13 +1277,37 @@
 						<th>Sécurité alimentaire</th>
 					</tr>
 					<tr colspan="6">
+
+						<!-- <td>
+									<obs 
+										id="" 
+										conceptId="CIEL:1712" 
+										answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Analphabète,Inconnue"
+										default="Travailleur social"
+									/>
+						</td> -->
 						<td>
+
+							<obs 
+								id="" 
+								conceptId="CIEL:1712" 
+								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:1067"
+								answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Analphabète,Inconnue"
+								default="Travailleur social"
+							/>
+
 							<obs conceptId="CIEL:1712"
 								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:1067"
 								answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Analphabète,Inconnue"
 								style="radio" />
 						</td>
 						<td>
+
+						<obs conceptId="CIEL:1712"
+								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785"
+								answerLabels="Peut s’offrir régulièrement à manger au moins 2 fois/jour,Peut s’offrir régulièrement à manger au moins 1 fois/jour,Ne peut pas s’offrir à manger certains jours"
+						/>
+
 							<obs conceptId="CIEL:1712"
 								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785"
 								answerLabels="Peut s’offrir régulièrement à manger au moins 2 fois/jour,Peut s’offrir régulièrement à manger au moins 1 fois/jour,Ne peut pas s’offrir à manger certains jours"
