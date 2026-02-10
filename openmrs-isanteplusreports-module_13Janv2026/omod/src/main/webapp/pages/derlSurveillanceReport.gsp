@@ -1,6 +1,10 @@
 <%
     ui.decorateWith("appui", "standardEmrPage")
 %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 <script>
     var cohortIndicatorList1 = ${ui.toJson(cohortIndicators1)};
     var cohortIndicatorList2 = ${ui.toJson(cohortIndicators2)};
@@ -438,6 +442,54 @@
             });
         });
 
+
+        jq("#btnPdf").on("click", function () {
+
+            var startDateRaw = jq('input[name="startDate"]').val();
+            var endDateRaw = jq('input[name="endDate"]').val();
+
+            var startDateObj = parseLocalDate(startDateRaw);
+            var endDateObj   = parseLocalDate(endDateRaw);
+
+            var startDate = formatDateFr(startDateObj);
+            var endDate   = formatDateFr(endDateObj);
+
+            // 1️⃣ Header PDF uniquement
+            var pdfOnlyContent =
+                '<div style="font-size:12px; margin-bottom:10px;">' +
+                '<h1 style="text-align:center;">Rapport de Comorbidité</h1>' +
+                '<p style="text-align:center;"><strong>Période :</strong> ' + startDate + ' → ' + endDate + '</p>' +
+                '<hr/>' +
+                '</div><br/>';
+
+            // 2️⃣ Contenu du rapport (clone pour ne pas toucher au DOM)
+            var reportElement = document.getElementById("indicatorTable1");
+            var reportClone = reportElement.cloneNode(true);
+            reportClone.querySelectorAll("table").forEach(function (table) {
+                table.style.width = "100%";
+                table.style.tableLayout = "fixed";
+            });
+
+            // 3️⃣ Conteneur temporaire PDF
+            var pdfContainer = document.createElement("div");
+            pdfContainer.style.padding = "10px";
+            pdfContainer.innerHTML = pdfOnlyContent;
+            pdfContainer.appendChild(reportClone);
+
+            // 4️⃣ Options PDF
+            var options = {
+                margin: 0.5,
+                filename: "rapport_surveillance.pdf",
+                image: { type: "jpeg", quality: 1 },
+                html2canvas: { scale: 4, logging: true },
+                jsPDF: { unit: "in", format: "a4", orientation: "landscape" }
+            };
+
+            // 5️⃣ Génération PDF
+            html2pdf().set(options).from(pdfContainer).save();
+        });
+
+
     });
 
 
@@ -489,6 +541,20 @@ body {
     background: #7a98bd;
     color: #fff;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.20);
+    animation: fadeIn 0.3s ease-in;
+    display: block;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(1px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .tab-content {
@@ -563,7 +629,7 @@ td.clickable a {
 </style>
 
 
-<div>
+<div style="height: 85vh;">
     <div class="running-reports">
 
         <div class="tabs">
@@ -575,8 +641,12 @@ td.clickable a {
 
             <div class="tab-content">
                 <div id="tab1" class="content active">
-                    <h3>Déclaration Immediate</h3>
-
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+                        <h3>Déclaration immédiate des maladies infectieuses</h3>
+                        <div>
+                            <button type="button" id="btnPdf">📄 Exporter PDF</button>
+                        </div>
+                    </div>
                     <table id="indicatorTable1">
                         <thead>
                         <tr>
