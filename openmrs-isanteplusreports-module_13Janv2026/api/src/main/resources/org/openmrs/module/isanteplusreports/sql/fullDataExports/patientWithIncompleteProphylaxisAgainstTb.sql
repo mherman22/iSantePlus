@@ -1,4 +1,4 @@
-/*Patients avec Prophylaxie incomplète contre la TB*/
+/*Patients VIH+ avec Prophylaxie incomplète contre la TB*/
 select DISTINCT  p.patient_id AS 'Patient Id', 
 p.st_id as 'NO. de patient attribué par le site',
 p.national_id as 'Numéro d\'identité national',

@@ -1,4 +1,4 @@
-/*Patients dépistés négatifs pour la TB n’ayant pas reçu de prophylaxie*/
+/*Patients VIH+ dépistés négatifs pour la TB n’ayant pas reçu de prophylaxie*/
 select DISTINCT  p.patient_id AS 'Patient Id', 
 p.st_id as 'NO. de patient attribué par le site',
 p.national_id as 'Numéro d\'identité national',
