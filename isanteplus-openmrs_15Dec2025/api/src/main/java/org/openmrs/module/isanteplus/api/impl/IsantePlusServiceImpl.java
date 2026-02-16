@@ -13,25 +13,20 @@
  */
 package org.openmrs.module.isanteplus.api.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.SQLQuery;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
@@ -893,7 +888,8 @@ public class IsantePlusServiceImpl extends BaseOpenmrsService implements IsanteP
                             encounterList.add(obs0.getEncounter());
                             // j'ajoute la date de dispensation
                             drugsHistory.add(obs);
-                        } else if (conceptList.contains(obs0.getValueCoded()) && encounterList.contains(obs0.getEncounter()));
+                        } else if (conceptList.contains(obs0.getValueCoded()) && encounterList.contains(obs0.getEncounter()))
+                            ;
 						/*else {
 							conceptList.add(obs0.getValueCoded());
 							encounterList.add(obs0.getEncounter());
@@ -1054,17 +1050,6 @@ public class IsantePlusServiceImpl extends BaseOpenmrsService implements IsanteP
     }
 
 
-    //Actif <=> perdu de vue
-    //Actif <=> Rendez-vous rate
-    //Actif <=> Transferer
-    //Actif ==> Decede
-    //Actif <=> Arrete
-    //Arrete <=> Decede
-    //Arrete <=> Actif
-    //Suppression de la derniere fiche d'ordonnance du patient
-    //Dispensation d'un groupe de drug ==> actif
-
-
     @SuppressWarnings("unchecked")
     @Override
     public DataSet getDateStartedArv(Patient patient) {
@@ -1213,5 +1198,73 @@ public class IsantePlusServiceImpl extends BaseOpenmrsService implements IsanteP
         return dao.getLocationAddresses(criteria);
     }
 
+    @Override
+    public List<PatientSearchInfos> getAllPatientSearchInfos(String criteria) {
+        if (criteria != null && !criteria.trim().isEmpty()) {
+
+            String sql = loadSqlFile("sql/patient_search_list.sql");
+            SQLQuery query = dao.getSessionFactoryResult().getCurrentSession().createSQLQuery(sql);
+
+            query.setParameter("criteria", "%" + criteria + "%");
+            query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+            List<Map<String, Object>> list = query.list();
+            List<PatientSearchInfos> patientSearchInfosList = new ArrayList();
+
+            for (Map<String, Object> row : list) {
+                PatientSearchInfos patientSearchInfos = new PatientSearchInfos();
+
+                if (row.get("patientId") != null)
+                    patientSearchInfos.setPatientId(((Number) row.get("patientId")).intValue());
+
+                if (row.get("age") != null)
+                    patientSearchInfos.setPatientAge(((Number) row.get("age")).intValue());
+
+                if (row.get("fullName") != null)
+                    patientSearchInfos.setFullName(row.get("fullName").toString());
+
+                if (row.get("birthdate") != null)
+                    patientSearchInfos.setBirthDate(row.get("birthdate").toString());
+
+                if (row.get("gender") != null)
+                    patientSearchInfos.setGender(row.get("gender").toString());
+
+                if (row.get("stId") != null)
+                    patientSearchInfos.setStId(row.get("stId").toString());
+
+                if (row.get("isanteId") != null)
+                    patientSearchInfos.setIsanteId(row.get("isanteId").toString());
+
+                if (row.get("pcId") != null)
+                    patientSearchInfos.setPcId(row.get("pcId").toString());
+
+                if (row.get("nationalId") != null)
+                    patientSearchInfos.setNationalId(row.get("nationalId").toString());
+
+                if (row.get("identifier") != null)
+                    patientSearchInfos.setIdentifier(row.get("identifier").toString());
+
+                if (row.get("lastAddress") != null)
+                    patientSearchInfos.setAdresses(row.get("lastAddress").toString());
+
+                patientSearchInfosList.add(patientSearchInfos);
+            }
+            return patientSearchInfosList;
+
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public String loadSqlFile(String path) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
+            if (is == null) {
+                throw new RuntimeException("Fichier SQL introuvable : " + path);
+            }
+            return IOUtils.toString(is, "UTF-8");
+        } catch (IOException e) {
+            throw new RuntimeException("Erreur lecture fichier SQL", e);
+        }
+    }
 
 }

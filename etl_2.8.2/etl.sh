@@ -4,7 +4,7 @@ MYSQL_USER='root'
 MYSQL_PASSWORD='Admin@123'
 MYSQL_PORT='3306'
 MYSQL_HOST='127.0.0.1'
-PATH_HOST=/home/jeejen/Desktop/etl_2.8.2
+PATH_HOST=/home/jeejen/Music/iSantePlus/etl_2.8.2
 
 mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -P$MYSQL_PORT -h$MYSQL_HOST isanteplus < $PATH_HOST/isanteplusreportsdmlscript.sql
 

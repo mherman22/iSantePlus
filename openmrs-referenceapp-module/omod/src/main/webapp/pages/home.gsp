@@ -219,6 +219,7 @@
 
     <div id="apps">
         <% extensions.each { ext -> %>
+        <% if(ext.url!="isanteplus/vitals.page?app=isanteplus.vitals&patientId={{patientId}}&visitId={{visitId}}" && ext.url!="coreapps/findpatient/findPatient.page?app=referenceapplication.vitals" && ext.url!="adminui/metadata/configureMetadata.page") { %>
         <a id="${htmlSafeId(ext)}" href="/${contextPath}/${ext.url}" class="button app big col">
             <% if (ext.icon) { %>
             <div class="app-icon">
@@ -229,7 +230,7 @@
                 <span class="app-title">${ui.message(ext.label)}</span>
             </div>
         </a>
-        <% } %>
+        <% }} %>
     </div>
 
 </div>

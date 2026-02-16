@@ -1,3 +1,4 @@
+org/openmrs/module/isanteplus/fragment/controller/FindPatientCriteriaFragmentController.class
 org/openmrs/module/isanteplus/page/controller/GetAllDiagnosisPageController.class
 org/openmrs/module/isanteplus/fragment/controller/registrationToggleMedicalPOA.class
 org/openmrs/module/isanteplus/fragment/controller/IsantePlusManagerFragmentController.class
@@ -20,6 +21,7 @@ org/openmrs/module/isanteplus/fragment/controller/IsanteplusAllergyFragmentContr
 org/openmrs/module/isanteplus/page/controller/GrowthChartsPageController.class
 org/openmrs/module/isanteplus/vis/VisLineGraphing.class
 org/openmrs/module/isanteplus/page/controller/ViralLoadHistoryPageController.class
+org/openmrs/module/isanteplus/page/controller/FindPatientPageController.class
 org/openmrs/module/isanteplus/page/controller/IsanteplusLoginPageController.class
 org/openmrs/module/isanteplus/page/controller/LoggedInUsersController.class
 org/openmrs/module/isanteplus/page/controller/ManageIsantePlusPageController.class

@@ -1,6 +1,28 @@
 USE isanteplus;
 
 
+-- Vérifier si la colonne pc_id existe déjà
+SET @col_exists := (
+    SELECT COUNT(*)
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = 'isanteplus'
+      AND TABLE_NAME = 'patient'
+      AND COLUMN_NAME = 'pc_id'
+);
+
+-- Construire la requête dynamiquement
+SET @sql := IF(
+    @col_exists = 0,
+    'ALTER TABLE isanteplus.patient ADD COLUMN pc_id VARCHAR(50);',
+    'SELECT ''Column pc_id already exists'';'
+);
+
+-- Exécuter
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- ---------------------------FIN----------------------------
 
 /* insert data to patient table */
 SET SQL_SAFE_UPDATES = 0;
@@ -49,6 +71,15 @@ SET SQL_SAFE_UPDATES = 0;
 	and pit.uuid="d059f6d0-9e42-4760-8de1-8316b48bc5f1"
 	and pi.voided=0;
 	
+		
+/*PC CODE*/
+	update patient p,openmrs.patient_identifier pi, openmrs.patient_identifier_type pit 
+	      set p.pc_id=pi.identifier 
+	 where p.patient_id=pi.patient_id 
+	    AND pi.identifier_type=pit.patient_identifier_type_id
+	     and pit.uuid='b7a154fd-0097-4071-ac09-af11ee7e0310'
+	     and pi.voided=0;
+	     
 /*National ID*/
 	update patient p,openmrs.patient_identifier pi, 
 	openmrs.patient_identifier_type pit set p.national_id=pi.identifier 

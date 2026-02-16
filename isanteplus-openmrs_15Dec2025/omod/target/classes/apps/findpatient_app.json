@@ -1,0 +1,22 @@
+[
+  {
+    "id": "isanteplus.findPatient",
+    "instanceOf": "isanteplus.template.findPatient",
+    "description": "Basic patient search that goes to the patient dashboard",
+    "order": 2,
+    "config": {
+      "patientPageUrl": "/coreapps/clinicianfacing/patient.page?patientId={{patientId}}"
+    },
+    "extensions": [
+      {
+        "id": "isanteplus.findPatientHomepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "isanteplus.findPatient.app.label",
+        "url": "isanteplus/findPatient.page?app=isanteplus.findPatient",
+        "icon": "icon-search",
+        "requiredPrivilege": "App: coreapps.findPatient"
+      }
+    ]
+  }
+]

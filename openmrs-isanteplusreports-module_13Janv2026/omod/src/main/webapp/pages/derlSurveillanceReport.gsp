@@ -445,47 +445,67 @@
 
         jq("#btnPdf").on("click", function () {
 
-            var startDateRaw = jq('input[name="startDate"]').val();
-            var endDateRaw = jq('input[name="endDate"]').val();
-
-            var startDateObj = parseLocalDate(startDateRaw);
-            var endDateObj   = parseLocalDate(endDateRaw);
-
-            var startDate = formatDateFr(startDateObj);
-            var endDate   = formatDateFr(endDateObj);
-
-            // 1️⃣ Header PDF uniquement
             var pdfOnlyContent =
-                '<div style="font-size:12px; margin-bottom:10px;">' +
-                '<h1 style="text-align:center;">Rapport de Comorbidité</h1>' +
-                '<p style="text-align:center;"><strong>Période :</strong> ' + startDate + ' → ' + endDate + '</p>' +
+                '<div style="font-size:16px; margin-bottom:10px;">' +
+                '<h2 style="text-align:center;">Rapport de surveillance épidémiologique</h2>' +
                 '<hr/>' +
-                '</div><br/>';
+                '</div>';
 
-            // 2️⃣ Contenu du rapport (clone pour ne pas toucher au DOM)
-            var reportElement = document.getElementById("indicatorTable1");
-            var reportClone = reportElement.cloneNode(true);
-            reportClone.querySelectorAll("table").forEach(function (table) {
-                table.style.width = "100%";
-                table.style.tableLayout = "fixed";
+            var pdfContainer = document.createElement("div");
+            pdfContainer.style.padding = "5px";
+            pdfContainer.style.width = "100%";
+            pdfContainer.innerHTML = pdfOnlyContent;
+
+            // 🔥 Liste des 3 tables
+            var tableIds = ["indicatorTable1", "indicatorTable2", "indicatorTable3"];
+
+            tableIds.forEach(function (tableId, index) {
+
+                var reportElement = document.getElementById(tableId);
+
+                if (reportElement) {
+
+                    var reportClone = reportElement.cloneNode(true);
+
+                    reportClone.querySelectorAll("table").forEach(function (table) {
+                        table.style.width = "100%";
+                        table.style.fontSize = "6px";
+                        table.style.borderCollapse = "collapse";
+                    });
+
+                    reportClone.querySelectorAll("th").forEach(function (cell) {
+                        cell.style.padding = "2px";
+                        cell.style.fontSize = "12px";
+                    });
+
+                    reportClone.querySelectorAll("td").forEach(function (cell) {
+                        cell.style.padding = "2px";
+                        cell.style.fontSize = "10px";
+                    });
+
+                    pdfContainer.appendChild(reportClone);
+
+                    // ✅ Saut de page après chaque table sauf la dernière
+                    if (index < tableIds.length - 1) {
+                        var pageBreak = document.createElement("div");
+                        pageBreak.style.pageBreakAfter = "always";
+                        pdfContainer.appendChild(pageBreak);
+                    }
+                }
             });
 
-            // 3️⃣ Conteneur temporaire PDF
-            var pdfContainer = document.createElement("div");
-            pdfContainer.style.padding = "10px";
-            pdfContainer.innerHTML = pdfOnlyContent;
-            pdfContainer.appendChild(reportClone);
-
-            // 4️⃣ Options PDF
             var options = {
-                margin: 0.5,
+                margin: 0.2,
                 filename: "rapport_surveillance.pdf",
                 image: { type: "jpeg", quality: 1 },
-                html2canvas: { scale: 4, logging: true },
-                jsPDF: { unit: "in", format: "a4", orientation: "landscape" }
+                html2canvas: { scale: 3 },
+                jsPDF: {
+                    unit: "in",
+                    format: "a3",
+                    orientation: "landscape"
+                }
             };
 
-            // 5️⃣ Génération PDF
             html2pdf().set(options).from(pdfContainer).save();
         });
 
@@ -624,6 +644,9 @@ td.clickable a {
     background-color: #eccf80;
 }
 
+th {
+    font-weight: lighter;
+}
 
 
 </style>
@@ -633,27 +656,30 @@ td.clickable a {
     <div class="running-reports">
 
         <div class="tabs">
-            <ul class="tab-list">
-                <li class="tab active" data-tab="tab1">Déclaration Immédiate</li>
-                <li class="tab" data-tab="tab2">Déclaration Hebdomadaire</li>
-                <li class="tab" data-tab="tab3">Déclaration mensuelle</li>
-            </ul>
+            <div style="display: flex; justify-content: space-between;">
+                <ul class="tab-list">
+                    <li class="tab active" data-tab="tab1">Déclaration Immédiate</li>
+                    <li class="tab" data-tab="tab2">Déclaration Hebdomadaire</li>
+                    <li class="tab" data-tab="tab3">Déclaration mensuelle</li>
+                </ul>
+                <div style="display: flex; justify-content: space-between; margin-right: 5px">
+                    <div>
+                        <button type="button" id="btnPdf">📄 Exporter PDF</button>
+                    </div>
+                </div>
+            </div>
 
             <div class="tab-content">
                 <div id="tab1" class="content active">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+                    <div style="display: flex; justify-content: space-between;">
                         <h3>Déclaration immédiate des maladies infectieuses</h3>
-                        <div>
-                            <button type="button" id="btnPdf">📄 Exporter PDF</button>
-                        </div>
                     </div>
-                    <table id="indicatorTable1">
+                    <table id="indicatorTable1" >
                         <thead>
                         <tr>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff" class="sticky-col"></th>
                             <th colspan="53" style="text-align: center; background: #3b5674; color: #fff; font-size: 15px; border-color: white; border-radius: 8px 8px 0px 0px;">Liste complète des semaines de l’année 2026, allant de la 1ʳᵉ à la 53ᵉ semaine</th>
                             <th style="background: #fff; color: #fff; font-size: 18px; border: 1px solid #fff; width: 35px" class="sticky-col"></th>
-
                         </tr>
                         <tr id="tableHeaderImmediate">
                             <th  style="background: #7a98bd; color: #fff; font-size: 18px; border-color: white; border-radius: 8px 0px 0px 0px;" class="sticky-col">Indicateurs</th>
@@ -665,8 +691,9 @@ td.clickable a {
                 </div>
 
                 <div id="tab2" class="content">
-                    <h3>Déclaration Hebdomadaire</h3>
-
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>Déclaration Hebdomadaire</h3>
+                    </div>
                     <table id="indicatorTable2">
                         <thead>
                         <tr>

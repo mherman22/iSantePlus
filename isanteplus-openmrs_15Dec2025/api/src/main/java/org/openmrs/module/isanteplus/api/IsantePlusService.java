@@ -21,10 +21,7 @@ import org.json.JSONObject;
 import org.openmrs.*;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.appframework.domain.ComponentState;
-import org.openmrs.module.isanteplus.ChartJSAgeAxis;
-import org.openmrs.module.isanteplus.IsantePlusObs;
-import org.openmrs.module.isanteplus.IsantePlusRelationship;
-import org.openmrs.module.isanteplus.LocationAddressMirror;
+import org.openmrs.module.isanteplus.*;
 import org.openmrs.module.isanteplus.liquibase.InitialiseFormsHistory;
 import org.openmrs.module.isanteplus.mapped.FormHistory;
 import org.openmrs.module.reporting.dataset.DataSet;
@@ -168,5 +165,5 @@ public interface IsantePlusService extends OpenmrsService {
 
     List<LocationAddressMirror> getAllLocationAddressesByCriteria(String criteria);
 
-//	User currentUser();
+	List<PatientSearchInfos> getAllPatientSearchInfos(String var1);
 }

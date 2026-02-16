@@ -46,7 +46,7 @@ public class DerlSurveillanceReportPageController {
         endDate = DateUtil.getEndOfDay(endDate);
 
         List<DerlSurveillanceDatasetDefinition> list1 = derlSurveillanceReportDataset.cohortIndicators1(startDate, endDate);
-        // 🔥 Traduction des labels ICI
+        // Traduction des labels ICI
         for (DerlSurveillanceDatasetDefinition indicator : list1) {
             String translatedLabel = Context.getMessageSourceService()
                     .getMessage(indicator.getLabel());
@@ -55,7 +55,7 @@ public class DerlSurveillanceReportPageController {
         model.addAttribute("cohortIndicators1", list1);
 
         List<DerlSurveillanceDatasetDefinition> list2 = derlSurveillanceReportDataset.cohortIndicators2(startDate, endDate);
-        // 🔥 Traduction des labels ICI
+        // Traduction des labels ICI
         for (DerlSurveillanceDatasetDefinition indicator : list2) {
             String translatedLabel = Context.getMessageSourceService()
                     .getMessage(indicator.getLabel());
@@ -64,13 +64,16 @@ public class DerlSurveillanceReportPageController {
         model.addAttribute("cohortIndicators2", list2);
 
         List<DerlSurveillanceDatasetDefinition> list3 = derlSurveillanceReportDataset.cohortIndicators3(startDate, endDate);
-        // 🔥 Traduction des labels ICI
+        // Traduction des labels ICI
         for (DerlSurveillanceDatasetDefinition indicator : list3) {
             String translatedLabel = Context.getMessageSourceService()
                     .getMessage(indicator.getLabel());
             indicator.setLabel(translatedLabel);
         }
         model.addAttribute("cohortIndicators3", list3);
+
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
 
         return null;
     }

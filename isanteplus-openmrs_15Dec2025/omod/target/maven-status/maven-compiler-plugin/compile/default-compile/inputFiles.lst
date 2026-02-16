@@ -14,6 +14,7 @@
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/IsanteplusLoginPageRequestMapper.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/VitalsPageController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/GetAllDiagnosisPageController.java
+/home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/FindPatientPageController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/LabHistoryPageController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/IsantePlusFormsFragmentController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/ViralLoadHistoryPageController.java
@@ -27,3 +28,4 @@
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/WeightGraphFragmentController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/IsanteplusHeaderFragmentController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/IsantePlusMostRecentVitalsFragmentController.java
+/home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/FindPatientCriteriaFragmentController.java

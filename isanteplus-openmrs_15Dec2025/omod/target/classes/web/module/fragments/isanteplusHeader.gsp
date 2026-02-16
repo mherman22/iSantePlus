@@ -233,7 +233,7 @@
                 </ul>
             <% } %>
         </li>
-        <li class="change-location">
+        <li class="change-location" style="background: #2b3a64; padding: 0px 5px">
             <a href="javascript:void(0);">
                 <i class="icon-map-marker small"></i>
                 <span data-bind="text: text"></span>
@@ -264,3 +264,4 @@
     </div>
     <% } %>
 </header>
+<br/>
