@@ -168,13 +168,29 @@
     padding: 6px 4px;
     margin: 14px 0 8px 0;
     border-left: 4px solid #0b7a7a;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+.reportBox .subTitle::after {
+    content: "▾";
+    color: #7a8691;
+    font-size: 13px;
+    margin-left: 8px;
+}
+.reportBox .subTitle.isCollapsed::after {
+    content: "▸";
 }
 .reportBox .listContainer {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 10px 0;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    counter-reset: item;
 }
 .reportBox .listItem {
     display: flex;
@@ -183,6 +199,24 @@
     border-radius: 0;
     padding: 12px 14px;
     border: 1px solid #e5e7eb;
+}
+.reportBox .listItem::before {
+    counter-increment: item;
+    content: counter(item);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 9999px;
+    background: #0b7a7a;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
 }
 .reportBox .listItem:hover {
     background: #f9fbfc;
@@ -272,6 +306,17 @@
     .reportBox .listItem {
         padding: 10px 12px;
     }
+    .reportBox .listContainer {
+        padding: 8px;
+        border-radius: 6px;
+    }
+    .reportBox .listItem::before {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        font-size: 11px;
+        margin-right: 8px;
+    }
 }
 </style>
 <div class="searchBar">
@@ -317,14 +362,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 var prev = list.previousElementSibling;
                 if (prev && prev.classList && prev.classList.contains('subTitle')) {
-                    prev.style.display = (q.length === 0 || groupVisibleCount > 0) ? '' : 'none';
+                    if (q.length === 0) {
+                        prev.style.display = '';
+                        list.style.display = prev.classList.contains('isCollapsed') ? 'none' : '';
+                    } else {
+                        var showGroup = groupVisibleCount > 0;
+                        prev.style.display = showGroup ? '' : 'none';
+                        if (showGroup) prev.classList.remove('isCollapsed');
+                        list.style.display = showGroup ? '' : 'none';
+                    }
+                } else {
+                    list.style.display = (q.length === 0 || groupVisibleCount > 0) ? '' : 'none';
                 }
-                list.style.display = (q.length === 0 || groupVisibleCount > 0) ? '' : 'none';
                 boxVisibleCount += groupVisibleCount;
             });
             box.style.display = (q.length === 0 || boxVisibleCount > 0) ? '' : 'none';
         });
     }
+    (function initCollapse() {
+        var subs = Array.prototype.slice.call(document.querySelectorAll('.reportBox .subTitle'));
+        subs.forEach(function(sub) {
+            sub.classList.add('isCollapsed');
+            var next = sub.nextElementSibling;
+            if (next && next.classList && next.classList.contains('listContainer')) {
+                next.style.display = 'none';
+            }
+            sub.addEventListener('click', function() {
+                var target = sub.nextElementSibling;
+                if (!target || !target.classList || !target.classList.contains('listContainer')) return;
+                var collapsed = sub.classList.toggle('isCollapsed');
+                if (input.value.trim().length === 0) {
+                    target.style.display = collapsed ? 'none' : '';
+                } else {
+                    target.style.display = collapsed ? 'none' : '';
+                }
+            });
+        });
+    })();
     input.addEventListener('input', applyFilter);
     if (clear) {
         clear.addEventListener('click', function() {
