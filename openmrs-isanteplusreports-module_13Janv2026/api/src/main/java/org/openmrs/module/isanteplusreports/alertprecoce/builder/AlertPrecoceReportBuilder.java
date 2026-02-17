@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
-import javax.xml.bind.DatatypeConverter;
+import java.util.Base64;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -146,7 +146,7 @@ public class AlertPrecoceReportBuilder extends UiUtils {
         out.flush();
         out.close();
 
-        return DatatypeConverter.printBase64Binary(out.toByteArray());
+        return Base64.getEncoder().encodeToString(out.toByteArray());
     }
 
     private ContainerTag buildTables() {

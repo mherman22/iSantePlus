@@ -30,7 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.DatatypeConverter;
+import java.util.Base64;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -373,7 +373,7 @@ public class PnlsReportBuilder extends UiUtils {
         out.flush();
         out.close();
 
-        return DatatypeConverter.printBase64Binary(out.toByteArray());
+        return Base64.getEncoder().encodeToString(out.toByteArray());
     }
 
     private ContainerTag buildTables(List<ReportData> allReportData) {

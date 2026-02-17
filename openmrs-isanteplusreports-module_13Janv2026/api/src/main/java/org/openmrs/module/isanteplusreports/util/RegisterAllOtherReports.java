@@ -9,7 +9,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.context.SessionContext;
 import org.openmrs.module.isanteplusreports.IsantePlusReportsProperties;
 import org.openmrs.module.isanteplusreports.IsantePlusReportsUtil;
-import org.openmrs.module.isanteplusreports.library.indicator.PmtctReportsIndicatorLibrary;
 import org.openmrs.module.isanteplusreports.library.indicator.PrenatalReportsIndicatorLibrary;
 import org.openmrs.module.isanteplusreports.reporting.reports.MalariaIndicatorReport;
 import org.openmrs.module.isanteplusreports.reporting.reports.ObGynIndicatorReport;
@@ -572,13 +571,13 @@ public class RegisterAllOtherReports extends SessionContext {
     }
 
     private static void patientWithIncompleteProphylaxisAgainstTb() {
-        IsantePlusReportsUtil.registerReportsWithStartAndEndDateParams("patientWithIncompleteProphylaxisAgainstTb.sql", "Patients avec Prophylaxie incomplète contre la TB",
-                "Patients avec Prophylaxie incomplète contre la TB", IsantePlusReportsProperties.PATIENT_WITH_INCOMPLETE_PROPHYLAXIS_AGAINST_TB_UUID);
+        IsantePlusReportsUtil.registerReportsWithStartAndEndDateParams("patientWithIncompleteProphylaxisAgainstTb.sql", "Patients VIH+ avec Prophylaxie incomplète contre la TB",
+                "Patients VIH+ avec Prophylaxie incomplète contre la TB", IsantePlusReportsProperties.PATIENT_WITH_INCOMPLETE_PROPHYLAXIS_AGAINST_TB_UUID);
     }
 
     private static void patientScreenedNegativeAgainstTbWithNoProphylaxis() {
-        IsantePlusReportsUtil.registerReportsWithStartAndEndDateParams("patientScreenedNegativeAgainstTbWithNoProphylaxis.sql", "Patients dépistés négatifs pour la TB n’ayant pas reçu de prophylaxie",
-                "Patients dépistés négatifs pour la TB n’ayant pas reçu de prophylaxie", IsantePlusReportsProperties.PATIENT_SCREENED_NEGATIVE_AGAINST_TB_WITH_NO_PROPHYLAXIS_UUID);
+        IsantePlusReportsUtil.registerReportsWithStartAndEndDateParams("patientScreenedNegativeAgainstTbWithNoProphylaxis.sql", "Patients VIH+ dépistés négatifs pour la TB n’ayant pas reçu de prophylaxie",
+                "Patients VIH+ dépistés négatifs pour la TB n’ayant pas reçu de prophylaxie", IsantePlusReportsProperties.PATIENT_SCREENED_NEGATIVE_AGAINST_TB_WITH_NO_PROPHYLAXIS_UUID);
     }
 
     private static void listPatientWithFingerPrint() {

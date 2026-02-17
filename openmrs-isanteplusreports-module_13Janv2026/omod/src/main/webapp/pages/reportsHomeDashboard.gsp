@@ -7,9 +7,9 @@
     def monitoringReports = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.reportingui.reports.monitoring")
     def dataQualityReports = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.reportingui.reports.dataquality")
     def dataExports = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.reportingui.reports.dataexport")
-	def other = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.other")
-	def antenatal = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.antenatal")
-	def patientsStatus = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.patientsstatus")
+    def other = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.other")
+    def antenatal = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.antenatal")
+    def patientsStatus = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.patientsstatus")
     def alertPrecoce = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.alertprecoce")
     def dashboard = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.dashboard")
     def ptme = appFrameworkService.getExtensionsForCurrentUser("org.openmrs.module.isanteplusreports.reports.ptme")
@@ -32,6 +32,50 @@
         { label: "${ ui.escapeJs(ui.message("reportingui.reportsapp.home.title")) }", link: emr.pageLink("reportingui", "reportsapp/home") }
     ];
 </script>
+
+<script type="text/javascript">
+(function(){
+    var m = document.createElement('meta');
+    m.setAttribute('name','viewport');
+    m.setAttribute('content','width=device-width, initial-scale=1.0');
+    document.head.appendChild(m);
+})();
+</script>
+
+<style type="text/css">
+#home-container #apps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(240px, 1fr));
+    grid-gap: 12px;
+}
+#home-container #apps a.button.app.big {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 56px;
+    width: 100%;
+    box-sizing: border-box;
+    float: none !important;
+}
+@media (max-width: 1200px) {
+    #home-container #apps {
+        grid-template-columns: repeat(3, minmax(240px, 1fr));
+    }
+}
+@media (max-width: 900px) {
+    #home-container #apps {
+        grid-template-columns: repeat(2, minmax(240px, 1fr));
+    }
+}
+@media (max-width: 640px) {
+    #home-container #apps {
+        grid-template-columns: 1fr;
+    }
+    #home-container #apps a.button.app.big {
+        width: 100% !important;
+    }
+}
+</style>
 
 
 
