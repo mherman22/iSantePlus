@@ -1,4 +1,4 @@
-<htmlform formUuid="e0a2f073-f263-11f0-9077-32056b2c7c0a"
+<htmlform formUuid="dd2c4fc5-3fea-430a-9442-c65a85d9c320"
           formName="SSP - Première Consultation (Redesign)" 
           formVersion="2.0"
           formAddMetadata="yes" 
@@ -7,7 +7,7 @@
           formIcon="icon-medkit" 
           formShowIf="" 
           formDisplayStyle="Standard"
-          formEncounterType="14cccf3b-f263-11f0-9077-32056b2c7c0a"
+          formEncounterType="12f4d7c3-e047-4455-a607-47a40fe32460"
           formDescription="Redesigned Primary Care Consultation Form">
 
     <style>

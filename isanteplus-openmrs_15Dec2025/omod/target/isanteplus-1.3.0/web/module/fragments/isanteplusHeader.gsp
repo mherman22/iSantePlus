@@ -210,7 +210,7 @@
        <div><a href="${ logoLinkUrl }" >
            <img src="${ logoIconUrl }" />
        </a></div>
-        <div style="margin-left: 10px; display: flex; align-items: center;"><span style="font-size:small;">v2.8.5</span></div>
+        <div style="margin-left: 10px; display: flex; align-items: center;"><span style="font-size:small;">v2.8.8</span></div>
         <div class="hamburger-menu">
             &#9776; <!-- Hamburger Icon -->
         </div>

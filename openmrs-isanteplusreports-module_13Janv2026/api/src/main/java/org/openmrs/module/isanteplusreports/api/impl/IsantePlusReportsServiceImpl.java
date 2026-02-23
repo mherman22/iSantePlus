@@ -291,7 +291,7 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
 
     @Override
     public List<Obs> getMotifsConsultattionLastSixMonths(Patient patient) {
-        List<Obs> motifsConsultationList = new ArrayList<Obs>();
+        List<Obs> motifsConsultationList = new ArrayList<>();
         Integer motifsConsultation = 159614;
         int i = 0;
         Concept testsOrdered = Context.getConceptService().getConcept(motifsConsultation);
@@ -308,7 +308,7 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
 
     @Override
     public List<Obs> getImpressionsCliniques(Patient patient) {
-        List<Obs> impressionsCliniquesList = new ArrayList<Obs>();
+        List<Obs> impressionsCliniquesList = new ArrayList<>();
         Integer impressionsCliniques = 1284;
         int i = 0;
         Concept testsOrdered = Context.getConceptService().getConcept(impressionsCliniques);
@@ -325,7 +325,7 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
 
     @Override
     public List<Obs> getDispensingDrugs(Patient patient) {
-        List<Obs> drugsHistory = new ArrayList<Obs>();
+        List<Obs> drugsHistory = new ArrayList<>();
         Integer drugsConceptId = 1282;
         Integer dateDrugsConceptId = 1276;
         Concept drugsDispensed = Context.getConceptService().getConcept(drugsConceptId);

@@ -153,10 +153,12 @@
     }
 
     .patient-data-grid {
+        width: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 15px;
         margin-top: 15px;
+        /*border: 1px solid green;*/
     }
 
     .patient-data-item {
@@ -164,6 +166,7 @@
         line-height: 1.5;
         background: white;
         padding: 8px;
+        /*width: 45%;*/
         border-radius: 4px;
         border: 1px solid #eee;
     }
@@ -244,12 +247,15 @@
         }
 
         .patient-data-grid {
-            grid-template-columns: 1fr;
+            width: 99%;
+            /*grid-template-columns: 1fr;*/
             gap: 10px;
+            /*border: 1px solid red;*/
+
         }
         
         .identifiers {
-            width: 100%;
+            width: 94%;
             box-sizing: border-box;
             border-left: none;
             border-top: 4px solid #566a8b;

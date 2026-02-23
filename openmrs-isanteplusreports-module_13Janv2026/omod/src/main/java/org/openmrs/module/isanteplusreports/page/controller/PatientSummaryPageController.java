@@ -26,7 +26,7 @@ public class PatientSummaryPageController {
 		DataSet dataset = registerSummary.patientDemographic(patient);
 		List<DataSetColumn> columns = null;
 		Iterator<DataSetRow> columnsValues = null;
-		if(dataset != null){
+		if(dataset != null) {
 			/*model.addAttribute("demographicColumns", dataset.getMetaData().getColumns());
 			model.addAttribute("demographicValues", dataset.iterator());*/
 			columns = dataset.getMetaData().getColumns();

@@ -93,10 +93,10 @@ public class PatientPageController {
         model.addAttribute("appContextModel", contextModel);
 
         List<Extension> overallActions = appFrameworkService.getExtensionsForCurrentUser(dashboard + ".overallActions", contextModel);
-        System.out.println("extension : DDDDD ");
-        for (Extension extension : overallActions) {
-            System.out.println("extension : " + extension.getLabel());
-        }
+//        System.out.println("extension : DDDDD ");
+//        for (Extension extension : overallActions) {
+//            System.out.println("extension : " + extension.getLabel());
+//        }
         Collections.sort(overallActions);
         model.addAttribute("overallActions", overallActions);
 

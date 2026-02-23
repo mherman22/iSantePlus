@@ -265,7 +265,7 @@ form, .form {
             <% } %>
             </a>
         </div>
-        <div style="margin-top:5px; margin-left: -5px"><span style="font-size: small;">v2.8.5</span></div>
+        <div style="margin-top:5px; margin-left: -5px"><span style="font-size: small;">v2.8.8</span></div>
     </div>
 </header>
 <br/><br/>

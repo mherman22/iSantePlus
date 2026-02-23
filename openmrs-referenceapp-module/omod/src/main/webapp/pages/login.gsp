@@ -110,7 +110,7 @@ ${ui.includeFragment("referenceapplication", "infoAndErrorMessages")}
             <img src="${ui.resourceLink("referenceapplication", "images/openMrsLogo.png")}"/>
             <% } %>
         </a></div>
-        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.5</span></div>
+        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.8</span></div>
     </div>
 </header>
 

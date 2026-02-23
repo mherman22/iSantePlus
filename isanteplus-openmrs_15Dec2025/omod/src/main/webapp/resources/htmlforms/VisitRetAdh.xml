@@ -1288,13 +1288,6 @@
 						</td> -->
 						<td>
 
-							<obs 
-								id="" 
-								conceptId="CIEL:1712" 
-								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:1067"
-								answerLabels="Primaire,Secondaire,Universitaire,Aucune éducation formelle,Analphabète,Inconnue"
-								default="Travailleur social"
-							/>
 
 							<obs conceptId="CIEL:1712"
 								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785,CIEL:160294,CIEL:1067,CIEL:1067"
@@ -1303,10 +1296,7 @@
 						</td>
 						<td>
 
-						<obs conceptId="CIEL:1712"
-								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785"
-								answerLabels="Peut s’offrir régulièrement à manger au moins 2 fois/jour,Peut s’offrir régulièrement à manger au moins 1 fois/jour,Ne peut pas s’offrir à manger certains jours"
-						/>
+
 
 							<obs conceptId="CIEL:1712"
 								answerConceptIds="CIEL:1713,CIEL:1714,CIEL:159785"

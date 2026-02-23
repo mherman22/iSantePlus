@@ -112,31 +112,6 @@ li {
                 </ul>
             </div>
 
-            <div class="div">
-                <h5 id="toggleEmergencyForm" style="cursor:pointer;">${
-                        ui.message("isanteplus.isanteForms.categories.emergency")}
-                    <i id="fm7" class="icon-chevron-right" style="float: right; margin: 1px 10px; font-size: 14px"></i>
-                </h5>
-                <ul id="emergencyForm">
-                    <% emergencyForms.each { %>
-                    <% if(it.name == "Signes Vitaux") { %>
-                    <li><a href="/${contextPath}/isanteplus/vitals.page?app=isanteplus.vitals&patientId=${patientId}&visitId=${visitId}">${ui.format(it.name)}</a></li>
-                    <% } else { %>
-                    <li><a href="${ui.format(it.url)}">${ui.format(it.name)}</a></li>
-                    <% } } %>
-                </ul>
-            </div>
-
-            <div class="div">
-                <h5 id="toggleInPatientForm" style="cursor:pointer;">${ui.message("isanteplus.isanteForms.categories.inpatient")}
-                    <i id="fm8" class="icon-chevron-right" style="float: right; margin: 1px 10px; font-size: 14px"></i>
-                </h5>
-                <ul id="inPatientForm">
-                    <% inPatientForms.each { %>
-                    <li><a href="${ui.format(it.url)}">${ui.format(it.name)}</a></li>
-                    <% } %>
-                </ul>
-            </div>
 
             <div class="div">
                 <h5 id="toggleOtherForms" style="cursor:pointer;">${

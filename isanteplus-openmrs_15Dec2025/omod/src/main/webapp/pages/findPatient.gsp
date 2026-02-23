@@ -3,560 +3,338 @@
     ui.includeCss("coreapps", "clinicianfacing/patient.css")
     ui.includeJavascript("coreapps", "custom/deletePatient.js")
 %>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 
-.form-group {
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.form-control {
-    border-radius: 10px;
-    height: 30px;
-    padding: 8px 15px;
-    border: 1px solid #ced4da;
-    box-shadow: none;
-    /*transition: all 0.1s ease-in-out;*/
-    width: 95%;
-    font-size: 14px;
-    margin-bottom: -10px;
+body {
+    font-family: Arial, sans-serif;
+    /*background: #f4f7fb;*/
 }
 
-.form-control:focus {
-    border: 1px solid #ced4da;
-    background: #fff;
-    outline-color: #8bafd4;
-}
-
+/* Container */
 .contain {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 .box {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    width: 56%;
-    padding: 20px;
-    border: 1px solid #f1f4f8;
-    /*border: 1px solid red;*/
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 5px -5px;
-
-}
-
-.results-container {
-    flex: 1;
-}
-
-
-/*--------------pagination--------------------------------------*/
-.pagination {
-    display: flex;
-    gap: 6px;
-    justify-content: end;
-    align-items: end;
-    margin-top: 15px;
-}
-
-.pagination button {
+    width: 60%;
     background: #fff;
-    border: 1px solid #ccc;
-    color: #333;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.pagination button.active {
-    background: #3498db;
-    color: white;
-    font-weight: bold;
-}
-
-.pagination button:hover {
-    background: #f2f2f2;
-}
-
-.pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-/*------------------------------------------------*/
-
-/*----------spinner--------------------*/
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-
-/*---------------------------------------*/
-/* ===== Google Style Results ===== */
-
-#myTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-#myTable thead {
-    display: none;
-    border-color: #fff;
-}
-#myTable tr {
-    border-color: #fff;
-}
-#myTable td {
-    background: #fff;
-    border-color: #fff;
-    /*border: 1px solid green;*/
-    padding: 5px 0px;
-    display: flex;
-    justify-content: center;
-}
-
-#myTable tr {
-    border-bottom: 1px solid #fff;
-}
-
-.patient-card {
-    width: 100%;
-    padding: 6px 12px;
-    background: #fff;
-    border: 1px solid #f6fafd;
-    /*border: 1px solid red;*/
-    border-radius: 10px;
+    padding: 25px;
     box-shadow: 0 3px 2px -3px;
+    border-radius: 1px;
+    border: 1px solid #f4f5f5;
 }
+
+.page-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+/* SEARCH */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 40px 10px 35px;
+    border: 1px solid #dce3ec;
+    font-size: 14px;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.2s ease;
+}
+
+.search-input:focus {
+    border-color: #448091;
+    box-shadow: 0 0 0 2px rgba(68,128,145,0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #888;
+}
+
+.clear-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    display: none;
+}
+
+.clear-icon:hover {
+    color: #e74c3c;
+}
+
+/* Patient Card */
+.patient-card {
+    background: #ffffff;
+    border: 1px solid #e3e8ef;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
 .patient-card:hover {
-    background: #f7fbff;
+    background: #f0f7ff;
+    transform: translateY(-2px);
+}
+
+.patient-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #448091;
+    margin-bottom: 6px;
 }
 
 .patient-meta {
     font-size: 12px;
     color: #555;
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
-.patient-meta span {
-    display: inline-block;
-    margin-right: 15px;
-}
-
 
 .patient-address {
     font-size: 12px;
     color: #777;
+    margin-top: 6px;
 }
 
-.patient-name {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 5px;
-    color: #3c5a81;
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 6px;
 }
 
-.patient-meta span {
-    display: inline-block;
-    margin-right: 15px;
+.page-btn {
+    padding: 6px 10px;
+    border: 1px solid #dce3ec;
+    cursor: pointer;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 4px;
 }
 
-.patient-address {
-    margin-top: 4px;
-    color: #666;
+.page-btn:hover {
+    background: #f0f7ff;
 }
 
-.icon-map-marker {
-    margin-right: 5px;
-    color: #66a7aa;
-}
-#clearHistory {
-    font-size: 12px;
+.page-btn.active {
+    background: #448091;
+    color: white;
+    border-color: #448091;
 }
 
+/* Spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     .box {
-        width: 90%;
-        padding: 0px 12px;
-    }
-    .form-control {
-        height: 28px;
-        border: 1px solid #ced4da;
-        font-size: 13px;
-        /*margin-bottom: -20px;*/
-    }
-    .patient-name {
-        font-weight: bold;
-        font-size: 13px;
-    }
-    .patient-meta span {
-        margin-right: 5px;
-    }
-    .patient-address {
-        margin-top: 2px;
-        font-size: 11px;
-    }
-    #clearHistory{
-        font-size: 10px;
+        width: 95%;
+        padding: 15px;
     }
 }
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .box {
-        width: 80%;
-        padding: 0px 12px;
-    }
-}
-
-
 </style>
 
-<div class="contain" style="width: 100%;">
+<div class="contain">
+    <div class="box">
 
-    <div class="box results-container">
-
-        <div style="margin-left: 20px; margin: auto;">
-            <h2>Rechercher dossier patient</h2>
+        <div class="page-title">
+            Rechercher dossier patient
         </div>
-        <br/>
 
-        <div class="form-group">
-
-            <div>
-                ${ ui.includeFragment("isanteplus", "findPatientCriteria") }
-            </div>
-
-            <div id="spinner" style="
-            display: none;
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            z-index: 10;
-            justify-content: center;
-            align-items: center;
-            ">
-                <div style="
-                width: 50px;
-                height: 50px;
-                border: 6px solid #ccc;
-                border-top: 6px solid #007bff;
-                border-radius: 50%;
-                animation: spin 0.6s linear infinite;
-                "></div>
-            </div>
-            <table id="myTable" style="margin-top: 30px; width:100%;">
-                <tbody style="background: #fff">
-                </tbody>
-            </table>
+        <!-- SEARCH -->
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search" class="search-input"
+                   placeholder="Rechercher par nom, ID ou critère...">
+            <span class="clear-icon" id="clearIcon">✖</span>
         </div>
-        <br/>
-        <div class="pagination" id="pagination" style="text-align:center; margin:20px; border: 1px solid white"></div>
-        <a href="" style="margin-bottom: 5px" id="clearHistory"><u>Effacer l’historique</u></a>
+
+        <!-- Spinner -->
+        <div id="spinner" style="
+        display:none;
+        position:absolute;
+        top:0; left:0;
+        width:100%; height:100%;
+        background:rgba(255,255,255,0.7);
+        justify-content:center;
+        align-items:center;
+        z-index:10;">
+            <div style="
+            width:40px;height:40px;
+            border:5px solid #ccc;
+            border-top:5px solid #448091;
+            border-radius:50%;
+            animation:spin 0.6s linear infinite;">
+            </div>
+        </div>
+
+        <!-- Container for patient cards -->
+        <div id="patientContainer"></div>
+
+        <!-- Pagination -->
+        <div  class="pagination" id="pagination"></div>
+
+        <div style="text-align:center;margin-top:40px; float: left">
+            <a href="" id="clearHistory"><u>Effacer l’historique</u></a>
+        </div>
+
     </div>
-
 </div>
 
-<script type="text/javascript">
-
+<script>
     jq(function () {
-
-        jq('#patient-search').focus();
 
         const input = jq('#search');
         const clearIcon = jq('#clearIcon');
-        const tbody = jq('#myTable tbody');
+        const container = jq('#patientContainer');
+        const spinner = jq('#spinner');
 
-        /* ===========================
-           ICON CLEAR
-        =========================== */
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let patients = [];
 
+        // Clear icon
         input.on('input', function () {
             clearIcon.toggle(jq(this).val().length > 0);
         });
 
         clearIcon.on('click', function () {
             input.val('').trigger('input').focus();
-            tbody.empty();
+            loadHistory();
         });
 
-        /* ===========================
-           HISTORIQUE (AFFICHAGE)
-        =========================== */
-
+        // Load history
         function loadHistory() {
+            patients = JSON.parse(localStorage.getItem('patientsConsultes')) || [];
+            renderPatients();
+        }
 
-            let historique = JSON.parse(localStorage.getItem('patientsConsultes')) || [];
-            tbody.empty();
+        // Render patient cards
+        function renderPatients() {
+            container.empty();
 
-            if (historique.length === 0) {
-                tbody.html('<tr class="no-data"><td style="text-align:center;color:#777;">Aucun patient consulté</td></tr>');
+            if (patients.length === 0) {
+                container.html('<div style="text-align:center;color:#777;">Aucun patient consulté</div>');
+                jq('#pagination').empty();
                 return;
             }
 
-            historique.forEach(p => {
+            const totalPages = Math.ceil(patients.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = 1;
 
-                const row =
-                    "<tr class='patient-row' data-patient-id='" + p.patientId + "'>" +
-                    "<td>" +
-                    "<div class='patient-card'>" +
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
 
-                    "<div class='patient-name'>" + (p.fullName || "") + "</div>" +
-
+            patients.slice(start, end).forEach(p => {
+                const card = jq(
+                    "<div class='patient-card' data-patient-id='"+p.patientId+"'>" +
+                    "<div class='patient-name'>"+(p.fullName||"")+"</div>" +
                     "<div class='patient-meta'>" +
-                    "<span><b>Sexe:</b> " + (p.gender || "") + "</span> " +
-                    "<span><b>Âge:</b> " + (p.patientAge || "") + "</span> " +
-                    "<span><b>Naissance:</b> " + (p.birthDate || "") + "</span>" +
+                    "<span><b>Sexe:</b> "+(p.gender||"")+"</span>" +
+                    "<span><b>Âge:</b> "+(p.patientAge||"")+"</span>" +
+                    "<span><b>Naissance:</b> "+(p.birthDate||"")+"</span>" +
                     "</div>" +
-
-                    "<div class='patient-address'><i class='icon-map-marker'></i>" + (p.adresses || "") + "</div>" +
-
-                    "</div>" +
-                    "</td>" +
-                    "</tr>";
-
-                tbody.append(row);
+                    "<div class='patient-address'>"+(p.adresses||"")+"</div>" +
+                    "</div>"
+                );
+                card.click(() => openPatient(p));
+                container.append(card);
             });
+
+            renderPagination(totalPages);
         }
 
-        loadHistory();
+        function renderPagination(totalPages) {
+            const pagination = jq('#pagination');
+            pagination.empty();
+            if (totalPages <= 1) return;
 
-        /* ===========================
-           CLICK SUR LIGNE (UN SEUL HANDLER)
-        =========================== */
+            const prev = jq('<div class="page-btn">«</div>');
+            prev.click(() => { if (currentPage>1) {currentPage--; renderPatients();} });
+            pagination.append(prev);
 
-        jq('#myTable').off('click', 'tr').on('click', 'tr', function () {
+            let start = Math.max(1, currentPage-2);
+            let end = Math.min(totalPages, start+4);
+            if (end-start<4) start = Math.max(1, end-4);
 
-            const patientId = jq(this).data('patient-id');
-            if (!patientId) return;
+            for(let i=start;i<=end;i++){
+                const btn = jq('<div class="page-btn">'+i+'</div>');
+                if(i===currentPage) btn.addClass('active');
+                btn.click(() => {currentPage=i; renderPatients();});
+                pagination.append(btn);
+            }
 
-            // 🔥 On récupère les infos propres depuis les div internes
-            const patient = {
-                patientId: patientId,
-                fullName: jq(this).find('.patient-name').text().trim(),
-                gender: jq(this).find('.patient-meta span').eq(0).text().replace('Sexe:', '').trim(),
-                patientAge: jq(this).find('.patient-meta span').eq(1).text().replace('Âge:', '').trim(),
-                birthDate: jq(this).find('.patient-meta span').eq(2).text().replace('Naissance:', '').trim(),
-                adresses: jq(this).find('.patient-address').text().trim()
-            };
+            const next = jq('<div class="page-btn">»</div>');
+            next.click(() => { if(currentPage<totalPages){currentPage++; renderPatients();} });
+            pagination.append(next);
+        }
 
-            let historique = JSON.parse(localStorage.getItem('patientsConsultes')) || [];
+        function openPatient(p) {
+            let hist = JSON.parse(localStorage.getItem('patientsConsultes')) || [];
+            hist = hist.filter(x => x.patientId!==p.patientId);
+            hist.unshift(p);
+            if(hist.length>50) hist.pop();
+            localStorage.setItem('patientsConsultes', JSON.stringify(hist));
+            window.location.href="/openmrs/coreapps/clinicianfacing/patient.page?patientId="+p.patientId;
+        }
 
-            // Supprimer si déjà existant
-            historique = historique.filter(p => p.patientId !== patient.patientId);
-
-            // Ajouter en premier
-            historique.unshift(patient);
-
-            // Limite à 50
-            if (historique.length > 50) historique.pop();
-
-            localStorage.setItem('patientsConsultes', JSON.stringify(historique));
-
-            window.location.href =
-                "/openmrs/coreapps/clinicianfacing/patient.page?patientId=" + patientId;
-        });
-
-
-        /* ===========================
-           CLEAR HISTORY
-        =========================== */
-
-        jq('#clearHistory').click(function () {
+        // Clear history
+        jq('#clearHistory').click(function(e){
+            e.preventDefault();
             localStorage.removeItem('patientsConsultes');
             loadHistory();
         });
 
-        /* ===========================
-           RECHERCHE AJAX
-        =========================== */
-
-        jq("#search").on("keyup", function () {
-
+        // AJAX search
+        input.on('keyup', function(){
             const criteria = jq(this).val().trim();
-            const spinner = jq("#spinner");
-
-            if (criteria.length < 2) {
+            if(criteria.length<2){
                 loadHistory();
                 return;
             }
-
             spinner.show();
-
             jq.ajax({
-                url: "${ ui.actionLink('isanteplus', 'findPatientCriteria', 'findPatientByCriteria') }",
+                url: "${ ui.actionLink('isanteplus','findPatientCriteria','findPatientByCriteria') }",
                 type: "POST",
                 data: { criteria: criteria },
-
-                success: function (response) {
-
-                    tbody.empty();
-
-                    if (!response || response.length === 0) {
-                        tbody.append("<tr class='no-data'><td>Aucun résultat</td></tr>");
-                        return;
-                    }
-
-                    jq.each(response, function (i, p) {
-
-                        console.log("p======",p)
-                        const row =
-                            "<tr class='patient-row' data-patient-id='" + p.patientId + "'>" +
-                            "<td>" +
-                            "<div class='patient-card'>" +
-
-                            "<div class='patient-name'>" + (p.fullName || "") + "</div>" +
-
-                            "<div class='patient-meta'>" +
-                            "<span><b>Sexe:</b> " + (p.gender || "") + "</span> " +
-                            "<span><b>Âge:</b> " + (p.patientAge || "") + "</span> " +
-                            "<span><b>Naissance:</b> " + (p.birthDate || "") + "</span>" +
-                            "</div>" +
-
-                            "<div class='patient-address'><i class='icon-map-marker'></i>" + (p.adresses || "") + "</div>" +
-
-                            "</div>" +
-                            "</td>" +
-                            "</tr>";
-
-                        tbody.append(row);
-                    });
+                success: function(response){
+                    patients = response || [];
+                    currentPage = 1;
+                    renderPatients();
                 },
-
-                complete: function () {
-                    spinner.hide();
-                },
-
-                error: function (xhr, status, error) {
-                    console.error("Erreur AJAX:", error);
-                }
+                complete: function(){ spinner.hide(); }
             });
         });
 
+        loadHistory();
+
     });
-
-
-    function displayDataTable() {
-        document.addEventListener("DOMContentLoaded", function () {
-            const rowsPerPage = 15;
-            let currentPage = 1;
-
-            const table = document.getElementById('myTable');
-            const tbody = table.querySelector('tbody');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-
-            function displayTable(page) {
-                const start = (page - 1) * rowsPerPage;
-                const end = start + rowsPerPage;
-
-                rows.forEach((row, index) => {
-                    row.style.display = (index >= start && index < end) ? '' : 'none';
-                });
-
-                displayPagination();
-                addRowClickListeners();
-            }
-
-            function displayPagination() {
-                const pagination = document.getElementById('pagination');
-                pagination.innerHTML = '';
-                const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-                // === Bouton précédent ===
-                const prevBtn = document.createElement('button');
-                prevBtn.textContent = '<<';
-                styleButton(prevBtn);
-                prevBtn.disabled = currentPage === 1;
-                prevBtn.onclick = () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        displayTable(currentPage);
-                    }
-                };
-                pagination.appendChild(prevBtn);
-
-                // === Les 5 premières pages ===
-                const maxPagesToShow = Math.min(15, totalPages);
-                for (let i = 1; i <= maxPagesToShow; i++) {
-                    const btn = document.createElement('button');
-                    btn.textContent = i;
-                    styleButton(btn);
-                    if (i === currentPage) btn.style.background = '#bcced8';
-                    btn.onclick = () => {
-                        currentPage = i;
-                        displayTable(currentPage);
-                    };
-                    pagination.appendChild(btn);
-                }
-
-                // === Bouton Dernière page ===
-                if (totalPages > 15) {
-                    const lastBtn = document.createElement('button');
-                    lastBtn.textContent = 'Dernière (' + totalPages + ')';
-                    styleButton(lastBtn);
-                    if (currentPage === totalPages) lastBtn.style.background = '#bcced8';
-                    lastBtn.onclick = () => {
-                        currentPage = totalPages;
-                        displayTable(currentPage);
-                    };
-                    pagination.appendChild(lastBtn);
-                }
-
-                // === Bouton suivant ===
-                const nextBtn = document.createElement('button');
-                nextBtn.textContent = '>>';
-                styleButton(nextBtn);
-                nextBtn.disabled = currentPage === totalPages;
-                nextBtn.onclick = () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        displayTable(currentPage);
-                    }
-                };
-                pagination.appendChild(nextBtn);
-            }
-
-            function styleButton(btn) {
-                btn.style.background = '#fff';
-                btn.style.border = '1px solid #ccc';
-                btn.style.padding = '2px 10px';
-                btn.style.fontSize = '13px';
-                btn.style.cursor = 'pointer';
-                btn.style.height = '26px';
-                btn.style.borderRadius = '5px';
-                btn.style.margin = '0 2px';
-            }
-
-            function addRowClickListeners() {
-                rows.forEach(row => {
-                    if (row.style.display !== 'none') {
-                        row.style.cursor = 'pointer';
-                        row.onclick = () => {
-                            const patientId = row.getAttribute('data-patient-id');
-                            window.location.href = "/openmrs/coreapps/clinicianfacing/patient.page?patientId=" + patientId;
-                        }
-                    } else {
-                        row.onclick = null;
-                    }
-                });
-            }
-
-            displayTable(currentPage);
-        });
-    }
-
-    displayDataTable();
 </script>
-
