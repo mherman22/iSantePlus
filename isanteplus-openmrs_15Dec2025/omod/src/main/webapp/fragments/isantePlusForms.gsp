@@ -3,13 +3,13 @@
 <style>
 
 /* SECTION PRINCIPALE */
-.info-section {
-    width: 72%;
-    margin: 20px auto;
+.info-section-form {
+    width: 72.2%;
+    margin: auto;
     /*background: #f9fbfd;*/
     padding: 20px;
     /*border-radius: 12px;*/
-    /*border: 1px solid red;*/
+    /*border: 1px solid green;*/
 }
 
 /* TITRE */
@@ -27,6 +27,7 @@
     gap: 20px;
     position: relative;
     z-index: 1;
+    /*border: 1px solid red;*/
 }
 
 /* CARD */
@@ -34,11 +35,10 @@
     position: relative;
     z-index: 1;
     background: #ffffff;
-    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     overflow: visible;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    /*border: 1px solid red;*/
+    border: 1px solid #f2f5f5;
 }
 
 /* Quand actif → passe au-dessus */
@@ -70,6 +70,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    font-weight: bold;
 }
 
 /* Emoji circulaire coloré */
@@ -99,8 +100,11 @@
     transition: transform 0.3s ease;
 }
 
-.form-card-menu h5.active i.icon-chevron-right {
+.form-card-menu h5.active i.icon-caret-right {
     transform: rotate(90deg);
+}
+.icon-caret-right {
+    font-size: 20px;
 }
 
 /* DROPDOWN */
@@ -111,7 +115,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
+    width: 89%;
     background: white;
     border-radius: 0 0 12px 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -148,11 +152,14 @@
     .formlinks {
         grid-template-columns: 1fr;
     }
+    .info-section-form {
+        width: 90%;
+    }
 }
 
 </style>
 
-<div class="info-section">
+<div class="info-section-form">
 
     <div class="info-header">
         <h3>${ui.message("isanteplus.iSantePlusForms")}</h3>
@@ -167,7 +174,7 @@
                     <span class="category-icon icon-primary">🩺</span>
                     ${ui.message("isanteplus.isanteForms.categories.primaryCare")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% primaryCareForms.each { %>
@@ -183,7 +190,7 @@
                     <span class="category-icon icon-lab">🧪</span>
                     ${ui.message("isanteplus.isanteForms.categories.lab")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% labForms.each { %>
@@ -199,7 +206,7 @@
                     <span class="category-icon icon-obygn">🤰</span>
                     ${ui.message("isanteplus.isanteForms.categories.obygn")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% obygnForms.each { %>
@@ -216,7 +223,7 @@
                     <span class="category-icon icon-hiv">🦠</span>
                     ${ui.message("isanteplus.isanteForms.categories.hivCare")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% hivCareForms.each { %>
@@ -232,7 +239,7 @@
                     <span class="category-icon icon-psycho">🧠</span>
                     ${ui.message("isanteplus.isanteForms.categories.psychoSocial")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% psychoSocialForms.each { %>
@@ -248,7 +255,7 @@
                     <span class="category-icon icon-emergency">🚑</span>
                     ${ui.message("isanteplus.isanteForms.categories.emergency")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% emergencyForms.each { %>
@@ -272,7 +279,7 @@
                     <span class="category-icon icon-inpatient">🏥</span>
                     ${ui.message("isanteplus.isanteForms.categories.inpatient")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% inPatientForms.each { %>
@@ -288,7 +295,7 @@
                     <span class="category-icon icon-other">📁</span>
                     ${ui.message("isanteplus.isanteForms.categories.other")}
                 </span>
-                <i class="icon-chevron-right"></i>
+                <i class="icon-caret-right"></i>
             </h5>
             <ul>
                 <% otherForms.each { %>
