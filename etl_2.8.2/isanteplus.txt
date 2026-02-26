@@ -1,16 +1,16 @@
 
-Nord ---> hyP&rion!NORD2020
-Nord-Est ---> hyP&rion!NORE2020
-Nord-Ouest --->	hyP&rion!NORO2020
-Artibonite --->	hyP&rion!ARTI2021
-Centre ---> hyP&rion!CENT2021
-Ouest ---> hyP&rion!OUES2021
-Grand'Anse --->	hyP&rion!GRAN2022
-Nippes ---> hyP&rion!NIPP2022
-Sud ---> hyP&rion!SUDD2022
-Sud-Est ---> hyP&rion!SUDE2022
+Nord ---> 
+Nord-Est ---> 
+Nord-Ouest --->	
+Artibonite --->	
+Centre ---> 
+Ouest ---> 
+Grand'Anse --->	
+Nippes ---> 
+Sud ---> 
+Sud-Est ---> 
 
-	D&moiSaP@2025
+	Demo Pass
 	1.1-SNAPSHOT
 	
 CREATE USER 'root'@'10.2.109.13' IDENTIFIED BY 'bioplugin@!!';
@@ -35,7 +35,7 @@ select l.location_id, l.name, a.value_reference, l.address3, l.city_village, sta
      
 --3. Delete the isanteplus database
      sudo service mysql.server restart
-     mysql -uroot -p'jO3!u7US&#rl'
+     mysql -uroot -p''
      DROP DATABASE isanteplus;
      
 --4. Create the isanteplus database
