@@ -7,6 +7,7 @@
 
     appContextModel.put("returnUrl", ui.thisUrl())
 %>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <script type="text/javascript">
@@ -91,183 +92,243 @@
 </script>
 
 <style type="text/css">
-    #container {
-        font-family: "OpenSans", Arial, sans-serif;
-        color: #363463;
-        font-size: small;
-    }
 
-    .sticky-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.98);
-        border-bottom: 1px solid #ddd;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        z-index: 9999;
-        padding: 10px 20px;
-        display: none;
-        box-sizing: border-box;
-    }
+/* ================= GLOBAL ================= */
+#container-header {
+    font-family: "Inter", "OpenSans", Arial, sans-serif;
+    width: 100%;
+    margin: auto;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-size: 12px;
+}
 
+/* ================= STICKY HEADER ================= */
+.sticky-header {
+    position: fixed;
+    left: 0;
+    width: 98%;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid #e6e9ef;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    z-index: 9999;
+    padding: 14px 30px;
+    display: none;
+    backdrop-filter: blur(8px);
+    /*border: 1px solid darkgreen;*/
+}
+
+.sticky-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.sticky-name {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* ================= MAIN CARD ================= */
+.patient-header {
+    width: 98%;
+    display: flex;
+    /*flex-wrap: wrap;*/
+    gap: 25px;
+    background: #ffffff;
+    padding: 15px;
+    margin: auto;
+    border-radius: 10px;
+    /*box-shadow: 0 10px 35px rgba(0,0,0,0.05);*/
+    box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    /*margin-top: -20px;*/
+    transition: all 0.3s ease;
+    border: 1px solid #ebf1fa;
+}
+
+/* ================= DEMOGRAPHICS ================= */
+.demographics {
+    width: 78%;
+    /*border: 1px solid red;*/
+}
+
+.demographics .name {
+    /*font-size: 1.9em;*/
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #1a2b4c;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.demographics .name em {
+    /*font-size: 0.65em;*/
+    font-weight: 500;
+    text-transform: uppercase;
+    /*letter-spacing: 0.5px;*/
+    color: #8898aa;
+}
+
+.gender-age {
+    /*font-size: 0.85em;*/
+    color: #6c7a89;
+}
+
+/* ================= DATA GRID ================= */
+.patient-data-grid {
+    width: 100%;
+    display: flex;
+    /*grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));*/
+    gap: 20px;
+    margin-top: 20px;
+    /*border: 1px solid darkgreen;*/
+}
+
+.patient-data-item {
+    background: linear-gradient(145deg,#ffffff,#ffffff,#f9fdff);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #eef1f6;
+    /*border-left: 4px solid #566a8b;*/
+    transition: 0.25s ease;
+    width: 80%;
+}
+
+.patient-data-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.patient-data-item i {
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #7b8ca8;
+    display: block;
+    margin-bottom: 4px;
+    font-style: normal;
+}
+
+.patient-data-item b {
+    font-size: 11px;
+    /*font-weight: 600;*/
+    color: #2c3e50;
+}
+
+/* ================= IDENTIFIERS CARD ================= */
+.identifiers {
+    flex: 1;
+    background: #ffffff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+    border: 1px solid #eef1f6;
+    border-right: 4px solid #566a8b;
+    float: right;
+    /*height: fit-content;*/
+}
+
+.identifiers em {
+    display: block;
+    /*font-weight: 600;*/
+    color: #5a6c90;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    font-style: normal;
+}
+
+
+.identifiers span {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-family: "Courier New", monospace;
+    font-weight: 600;
+    color: #1f2d3d;
+}
+
+#contactInfoContent{
+    font-size: 18px;
+}
+
+/* ================= UNKNOWN PATIENT ================= */
+.unknown-patient {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 18px;
+}
+
+/* ================= SECOND LINE FRAGMENTS ================= */
+.secondLineFragments {
+    width: 100%;
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
     .patient-header {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        flex-direction: column;
+        /*padding: 20px;*/
+    }
+    .identifiers {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    #container-header {
+        width: 100%;
+        margin: 0px;
+        margin-top: -10px;
         margin-bottom: 10px;
+        /*border: 1px solid red;*/
+    }
+    .sticky-header {
+        width: 87%;
     }
 
-    .demographics {
-        flex: 2;
-        min-width: 300px;
-        margin-right: 20px;
+    .patient-header{
+        width: 90%;
+    }
+    .demographics{
+        width: 100%;
     }
 
     .demographics .name {
         font-size: 1.5em;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #00463f;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
     }
-    
-    .demographics .name > span {
-        margin-right: 10px;
+    .patient-data-item{
+        width: 92%;
     }
 
-    .demographics .gender-age {
-        display: block;
-        margin-top: 5px;
-        font-size: 0.8em;
-        color: #555;
-        font-weight: normal;
-    }
 
     .patient-data-grid {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 15px;
-        margin-top: 15px;
-        /*border: 1px solid green;*/
+        flex-direction: column;
+        /*border: 1px solid red;*/
     }
-
-    .patient-data-item {
-        font-size: 0.95em;
-        line-height: 1.5;
-        background: white;
-        padding: 8px;
-        /*width: 45%;*/
-        border-radius: 4px;
-        border: 1px solid #eee;
-    }
-
-    .patient-data-item i {
-        font-weight: 600;
-        color: #566a8b;
-        font-style: normal;
-        display: block;
-        font-size: 0.85em;
-        margin-bottom: 2px;
-    }
-
-    .patient-data-item b {
-        color: #333;
-        font-weight: 500;
-    }
-
     .identifiers {
-        flex: 1;
-        min-width: 200px;
-        background: #eef2f5;
-        padding: 15px;
-        border-radius: 4px;
-        border-right: 4px solid #566a8b;
-        height: fit-content;
+        width: 80%;
+        /*border: 1px solid red;*/
     }
+}
 
-    .identifiers em {
-        display: block;
-        font-weight: bold;
-        color: #566a8b;
-        margin-bottom: 3px;
-        font-style: normal;
-        text-transform: uppercase;
-        font-size: 0.75em;
-        letter-spacing: 0.5px;
-    }
-
-    .identifiers span {
-        display: block;
-        font-size: 1.1em;
-        margin-bottom: 12px;
-        font-family: "Courier New", monospace;
-        color: #333;
-        font-weight: 600;
-    }
-    
-    .identifiers .add-id {
-        margin-top: 5px;
-    }
-
-    .secondLineFragments {
-        width: 100%;
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid #eee;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        justify-content: flex-start;
-    }
-
-    @media (max-width: 768px) {
-        .patient-header {
-            flex-direction: column;
-            padding: 10px;
-        }
-
-        .demographics {
-            margin-right: 0;
-            margin-bottom: 20px;
-            min-width: 100%;
-        }
-        
-        .demographics .name {
-            font-size: 1.3em;
-        }
-
-        .patient-data-grid {
-            width: 99%;
-            /*grid-template-columns: 1fr;*/
-            gap: 10px;
-            /*border: 1px solid red;*/
-
-        }
-        
-        .identifiers {
-            width: 94%;
-            box-sizing: border-box;
-            border-left: none;
-            border-top: 4px solid #566a8b;
-        }
-
-        .secondLineFragments {
-            flex-direction: column;
-        }
-    }
 </style>
 
-<div id="container">
+
+
+<div id="container-header">
     <div id="sticky-patient-header" class="sticky-header">
         <div class="sticky-content">
             <span class="sticky-name">
@@ -293,7 +354,7 @@
     <div class="patient-header <% if (patient.patient.dead) { %>dead<% } %>">
 
         <% if (patient.patient.dead) { %>
-        <div class="death-header">
+        <div class="death-header" style="">
             <span class="death-message">
                 ${ ui.message("coreapps.deadPatient", ui.format(patient.patient.deathDate), ui.format(patient.patient.causeOfDeath)) }
             </span>
@@ -348,7 +409,7 @@
                     ${ ui.includeFragment("coreapps", "patientdashboard/contactInfoInline", [ patient: config.patient, contextModel: appContextModel ]) }
                 </div>
             </h1>
-            <div class="patient-data-grid">
+            <div class="patient-data-grid" style="">
                 <% if (config.patientRecordingDate != null) { %>
                 <div class="patient-data-item">
                     <i>${ ui.message("isanteplus.patientRecordingDate") }</i>
@@ -454,13 +515,6 @@
             </form>
         </div>
 
-        <div class="secondLineFragments">
-            <% secondLineFragments.each { %>
-            ${ ui.includeFragment(it.extensionParams.provider, it.extensionParams.fragment, [patient: config.patient])}
-            <% } %>
-        </div>
-
-        <div class="close"></div>
     </div>
 
     <div id="edit-patient-identifier-dialog" class="dialog" style="display: none">

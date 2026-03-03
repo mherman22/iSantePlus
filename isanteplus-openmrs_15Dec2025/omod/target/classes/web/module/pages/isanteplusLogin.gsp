@@ -23,127 +23,137 @@
 
 body {
     margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f5f5f5 0%, #e9e9e9 100%);
+    font-family: "Segoe UI", Arial, sans-serif;
+    /*background: #f4f6f9;*/
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-#username, #password {
-    width: 97%;
-    height: 40px;
-    border-radius: 5px;
-    max-width: 100%;
-    padding: 8px;
-}
+/* ================= HEADER ================= */
 
-#body-wrapper {
-    border-radius: 10px;
-    box-shadow: 1px 5px 14px -10px;
-    width: calc(100% - 20px);
-    max-width: 500px;
-    height: auto;
-    margin: 0px auto 40px;
-    padding: 30px 20px;
-    background: white;
-    flex-shrink: 0;
-}
-
-.clear, .select {
-    display: none;
-}
-
-#loginButton {
-    width: 80%;
-    max-width: 100%;
-    height:auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.confirm {
-    width: 100%;
+header {
+    background: #566a8b;
+    padding: 10px 20px;
+    border-radius: 0px;
 }
 
 .logo {
     display: flex;
-    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
+/* ================= TITRE ================= */
+
 h1 {
-    font-size: clamp(1.5rem, 8vw, 3rem);
+    font-size: 26px;
+    font-weight: 500;
+    margin: 25px 0 5px;
+    color: #2c3e50;
 }
 
 h5 {
-    font-size: clamp(0.875rem, 4vw, 1rem);
+    font-weight: 400;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* ================= CARD LOGIN ================= */
+
+#body-wrapper {
+    max-width: 380px;
+    margin: auto;
+    padding: 30px 25px;
+    background: #ffffff;
+    border-radius: 0px;
+    border: 1px solid #f4f5f5;
+    box-shadow: 0 3px 2px -3px;
+}
+
+/* Icône utilisateur plus fine */
+.icon-user {
+    font-size: 32px !important;
+    padding: 10px 14px;
+    border-radius: 50%;
+    border: 2px solid #3d2763 !important;
+}
+
+/* ================= FORM ================= */
+
+form label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #374151;
 }
 
 input[type="text"],
 input[type="password"] {
-    font-size: 16px;
+    width: 100%;
+    height: 42px;
+    padding: 0 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    transition: 0.2s ease;
 }
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #566a8b;
+    outline: none;
+}
+
+/* ================= BUTTON ================= */
+
+#loginButton {
+    width: 100%;
+    max-width: 300px;
+    height: 42px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    background: #4f617f;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#loginButton:hover {
+    background: #404f67;
+}
+
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
 
     #body-wrapper {
         width: 90%;
-        max-width: 380px;
-        margin: 20px auto 40px;
-        padding: 20px;
-        flex-shrink: 0;
+        padding: 25px 20px;
     }
 
-    #username, #password {
-        width: 100%;
-        height: 44px;
-    }
-
-    .loginButton {
-        padding: 15px 10px !important;
-    }
-}
-
-@media (max-width: 360px) {
-    #body-wrapper {
-        width: 90%;
-        max-width: 320px;
-        margin: 15px auto 30px;
-        padding: 15px;
-        border-radius: 10px;
-    }
-
-    #username, #password {
-        width: 100%;
-        height: 44px;
+    #loginButton{
+        max-width: 285px;
     }
 
     h1 {
-        font-size: 1.75rem;
-        margin: 10px 0;
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    #body-wrapper {
+        padding: 20px 15px;
+        /*border-radius: 10px;*/
     }
 
-    h5 {
-        font-size: 0.9rem;
-    }
-
-    .loginButton {
-        padding: 12px 10px !important;
-        width: 100% !important;
-    }
-
+    input[type="text"],
+    input[type="password"],
     #loginButton {
-        width: 100% !important;
-    }
-
-    div[align="center"] > div[style*="padding"] {
-        padding: 0 10px !important;
+        height: 40px;
     }
 }
 </style>
@@ -253,7 +263,7 @@ form, .form {
 }
 </style>
 <% } %>
-<header style="background: #566a8b">
+<header style="background: #566a8b;">
     <div class="logo">
         <div style="display: flex; margin: 0px 5px; flex-direction: row; justify-content: center;">
             <a href="${ui.pageLink("referenceapplication", "home")}">
@@ -269,10 +279,7 @@ form, .form {
     </div>
 </header>
 <br/><br/>
-<div style="width: 100%; padding: 0 10px; display: flex; flex-direction: column; justify-content: flex-start;">
-
-    <h1 align="center" style="font-weight: bold; margin: 20px 0 10px 0;">Bienvenue</h1>
-
+<div class="page-intro">
     <h5 align="center" style="margin: 10px 0 20px 0;">
         <% locations.sort { ui.format(it) }.each { %>
         <span align="center" id="${ui.encodeHtml(it.name)}" tabindex="1"
@@ -283,14 +290,14 @@ form, .form {
 
 <br/>
 <div id="body-wrapper">
-    <div id="content">
-        <p align="center" class="clear">
+    <div id="content" >
+        <p align="center" class="clear" style="display: none">
             <label for="sessionLocation">
                 ${ui.message("referenceapplication.login.sessionLocation")}:
                 <span class="location-error" id="sessionLocationError"
                       style="display: none">${ui.message("referenceapplication.login.error.locationRequired")}</span>
             </label>
-        <ul align="center" id="sessionLocation" class="select">
+        <ul align="center" id="sessionLocation" class="select" style="display: none">
             <% locations.sort { ui.format(it) }.each { %>
             <li id="${ui.encodeHtml(it.name)}" tabindex="0" value="${it.id}">${ui.encodeHtmlContent(ui.format(it))}</li>
             <% } %>
@@ -302,8 +309,7 @@ form, .form {
             <div align="center" style="padding: 0 15px;">
 
                 <div><br/><br/>
-                    <i style="font-size: xxx-large; padding: 5px 11px; border-radius: 60px; margin-top: 30px; border: 6px solid #3d2763;"
-                       class="icon-user small"><br/></i>
+                    <i class="icon-user small"><br/></i>
 
                     <h1 style="font-size: x-large; margin-top: 10px"><br/>${ui.message("referenceapplication.login.loginHeading")}
                     </h1>
@@ -333,8 +339,8 @@ form, .form {
 
             </div>
 
-            <div class="loginButton" style="width: 91.5%; margin-left: auto; margin-right: auto;">
-                <input style="border-radius: 5px; padding: 12px" id="loginButton" class="confirm" type="submit"
+            <div class="loginButton">
+                <input id="loginButton" class="confirm" type="submit"
                        value="${ui.message("isanteplus.loginButton")}"/>
             </div>
 

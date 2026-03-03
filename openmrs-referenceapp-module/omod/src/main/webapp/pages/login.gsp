@@ -124,11 +124,10 @@ ${ui.includeFragment("referenceapplication", "infoAndErrorMessages")}
             <img src="${ui.resourceLink("referenceapplication", "images/openMrsLogo.png")}"/>
             <% } %>
         </a></div>
-        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.6</span></div>
     </div>
 </header>
 
-<div id="body-wrapper" style="">
+<div id="" style="width: 100%">
     <div id="content">
         <form id="login-form" method="post" autocomplete="off">
             <fieldset>

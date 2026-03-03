@@ -1,14 +1,9 @@
 <htmlform formUuid="dd2c4fc5-3fea-430a-9442-c65a85d9c320"
-		  formName="SSP - Première Consultation"
-		  formVersion="2.0"
-		  formAddMetadata="yes"
-		  formUILocation="patientDashboard.visitActions"
-		  formOrder="101"
-		  formIcon="icon-medkit"
-		  formShowIf=""
-		  formDisplayStyle="Standard"
+		  formName="SSP - Première Consultation" formVersion="1.0"
+		  formAddMetadata="yes" formUILocation="patientDashboard.visitActions"
+		  formOrder="100" formIcon="icon-medkit" formShowIf="" formDisplayStyle="Standard"
 		  formEncounterType="12f4d7c3-e047-4455-a607-47a40fe32460"
-		  formDescription="Redesigned Primary Care Consultation Form">
+		  formDescription="Soins de santé primaire--première consultation;Première consultation adulte SSP">
 
 	<style>
 		.checklist-item {
@@ -442,59 +437,6 @@
 		.confirm-btn {
 		display: flex;
 		justify-content: center;
-		}
-
-		/* BP Input Group */
-		.bp-group {
-		display: flex;
-		align-items: center;
-		width: 100%;
-		}
-		.bp-label {
-		margin-right: 12px;
-		font-weight: bold;
-		color: #333;
-		min-width: 25px;
-		}
-		.bp-inputs-container {
-		display: flex;
-		align-items: center;
-		background: #fff;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		padding: 8px 12px;
-		flex: 1;
-		}
-		.bp-input-wrapper {
-		flex: 1;
-		display: flex;
-		justify-content: center;
-		}
-		.bp-input-wrapper input {
-		border: none !important;
-		box-shadow: none !important;
-		width: 100%;
-		text-align: center;
-		padding: 0;
-		margin: 0;
-		background: transparent;
-		height: 24px;
-		}
-		.bp-input-wrapper input:focus {
-		outline: none !important;
-		background: transparent;
-		}
-		.bp-slash {
-		margin: 0 10px;
-		color: #999;
-		font-weight: 300;
-		font-size: 20px;
-		line-height: 1;
-		}
-		.bp-unit {
-		margin-left: 10px;
-		color: #666;
-		font-size: 13px;
 		}
 
 	</style>
@@ -1800,7 +1742,7 @@
 	<ifMode mode="ENTER">
 		<lookup complexExpression="
             #set( $encounter = 0 )
-            #set( $encounter = $fn.latestEncounter('14cccf3b-f263-11f0-9077-32056b2c7c0a') )
+            #set( $encounter = $fn.latestEncounter('12f4d7c3-e047-4455-a607-47a40fe32460') )
             #if( $encounter != 0 )
                 &lt;script type=&quot;text/javascript&quot;&gt;
                     alert('Cette fiche, doit etre en un seul exemplaire');
@@ -2568,21 +2510,9 @@
 						<span class="unit">cm</span>
 					</div>
 					<div class="col-xs-12 col-sm-4 col-md-6 column">
-						<span class="bp-label">TA</span>
-						<div class="bp-group">
-
-							<div class="bp-inputs-container">
-								<div class="bp-input-wrapper">
-									<obs conceptId="CIEL:5085" labelText=""/>
-								</div>
-								<span class="bp-slash">/</span>
-								<div class="bp-input-wrapper">
-									<obs conceptId="CIEL:5086" labelText=""/>
-								</div>
-							</div>
-
-						</div>
-						<span class="unit bp-unit">mmHg</span>
+						<obs conceptId="CIEL:5085" labelText="TA"/>
+						<obs conceptId="CIEL:5086" labelText=" / "/>
+						<span class="unit">mmHg</span>
 					</div>
 				</div>
 
@@ -3275,6 +3205,116 @@
 						<obs conceptId="CIEL:1391" rows="5" style="textarea"/>
 					</div>
 				</div>
+			</div>
+		</div>
+		<!-- Screening santé mentale -->
+		<a href="#" class="toggle-trigger section-toggle" data-target="#screening-sante-mentale">
+			<span>SCREENING SANTÉ MENTALE</span>
+			<span class="toggle-icon">▼</span>
+		</a>
+		<div id="screening-sante-mentale" class="section-content plan-section-group" style="display:none;">
+			<div class="plan-section-card">
+				<div class="plan-section-title">Anxiété généralisé - Trouble d'anxiété généralisée (GAD-2)</div>
+				<div class="plan-section-body">
+					<div class="plan-field">
+						<label class="heading-3 text-xl">Au cours des 2 dernières semaines, à quelle fréquence avez-vous été gêné par les problèmes suivants</label>
+					</div>
+					<div class="plan-field">
+						<label>Se sentir nerveux, anxieux ou nerveux ?</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field">
+						<label>Ne pas être capable d'arrêter ou de contrôler son inquiétude</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field">
+						<label>Score GAD-2</label>
+						<span >
+							<obs conceptId="CIEL:160716" allowTime="false"/>
+						</span>
+					</div>
+					<div class="p-6 caption m-6 bg-gray-100 border rounded-md">
+						<span class="text-sm text-muted italic mx-auto block">
+							Tout patient avec un score ≥ a 3 points sera référé à un spécialiste de la santé mentale. (En utilisant un seuil de 3, le GAD-2 a une sensibilité de 86 % et une spécificité de 83 % pour le diagnostic du trouble d'anxiété généralisée.)
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="plan-section-card">
+				<div class="plan-section-title">Dépression - depistage de la dépression(PHQ-2)</div>
+				<div class="plan-section-body">
+					<div class="plan-field">
+						<label class=" heading-2 text-xl">Au cours des 2 dernières semaines, à quelle fréquence avez-vous été gêné par les problèmes suivants ?</label>
+					</div>
+					<div class="plan-field">
+						<label>Peu d’intérêt ou de plaisir à faire les chose</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field">
+						<label>Se sentir déprimé, déprimé ou désespéré</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+				</div>
+				<div class="plan-field px-6">
+					<label>Score PHQ-2</label>
+					<span >
+						<!-- <obs conceptId="CIEL:160717" allowTime="false"/> -->
+					</span>
+				</div>
+
+				<div class="p-6 caption m-6 bg-gray-100 border rounded-md">
+					<span class="text-sm text-muted italic mx-auto block">
+						Un score PHQ-2 va de 0 à 6. Les auteurs ont identifié un score de 3 comme seuil optimal lors de l’utilisation du PHQ-2 pour dépister la dépression. Si le score est de 3 ou plus, un trouble dépressif majeur est probable. Les patients dont le résultat est positif doivent être évalués plus en détail à l'aide du PHQ-9 , d'autres instruments de diagnostic ou d'un entretien direct pour déterminer s'ils répondent aux
+					</span>
+				</div>
+			</div>
+			<div class="plan-section-card">
+				<div class="plan-section-title">Syndrome de stress post-traumatique</div>
+				<div class="plan-section-body">
+					<div class="plan-field">
+						<label class=" heading-2 text-xl">Au cours du dernier mois, avez-vous </label>
+					</div>
+					<div class="plan-field col-6">
+						<label>Vous avez fait des cauchemars à propos du ou des événements ou avez pensé au(x) événement(s) alors que vous ne le vouliez pas ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+					<div class="plan-field col-6">
+						<label>Se sentir déprimé, déprimé ou désespéré</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field col-6">
+						<label>Avez-vous été constamment sur vos gardes, vigilant ou facilement surpris ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+					<div class="plan-field col-6">
+						<label>Vous vous sentez engourdi ou détaché des gens, des activités ou de votre environnement ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+					<div class="plan-field col-6">
+						<label>Vous vous sentez coupable ou incapable d'arrêter de vous blâmer ou de blâmer les autres pour les événements ou les problèmes que ces événements ont pu causer ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+				</div>
+				<div class="plan-field col-12">
+					<label>Score PHQ-2</label>
+					<span >
+
+					</span>
+				</div>
+				<div class="p-6 caption m-6 bg-gray-100 border rounded-md">
+					<span class="text-sm text-muted italic mx-auto block">
+						Interprétation :
+						Les recherches actuelles suggèrent que les résultats du PC-PTSD-5 devraient être considérés comme « positifs » si un patient répond « oui » à trois éléments.
+					</span>
+					<span class="text-sm text-muted italic mx-auto block">
+						Tout patient qui répond « oui » a 3 éléments sera référé à un spécialiste de la santé mentale.
+					</span>
+				</div>
+
 			</div>
 		</div>
 
@@ -5507,6 +5547,106 @@
 			</div>
 		</div>
 
+		<!-- Screening santé mentale -->
+		<a href="#" class="toggle-trigger section-toggle" data-target="#screening-sante-mentale">
+			<span>SCREENING SANTÉ MENTALE</span>
+			<span class="toggle-icon">▼</span>
+		</a>
+		<div id="screening-sante-mentale" class="section-content plan-section-group" style="display:none;">
+			<div class="plan-section-card">
+				<div class="plan-section-title">Anxiété généralisé - Trouble d'anxiété généralisée (GAD-2)</div>
+				<div class="plan-section-body">
+					<div class="plan-field">
+						<label class="heading-3 text-xl">Au cours des 2 dernières semaines, à quelle fréquence avez-vous été gêné par les problèmes suivants</label>
+					</div>
+					<div class="plan-field">
+						<label>Se sentir nerveux, anxieux ou nerveux ?</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field">
+						<label>Ne pas être capable d'arrêter ou de contrôler son inquiétude</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field">
+						<label>Score GAD-2</label>
+						<span >
+							<obs conceptId="CIEL:160716" allowTime="false"/>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="plan-section-card">
+				<div class="plan-section-title">Dépression - depistage de la dépression(PHQ-2)</div>
+				<div class="plan-section-body">
+					<div class="plan-field">
+						<label class=" heading-2 text-xl">Au cours des 2 dernières semaines, à quelle fréquence avez-vous été gêné par les problèmes suivants ?</label>
+					</div>
+					<div class="plan-field">
+						<label>Peu d’intérêt ou de plaisir à faire les chose</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field">
+						<label>Se sentir déprimé, déprimé ou désespéré</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+				</div>
+				<div class="plan-field px-6">
+					<label>Score PHQ-2</label>
+					<span >
+						<!-- <obs conceptId="CIEL:160717" allowTime="false"/> -->
+					</span>
+				</div>
+				<div class="p-6 caption m-6 bg-gray-100 border rounded-md">
+					<span class="text-sm text-muted italic mx-auto block">
+						Tout patient avec un score ≥ a 3 points sera référé à un spécialiste de la santé mentale. (En utilisant un seuil de 3, le GAD-2 a une sensibilité de 86 % et une spécificité de 83 % pour le diagnostic du trouble d'anxiété généralisée.)
+					</span>
+				</div>
+			</div>
+			<div class="plan-section-card">
+				<div class="plan-section-title">Syndrome de stress post-traumatique</div>
+				<div class="plan-section-body">
+					<div class="plan-field">
+						<label class=" heading-2 text-xl">Au cours du dernier mois, avez-vous </label>
+					</div>
+					<div class="plan-field col-6">
+						<label>Vous avez fait des cauchemars à propos du ou des événements ou avez pensé au(x) événement(s) alors que vous ne le vouliez pas ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+					<div class="plan-field col-6">
+						<label>Se sentir déprimé, déprimé ou désespéré</label>
+						<obs conceptId="CIEL:159946" answerConceptIds="CIEL:159943,CIEL:159944,CIEL:159944" answerLabels="Pas du Tout,Plusieurs jours, Plus de la moitié des jours, Presque tous les jours" />
+					</div>
+					<div class="plan-field col-6">
+						<label>Avez-vous été constamment sur vos gardes, vigilant ou facilement surpris ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+					<div class="plan-field col-6">
+						<label>Vous vous sentez engourdi ou détaché des gens, des activités ou de votre environnement ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+					<div class="plan-field col-6">
+						<label>Vous vous sentez coupable ou incapable d'arrêter de vous blâmer ou de blâmer les autres pour les événements ou les problèmes que ces événements ont pu causer ?</label>
+						<obs conceptId="CIEL:124068" answerConceptIds="CIEL:1065,CIEL:1066"
+							 answerLabels="Oui,Non" style="dropdown"/>
+					</div>
+				</div>
+				<div class="plan-field col-12">
+					<label>Score PHQ-2</label>
+					<span >
+
+					</span>
+				</div>
+				<div class="p-6 caption m-6 bg-gray-100 border rounded-md">
+					<span class="text-sm text-muted italic mx-auto block">
+						Un score PHQ-2 va de 0 à 6. Les auteurs ont identifié un score de 3 comme seuil optimal lors de l’utilisation du PHQ-2 pour dépister la dépression. Si le score est de 3 ou plus, un trouble dépressif majeur est probable. Les patients dont le résultat est positif doivent être évalués plus en détail à l'aide du PHQ-9 , d'autres instruments de diagnostic ou d'un entretien direct pour déterminer s'ils répondent aux
+					</span>
+				</div>
+			</div>
+		</div>
+
 		<a href="#" class="toggle-trigger section-toggle" data-target="#conduite-a-tenir">
 			<span>CONDUITE A TENIR</span>
 			<span class="toggle-icon">▼</span>
@@ -5640,6 +5780,7 @@
 				</div>
 			</div>
 		</div>
+
 
 		<a href="#" class="toggle-trigger section-toggle" data-target="#autre-plan">
 			<span>AUTRE PLAN</span>

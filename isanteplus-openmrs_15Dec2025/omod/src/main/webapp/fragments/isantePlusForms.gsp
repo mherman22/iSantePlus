@@ -18,12 +18,13 @@
     margin-bottom: 25px;
     color: #2a567c;
     font-weight: 600;
+    font-size: 20px;
 }
 
 /* GRID */
 .formlinks {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 20px;
     position: relative;
     z-index: 1;
@@ -35,10 +36,13 @@
     position: relative;
     z-index: 1;
     background: #ffffff;
+    /*width: 92%;*/
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     overflow: visible;
+    margin: 5px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid #f2f5f5;
+    border-radius: 5px;
 }
 
 /* Quand actif → passe au-dessus */
@@ -62,7 +66,8 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: 5px;
+    /*border: 1px solid red;*/
 }
 
 /* Partie gauche (icone + texte) */
@@ -78,22 +83,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 50px;
+    height: 50px;
+    padding: 0px;
     border-radius: 50%;
-    font-size: 16px;
+    font-size: 20px;
     color: white;
+    border: 1px solid #dbe6eb;
 }
 
-/* Couleurs par catégorie */
-.icon-primary { background: #4CAF50; }      /* 🩺 Vert */
-.icon-lab { background: #9C27B0; }          /* 🧪 Violet */
-.icon-obygn { background: #E91E63; }        /* 🤰 Rose */
-.icon-hiv { background: #F44336; }          /* 🦠 Rouge */
-.icon-psycho { background: #FF9800; }       /* 🧠 Orange */
-.icon-emergency { background: #D32F2F; }    /* 🚑 Rouge foncé */
-.icon-inpatient { background: #2196F3; }    /* 🏥 Bleu */
-.icon-other { background: #607D8B; }        /* 📁 Gris */
+
 
 /* Flèche rotation */
 .form-card-menu h5 i.icon-chevron-right {
@@ -113,9 +112,9 @@
     margin: 0;
     padding: 12px 18px;
     position: absolute;
-    top: 100%;
+    top: 95%;
     left: 0;
-    width: 89%;
+    width: 92%;
     background: white;
     border-radius: 0 0 12px 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -139,6 +138,7 @@
     color: #1b3d5a;
     font-weight: 500;
     padding-left: 4px;
+    background: #5a6c90;
 }
 
 /* Animation */

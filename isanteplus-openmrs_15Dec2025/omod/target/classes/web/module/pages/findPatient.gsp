@@ -96,6 +96,7 @@ body {
 
 .patient-card:hover {
     background: #f0f7ff;
+    transform: translateY(-2px);
 }
 
 .patient-name {

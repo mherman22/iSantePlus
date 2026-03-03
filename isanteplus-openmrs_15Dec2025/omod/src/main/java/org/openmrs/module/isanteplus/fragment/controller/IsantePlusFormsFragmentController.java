@@ -85,10 +85,10 @@ public class IsantePlusFormsFragmentController {
                     "ConsPed.xml", resourceFactory, formService,
                     htmlFormEntryService, patient, visit != null ? visit : activeVisit != null ? activeVisit.getVisit() : null);
             IsantePlusHtmlForm soinsDeSantePrimairePremiereConsultation = new IsantePlusHtmlForm(
-                    "PCons2.xml", resourceFactory, formService, htmlFormEntryService,
+                    "PCons.xml", resourceFactory, formService, htmlFormEntryService,
                     patient, visit != null ? visit : activeVisit != null ? activeVisit.getVisit() : null);
             IsantePlusHtmlForm soinsDeSantePrimairePremiereConsultationPediatrique = new IsantePlusHtmlForm(
-                    "PConsPed2.xml", resourceFactory, formService,
+                    "PConsPed.xml", resourceFactory, formService,
                     htmlFormEntryService, patient, visit != null ? visit : activeVisit != null ? activeVisit.getVisit() : null);
             IsantePlusHtmlForm soinsDeSantePrimaireConsultation = new IsantePlusHtmlForm(
                     "Cons.xml", resourceFactory, formService, htmlFormEntryService, patient,
