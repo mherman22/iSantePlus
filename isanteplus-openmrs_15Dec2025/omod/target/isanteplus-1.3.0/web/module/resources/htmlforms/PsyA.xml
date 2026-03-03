@@ -1262,73 +1262,71 @@
                 <div id="div1" class="togglable" style="display: none;">
                     <section>
                         <!-- Attente new question concept replace 163145 -->
-                        <obsgroup groupingConceptId="163180">
-
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Inscrit dans le programme de soins du VIH" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:163469"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:163469"
                                                  answerLabel="Evaluation psychologique" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160198"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:160198"
                                                  answerLabel="Problème psychologique" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:134660"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:134660"
                                                  answerLabel="Problèmes familiaux" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:126312"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:126312"
                                                  answerLabel="Discrimination sociale" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159598"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159598"
                                                  answerLabel="Non-respect d'un traitement ou d'une thérapie" />
                                         </td>
                                         <td>
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="9fb9a204-56d4-488c-9693-c067c53b593d"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="9fb9a204-56d4-488c-9693-c067c53b593d"
                                                  answerLabel="Initiation thérapie psychologique" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="5079a471-61b4-4d0e-ad87-c08fc31162b2"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="5079a471-61b4-4d0e-ad87-c08fc31162b2"
                                                  answerLabel="Suivi psychologique en cours" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="3c9afedd-4287-4f32-ac76-41410a61d5e0"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="3c9afedd-4287-4f32-ac76-41410a61d5e0"
                                                  answerLabel="Fermeture thérapie psychologique" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="668726f0-8f36-4cb5-8a7d-7abee4275cbe"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="668726f0-8f36-4cb5-8a7d-7abee4275cbe"
                                                  answerLabel="Difficulté scolaire" />
                                             <br /><!-- add -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159423"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159423"
                                                  answerLabel="Dévoilement statut" /><br/>
-                                            <obs conceptId="CIEL:163145" answerConceptId="e0520711-73e5-4490-ba34-9dc3d7e959c3"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="e0520711-73e5-4490-ba34-9dc3d7e959c3"
                                                  answerLabel="Accompagnement psychosocial pour CV > 1000" />
                                         </td>
                                         <!-- Attente new question concept replace 159811 -->
                                         <td>
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Activités Génératrice de Revenues (AGR)" />
                                             <br />
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Déplacés internes" />
                                             <br/>
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Dificultés par rapport au logement" />
                                             <br />
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Rencontre suivi de groupe" />
                                             <br />
                                             <!-- Attente new question concept replace 159811 -->
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:159811"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:159811"
                                                  answerLabel="Rencontre suivi PIT" />
                                             <br />
 
                                             <!-- End -->
 
-                                            <obs conceptId="CIEL:163145" answerConceptId="CIEL:160523"
+                                            <obs conceptId="d4700ff4-352d-46da-bc19-dba2d274c895" answerConceptId="CIEL:160523"
                                                  answerLabel="Visite de suivi, régulier" />
                                             <br />
                                         </td>
@@ -1337,7 +1335,6 @@
 
                                 </tbody>
                             </table>
-                        </obsgroup>
                     </section>
                 </div>
             </div>
@@ -2542,7 +2539,7 @@
                                                             conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
                                                     <render concept="CIEL:135595" drugname="Perte d'appétit"
                                                             id="perte_appetit" conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
-                                                    <render concept="CIEL:163470" drugname="Pensées négatives" id="pensees_negatives"
+                                                    <render concept="84c066e8-544f-4f04-bae1-b313ffa1c503" drugname="Pensées négatives" id="pensees_negatives"
                                                             conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
                                                     <render concept="CIEL:156280" drugname="Difficultés interpersonnelles / relationnelles" id="diffic_interpersonnelles "
                                                             conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
@@ -2678,9 +2675,9 @@
                                                             conceptgroup="f88abb0d-47bd-4dc7-a801-c895b479093c" color="#D8D8D8" />
                                                     <render concept="CIEL:119574" drugname="Délire" id="delire"
                                                             conceptgroup="68a816a5-3918-4f52-a238-d33b5524ee0e" color="#FFFFFF" />
-                                                    <render concept="CIEL:121543" drugname="Désorganisation de la pensée et du comportement" id="desorganisation_pensee"
+                                                    <render concept="e2a68e3c-36b9-4602-b009-7f0eaad8eb95" drugname="Désorganisation de la pensée et du comportement" id="desorganisation_pensee"
                                                             conceptgroup="08079f5b-6b76-4095-a484-25e05e4ec41f" color="#D8D8D8" />
-                                                    <render concept="CIEL:163470" drugname="Perte de contact avec la réalité" id="perte_contact"
+                                                    <render concept="3fe85ce2-c87b-4706-b5a4-580a0320cfa6" drugname="Perte de contact avec la réalité" id="perte_contact"
                                                             conceptgroup="e5d3b234-99be-48ee-a351-df07c5f47cf3" color="#FFFFFF" />
                                                     <render concept="CIEL:137646" drugname="Discours incohérent" id="discours_incohrent"
                                                             conceptgroup="bb87b6d6-a963-4257-ba21-130df09efd27" color="#D8D8D8" />
