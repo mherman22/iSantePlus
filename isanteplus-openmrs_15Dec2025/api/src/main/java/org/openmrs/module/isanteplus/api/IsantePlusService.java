@@ -15,6 +15,7 @@ package org.openmrs.module.isanteplus.api;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -166,4 +167,6 @@ public interface IsantePlusService extends OpenmrsService {
     List<LocationAddressMirror> getAllLocationAddressesByCriteria(String criteria);
 
 	List<PatientSearchInfos> getAllPatientSearchInfos(String var1);
+    Map<String, List<LocationAddress>> getLocationAddressesGroupedByNature(List<String> natures);
+
 }

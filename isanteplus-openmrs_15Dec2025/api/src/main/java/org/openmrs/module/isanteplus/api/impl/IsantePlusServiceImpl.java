@@ -1267,4 +1267,38 @@ public class IsantePlusServiceImpl extends BaseOpenmrsService implements IsanteP
         }
     }
 
+    @Override
+    public Map<String, List<LocationAddress>> getLocationAddressesGroupedByNature(List<String> natures) {
+
+        String sql = "SELECT la.id, la.code, la.color, la.name, la.nature, la.parent " +
+                "FROM isanteplus.location_address la " +
+                "WHERE la.nature IN (:natures) " +
+                "ORDER BY la.nature ASC, la.name ASC";
+
+        List<Object[]> rows = dao.getSessionFactoryResult().getCurrentSession()
+                .createSQLQuery(sql)
+                .setParameterList("natures", natures)
+                .list();
+
+        Map<String, List<LocationAddress>> result = new HashMap<>();
+
+        for (Object[] row : rows) {
+            Integer id = ((Number) row[0]).intValue();
+            String code = (String) row[1];
+            String color = (String) row[2];
+            String name = (String) row[3];
+            String nature = (String) row[4];
+            Integer parent = row[5] != null ? ((Number) row[5]).intValue() : null;
+
+            LocationAddress location = new LocationAddress(
+                    id, code, color, name, nature, parent
+            );
+
+            result.computeIfAbsent(nature, k -> new ArrayList<>())
+                    .add(location);
+        }
+
+        return result;
+    }
+
 }

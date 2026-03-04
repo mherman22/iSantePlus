@@ -1,8 +1,14 @@
 <%
     ui.decorateWith("appui", "standardEmrPage")
 %>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+    var stateProvinces = ${ui.toJson(stateProvinces)};
+    var cityVillages = ${ui.toJson(cityVillages)};
+    var municipalSections = ${ui.toJson(municipalSections)};
+    var localities = ${ui.toJson(localities)};
+</script>
 
 <style>
 * {
@@ -22,9 +28,10 @@ body {
     max-width: 1350px;
     margin: 0 auto;
     background: white;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     box-shadow: 0 3px 5px -5px;
     overflow: hidden;
+    border: 1px solid #eef1f5;
 }
 
 /* TAB HEADER */
@@ -77,6 +84,64 @@ body {
     animation: fadeIn 0.3s ease-in;
 }
 
+
+.form-control, .form-select {
+    border-radius: 5px;
+    padding: 12px 10px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    transition: all 0.1s ease-in-out;
+    font-size: 16px;
+    width: 100%;
+    font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+}
+
+.form-control:focus, .form-select:focus {
+    border: 2px solid #0b4a7b;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(11, 74, 123, 0.25);
+}
+
+.tab1-infos1, .tab1-infos2, .tab1-infos3 {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.tab1-infos4 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #0f172a;
+}
+fieldset {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    border: 1px solid #e6e9ee;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 16px 0;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -101,6 +166,9 @@ body {
     .tablist {
         flex-direction: column;
         align-items: center;
+    }
+    .tab1-infos1, .tab1-infos2, .tab1-infos3, .tab1-infos4 {
+        flex-direction: column;
     }
 }
 </style>
@@ -204,7 +272,7 @@ body {
                     aria-selected="false"
                     aria-controls="panel-2"
                     tabindex="-1">
-                Modificateurs
+                Adresse
             </button>
 
             <button class="tab"
@@ -212,6 +280,15 @@ body {
                     id="tab-3"
                     aria-selected="false"
                     aria-controls="panel-3"
+                    tabindex="-1">
+                Modificateurs
+            </button>
+
+            <button class="tab"
+                    role="tab"
+                    id="tab-4"
+                    aria-selected="false"
+                    aria-controls="panel-4"
                     tabindex="-1">
                 Examen clinique
             </button>
@@ -228,109 +305,103 @@ body {
 
                 <div class="info-pers" style="margin-top: -10px">
 
-                    <div class="form-group">
-                        <label for="firstName">Prénom <span class="asterix">*</span></label>
-                        <input type="text" class="form-control" name="firstName" value="${firstName != null ? firstName : ''}" id="firstName" placeholder=""
-                               required>
+                    <div class="tab1-infos1">
+                        <div class="form-group">
+                            <label for="firstName">Prénom <span class="asterix">*</span></label>
+                            <input type="text" class="form-control" name="firstName" value="${firstName != null ? firstName : ''}" id="firstName" placeholder=""
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Nom <span class="asterix">*</span></label>
+                            <input type="text" class="form-control" name="lastName" value="${lastName != null ? lastName : ''}" id="nom" placeholder=""
+                                   required>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="lastName">Nom <span class="asterix">*</span></label>
-                        <input type="text" class="form-control" name="lastName" value="${lastName != null ? lastName : ''}" id="nom" placeholder=""
-                               required>
+                    <div class="tab1-infos2">
+                        <div class="form-group">
+                            <label for="birthDate">Date de naissance</label>
+                            <input type="date" class="form-control" name="birthDate" id="birthDate" value="${dateOfBirth != null ? dateOfBirth : ''}"
+                                   placeholder="mm/dd/yy">
+                            <span class="span-hint" style="font-size: small">mm/dd/yy</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Sexe <span class="asterix">*</span></label>
+                            <select class="form-select" name="gender" id="gender" required>
+                                <option value="">-- Sélectionner --</option>
+                                <option value="M" ${(gender != null ? gender : '') == 'M' ? 'selected' : ''}>Masculin</option>
+                                <option value="F" ${(gender != null ? gender : '') == 'F' ? 'selected' : ''}>Féminin</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="birthDate">Date de naissance</label>
-                        <input type="date" class="form-control" name="birthDate" id="birthDate" value="${dateOfBirth != null ? dateOfBirth : ''}"
-                               placeholder="mm/dd/yy">
-                        <span class="span-hint" style="font-size: small">mm/dd/yy</span>
+                    <div class="tab1-infos3">
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" class="form-control" name="phone" value="${phoneNumber != null ? phoneNumber : ''}" id="phone"
+                                   placeholder="+509 0000-0000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="arrivalMode">Mode d’arrivée <span class="asterix">*</span></label>
+                            <select class="form-select" name="arrivalMode" id="arrivalMode" required>
+                                <option value="">-- Sélectionner --</option>
+                                <option value="133499">Ambulance</option>
+                                <option value="133499">Voiture privée</option>
+                                <option value="133499">Transport publique</option>
+                                <option value="133499">Motocyclette</option>
+                                <option value="133499">A pied</option>
+                                <option value="133499">Animal</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ageGroup">Catégorie <span class="asterix">*</span></label>
+                            <select class="form-select" name="ageGroup" id="ageGroup" required>
+                                <option value="">-- Sélectionner --</option>
+                                <option value="122496">Nourisson</option>
+                                <option value="122496">Enfant</option>
+                                <option value="122496">Adolescent</option>
+                                <option value="122496">Adulte</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="gender">Sexe <span class="asterix">*</span></label>
-                        <select class="form-select" name="gender" id="gender" required>
-                            <option value=""></option>
-                            <option value="M" ${(gender != null ? gender : '') == 'M' ? 'selected' : ''}>Masculin</option>
-                            <option value="F" ${(gender != null ? gender : '') == 'F' ? 'selected' : ''}>Féminin</option>
-                        </select>
-                    </div>
+                    <fieldset>
+                        <legend>Contact</legend>
 
-                    <div class="form-group">
-                        <label for="phone">Téléphone</label>
-                        <input type="tel" class="form-control" name="phone" value="${phoneNumber != null ? phoneNumber : ''}" id="phone"
-                               placeholder="+509 0000-0000">
-                    </div>
+                        <div class="tab1-infos4">
+                            <div class="form-group">
+                                <label for="contactName" style="font-size: 14px">Nom complet
+                                </label>
+                                <input type="text" name="contactName"
+                                       class="form-control" id="contactName"
+                                       placeholder="">
+                            </div>
 
-                    <div class="form-group" style="width: 36%;">
-                        <label style="margin-left: 1.4%" for="adresse">Adresse</label>
-                        <input style="float: right; width: 95%; margin-right: 0.5%;" type="text" class="form-control" list="locationOptions" value="${address != null ? address : ''}" name="adresse" id="" placeholder="">
-                        <datalist id="locationOptions">
-                            <option value="">Limothe, 1ere La Plate, Bassin Bleu, Nord-Ouest, Haiti</option>
-                            <% locationAddressMirrors.each { location -> %>
-                            <option value="${location.getFullAddress()}">${location.getFullAddress()}</option>
-                            <% } %>
-                        </datalist>
-                    </div>
+                            <div class="form-group">
+                                <label for="relation">Relation</label>
+                                <select class="form-select" name="relation" id="relation">
+                                    <option value=""></option>
+                                    <% relationshipsList.each { relation -> %>
+                                    <option value="${relation.answerConcept}" ${relationship == relation.answerConcept ? 'selected' : ''}>${relation.name}</option>
+                                    <% } %>
+                                </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="contactPhone"
+                                       style="font-size: 14px"><strong>Contact</strong>  (Téléphone)
+                                </label>
+                                <input type="tel" class="form-control" name="contactPhone"
+                                       id="telephone"
+                                       placeholder="+509 0000-0000">
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
-
-                <div class="info-pers" style="margin-top: 10px">
-
-                    <div class="form-group">
-                        <label for="arrivalMode">Mode d’arrivée <span class="asterix">*</span></label>
-                        <select class="form-select" name="arrivalMode" id="arrivalMode" required>
-                            <option value=""></option>
-                            <option value="133499">Ambulance</option>
-                            <option value="133499">Voiture privée</option>
-                            <option value="133499">Transport publique</option>
-                            <option value="133499">Motocyclette</option>
-                            <option value="133499">A pied</option>
-                            <option value="133499">Animal</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ageGroup">Catégorie <span class="asterix">*</span></label>
-                        <select class="form-select" name="ageGroup" id="ageGroup" required>
-                            <option value=""></option>
-                            <option value="122496">Nourisson</option>
-                            <option value="122496">Enfant</option>
-                            <option value="122496">Adolescent</option>
-                            <option value="122496">Adulte</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" style="width: 19%">
-                        <label for="contactName"
-                               style="font-size: 14px"><strong>Contact</strong>  (Nom complet)
-                        </label>
-                        <input type="text" name="contactName"
-                               class="form-control" id="contactName"
-                               placeholder="">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="relation">Relation</label>
-                        <select class="form-select" name="relation" id="relation">
-                            <option value=""></option>
-                            <% relationshipsList.each { relation -> %>
-                            <option value="${relation.answerConcept}" ${relationship == relation.answerConcept ? 'selected' : ''}>${relation.name}</option>
-                            <% } %>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="contactPhone"
-                               style="font-size: 14px"><strong>Contact</strong>  (Téléphone)
-                        </label>
-                        <input type="tel" class="form-control" name="contactPhone"
-                               id="telephone"
-                               placeholder="+509 0000-0000">
-                    </div>
-                </div>
-
-
             </div>
 
             <div id="panel-2"
@@ -338,7 +409,7 @@ body {
                  role="tabpanel"
                  aria-labelledby="tab-2"
                  hidden>
-                <h2>Modificateurs</h2>
+                <h2>Adresse du patient</h2>
                 <p>Contenu du deuxième onglet...</p>
             </div>
 
@@ -346,6 +417,15 @@ body {
                  class="panel"
                  role="tabpanel"
                  aria-labelledby="tab-3"
+                 hidden>
+                <h2>Modificateurs</h2>
+                <p>Contenu du deuxième onglet...</p>
+            </div>
+
+            <div id="panel-4"
+                 class="panel"
+                 role="tabpanel"
+                 aria-labelledby="tab-4"
                  hidden>
                 <h2>Examen clinique</h2>
                 <p>Contenu du troisième onglet...</p>

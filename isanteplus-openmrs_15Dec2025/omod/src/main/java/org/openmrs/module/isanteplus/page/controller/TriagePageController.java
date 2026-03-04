@@ -24,6 +24,7 @@ import org.openmrs.module.idgen.IdentifierSource;
 import org.openmrs.module.idgen.service.IdentifierSourceService;
 import org.openmrs.module.isanteplus.IsantePlusConstants;
 import org.openmrs.module.isanteplus.IsantePlusRelationship;
+import org.openmrs.module.isanteplus.LocationAddress;
 import org.openmrs.module.isanteplus.LocationAddressMirror;
 import org.openmrs.module.isanteplus.api.IsantePlusService;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -58,7 +59,15 @@ public class TriagePageController {
         List<Encounter> encounterList;
         List<Obs> obsList = null;
 
-
+        Map<String, List<LocationAddress>> locations =
+                isantePlusService.getLocationAddressesGroupedByNature(
+                        Arrays.asList(
+                                "state_province",
+                                "city_village",
+                                "municipal_section",
+                                "locality"
+                        )
+                );
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -66,12 +75,12 @@ public class TriagePageController {
         String lastName = null;
         String dateOfBirth = null;
         String gender = null;
-        String address = null;
         String phoneNumber = null;
 
         Integer relationship = null;
         String contactPhone = null;
         String contactName = null;
+
 
         if (visitId != null && patientId != null) {
 
@@ -84,12 +93,6 @@ public class TriagePageController {
             dateOfBirth = sdf.format(patient.getBirthdate());
 
             gender = patient.getGender();
-
-            address = patient.getPerson().getPersonAddress().getAddress1() + ", "
-                    + patient.getPerson().getPersonAddress().getAddress3() + ", "
-                    + patient.getPerson().getPersonAddress().getCityVillage() + ", "
-                    + patient.getPerson().getPersonAddress().getStateProvince() + ", "
-                    + patient.getPerson().getPersonAddress().getCountry();
 
             List<PersonAttribute> personAttributes = patient.getActiveAttributes();
 
@@ -111,11 +114,15 @@ public class TriagePageController {
             }
         }
 
+        model.addAttribute("stateProvinces", locations.get("state_province"));
+        model.addAttribute("cityVillages", locations.get("city_village"));
+        model.addAttribute("municipalSections", locations.get("municipal_section"));
+        model.addAttribute("localities", locations.get("locality"));
+
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("dateOfBirth", dateOfBirth);
         model.addAttribute("gender", gender);
-        model.addAttribute("address", address);
         model.addAttribute("phoneNumber", phoneNumber);
         model.addAttribute("relationship", relationship);
         model.addAttribute("contactName", contactName);

@@ -21,6 +21,7 @@
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/api/db/IsantePlusDAO.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/deploy/bundle/LocationAttributeTypes.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/mapped/FormHistory.java
+/home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/LocationAddress.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/liquibase/InitialiseFormsHistory.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/ISantePlusActivator.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/api/src/main/java/org/openmrs/module/isanteplus/configuration/wsdl/AddToCache.java

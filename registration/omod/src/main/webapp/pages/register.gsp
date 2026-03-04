@@ -478,6 +478,7 @@
         QuickAddress("departement_demo", "commune_demo", "sectionCommunale_demo", "localite_demo");
         QuickAddress("departement_pcontact", "commune_pcontact", "sectionCommunale_pcontact", "localite_pcontact");
         QuickAddress("departement_presponsable", "commune_presponsable", "sectionCommunale_presponsable", "localite_presponsable");
+
     });
 
 </script>

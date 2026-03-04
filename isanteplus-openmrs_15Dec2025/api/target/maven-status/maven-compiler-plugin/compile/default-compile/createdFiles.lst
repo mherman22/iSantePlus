@@ -68,6 +68,7 @@ org/openmrs/module/isanteplus/api/IsantePlusService.class
 org/openmrs/module/isanteplus/api/db/hibernate/HibernateIsantePlusDAO.class
 org/openmrs/module/isanteplus/deploy/bundle/LocationAttributeTypes$6.class
 org/openmrs/module/isanteplus/liquibase/InitialiseFormsHistory.class
+org/openmrs/module/isanteplus/LocationAddress.class
 org/openmrs/module/isanteplus/ChartJSAgeAxis.class
 org/openmrs/module/isanteplus/BaseOpenmrsDataObject.class
 org/openmrs/module/isanteplus/ISantePlusActivator.class
