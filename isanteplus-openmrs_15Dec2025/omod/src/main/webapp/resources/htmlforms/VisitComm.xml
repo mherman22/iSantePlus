@@ -1111,7 +1111,7 @@
 									<label style="color: #d66f08; font-size: 12px;">Mode de suivi</label>
 									<obs 
 										id="locationTypeValue" 
-										conceptId="CIEL:163529" 
+										conceptId="4056846d-a1c2-4924-918d-72780fa41c95" 
 										answers="Rencontre communautaire,Rencontre virtuelle,Appel vocal, SantePam"
 										default="Rencontre communautaire"
 									/>
@@ -1120,18 +1120,18 @@
 						</td>
 						<td class="sansbordure">
 							<b style="font-size: 0.8em; color: #666;">Objectif principal de ce suivi communautaire</b> <br />
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Évaluation sociale"/>  <br/>
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Livraison des médicaments"/>  <br/>
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Renforcement de l’adhérence"/> 
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="092ef945-56c6-408c-99b4-f2fb8a1d26d6" answerLabel="Évaluation sociale"/>  <br/>
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="3f30f7ad-9fe4-4a1d-bb6e-443983b1b3d9" answerLabel="Livraison des médicaments"/>  <br/>
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="f086f0e6-3619-4819-8ed7-974915e7e66b" answerLabel="Renforcement de l’adhérence"/> 
 						</td>
 						<td class="sansbordure">
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Communication de résultats de labo"/>  <br/>
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Suivi régulier"/>  <br/>
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Prélèvements de spécimen de labo"/> 
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="d19df533-1005-499a-8e0c-3bb67a060a1f" answerLabel="Communication de résultats de labo"/>  <br/>
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="519080a3-a5b8-4a61-a955-b8bbbd139606" answerLabel="Suivi régulier"/>  <br/>
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="a04a1c66-dae4-4557-99e9-07c6af314b49" answerLabel="Prélèvements de spécimen de labo"/> 
 						</td>
 						<td class="sansbordure">
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Dépistage TB"/>  <br/>
-							<obs conceptId="CIEL:161648" answerConceptId="CIEL:161648" answerLabel="Autre…………………………"/> 
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="e86bb03f-87b3-41bf-9344-19567854f6c0" answerLabel="Dépistage TB"/>  <br/>
+							<obs conceptId="7e4d245d-ce6a-42a8-885e-1dcfa9637801" answerConceptId="	e783f909-d79c-48f2-882f-45c44454d000" answerLabel="Autre…………………………"/> 
 						</td>
 					</tr>
 				</tbody>
