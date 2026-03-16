@@ -11,5 +11,7 @@ public class RegistrationConstants {
 	public static final String CONTACT_RELATION_CONCEPT_UUID = "164352AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	
 	public static final String CONTACT_PHONE_CONCEPT_UUID = "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-	
+
+	public static final String BIOMETRIC_NATIONAL_IDENTIFIER_TYPE_UUID = "5a597bcc-26ad-11e8-b467-0ed5f89f718b";
+
 }

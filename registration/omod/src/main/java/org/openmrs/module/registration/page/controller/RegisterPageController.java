@@ -249,7 +249,7 @@ public class RegisterPageController {
                     if (!fingerprint.isEmpty()) {
                         String res = registrationService.registerPatient(fingerprint, patientSave.getUuid(), sessionContext.getSessionLocationId());
                         if (res != null && !res.isEmpty()) {
-                            PatientIdentifierType biometricNationalType = patientService.getPatientIdentifierTypeByUuid("5a597bcc-26ad-11e8-b467-0ed5f89f718b");
+                            PatientIdentifierType biometricNationalType = patientService.getPatientIdentifierTypeByUuid(RegistrationConstants.BIOMETRIC_NATIONAL_IDENTIFIER_TYPE_UUID);
                             PatientIdentifier biometricIdentifier = new PatientIdentifier(res, biometricNationalType, sessionContext.getSessionLocation());
                             biometricIdentifier.setCreator(sessionContext.getCurrentUser());
                             biometricIdentifier.setDateCreated(patientSave.getDateCreated());
