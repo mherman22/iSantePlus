@@ -248,7 +248,17 @@ public class RegisterPageController {
 
                     if (!fingerprint.isEmpty()) {
                         String res = registrationService.registerPatient(fingerprint, patientSave.getUuid(), sessionContext.getSessionLocationId());
-                        System.out.println("Check saved finger ::: " + res);
+                        if (res != null && !res.isEmpty()) {
+                            PatientIdentifierType biometricNationalType = patientService.getPatientIdentifierTypeByUuid("5a597bcc-26ad-11e8-b467-0ed5f89f718b");
+                            PatientIdentifier biometricIdentifier = new PatientIdentifier(res, biometricNationalType, sessionContext.getSessionLocation());
+                            biometricIdentifier.setCreator(sessionContext.getCurrentUser());
+                            biometricIdentifier.setDateCreated(patientSave.getDateCreated());
+                            biometricIdentifier.setVoided(false);
+                            biometricIdentifier.setPreferred(false);
+                            biometricIdentifier.setUuid(UUID.randomUUID().toString());
+                            patientSave.addIdentifier(biometricIdentifier);
+                            patientService.savePatient(patientSave);
+                        }
                     }
 
                     EncounterType encounterType = encounterService.getEncounterTypeByUuid("873f968a-73a8-4f9c-ac78-9f4778b751b6");
