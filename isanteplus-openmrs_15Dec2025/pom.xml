@@ -68,7 +68,7 @@
 		<htmlformentryuiVersion>1.6.3</htmlformentryuiVersion>
 		<referenceapplicationVersion>2.6.0</referenceapplicationVersion>
 		<haiticoreVersion>1.0.0-SNAPSHOT</haiticoreVersion>
-		<xds-senderVersion>1.0.0</xds-senderVersion>
+<!--		<xds-senderVersion>1.0.0</xds-senderVersion>-->
 		<!-- Required to pass tests -->
 		<reportingVersion>1.12.0</reportingVersion>
 		<calculationVersion>1.2</calculationVersion>
@@ -76,7 +76,6 @@
 		<providermanagementVersion>2.5.0</providermanagementVersion>
 		<idgenVersion>4.4.1</idgenVersion>
 		<allergyuiVersion>1.7.0</allergyuiVersion>
-
 	</properties>
 
 	<dependencyManagement>

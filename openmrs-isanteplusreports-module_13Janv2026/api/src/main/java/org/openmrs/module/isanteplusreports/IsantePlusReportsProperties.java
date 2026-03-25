@@ -204,4 +204,5 @@ public class IsantePlusReportsProperties{
 	public static final String DDPREPORTBYPERIOD_UUID = "3510620c-5eb8-4ca0-b680-eebc80502ebc";
 
 	public static final String PATIENT_WITH_FINGER_PRINT_UUID = "2a06491b-9f73-40a6-bed6-8c39fade8d7a";
+
 }

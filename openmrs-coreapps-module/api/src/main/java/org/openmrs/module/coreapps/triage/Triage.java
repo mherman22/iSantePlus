@@ -1,15 +1,18 @@
-package org.openmrs.module.coreapps;
+package org.openmrs.module.coreapps.triage;
 
 import org.openmrs.Patient;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Triage implements Serializable {
 
     private Patient patient;
     private Vitals vitals;
     private String triageLevel;
+
+    public Triage() {
+        // Constructeur vide pour frameworks / sérialisation
+    }
 
     public Triage(Patient patient, Vitals vitals) {
         this.patient = patient;
@@ -43,7 +46,7 @@ public class Triage implements Serializable {
     @Override
     public String toString() {
         return "Triage{" +
-                "patient=" + patient +
+                "patient=" + (patient != null ? patient.getPersonName() : "null") +
                 ", vitals=" + vitals +
                 ", triageLevel='" + triageLevel + '\'' +
                 '}';

@@ -48,6 +48,7 @@ import org.openmrs.module.isanteplusreports.api.dao.IsantePlusReportsDao;
 import org.openmrs.module.isanteplusreports.api.db.IsantePlusReportsDAO;
 import org.openmrs.module.isanteplusreports.comorbidity.model.PatientSummary;
 import org.openmrs.module.isanteplusreports.dataset.definitions.DdpReportByPeriodDataSetDefinition;
+import org.openmrs.module.isanteplusreports.model.PatientAddressHistory;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.common.DateUtil;
 import org.openmrs.module.reporting.common.ObjectUtil;
@@ -66,6 +67,8 @@ import org.openmrs.module.reporting.indicator.Indicator;
 import org.openmrs.module.reporting.indicator.dimension.Dimension;
 import org.openmrs.util.HandlerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.openmrs.module.isanteplusreports.util.IsantePlusReportsConstants.REPORTS_SQL_PATH;
 
 public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements IsantePlusReportsService {
 
@@ -129,8 +132,8 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
 
     /**
      * @return The definition of the passed uuid and type. This will first check any
-     *         DefinitionLibrary that is defined, and if none found, will check the appropriate
-     *         reporting definition service
+     * DefinitionLibrary that is defined, and if none found, will check the appropriate
+     * reporting definition service
      */
     protected <T extends Definition> T getDefinition(String uuid, Class<T> type) {
         DefinitionLibrary<T> l = HandlerUtil.getPreferredHandler(DefinitionLibrary.class, type);
@@ -851,6 +854,45 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
         return patientList;
     }
 
+    @Override
+    public List<PatientAddressHistory> getAddressHistory(Integer patientId) {
+        String sql = loadSqlFile(REPORTS_SQL_PATH + "patientAddressHistory.sql");
+
+        SQLQuery query = dao.getSessionFactoryResult().createSQLQuery(sql);
+
+        query.setInteger("patientId", patientId);
+        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+        List<Map<String, Object>> list = query.list();
+        List<PatientAddressHistory> patientAddressHistoryList = new ArrayList<>();
+
+        for (Map<String, Object> row : list) {
+            PatientAddressHistory patientAddressHistory = new PatientAddressHistory();
+
+            if (row.get("personId") != null)
+                patientAddressHistory.setPersonId(((Number) row.get("personId")).intValue());
+
+            if (row.get("address2") != null)
+                patientAddressHistory.setAddress2(row.get("address2").toString());
+
+            if (row.get("address1") != null)
+                patientAddressHistory.setAddress1(row.get("address1").toString());
+
+            if (row.get("cityVillage") != null)
+                patientAddressHistory.setCityVillage(row.get("cityVillage").toString());
+
+            if (row.get("stateProvince") != null)
+                patientAddressHistory.setStateProvince(row.get("stateProvince").toString());
+
+            if (row.get("country") != null)
+                patientAddressHistory.setCountry(row.get("country").toString());
+
+            patientAddressHistoryList.add(patientAddressHistory);
+        }
+
+        return patientAddressHistoryList;
+    }
+
     private LocalDate getDateFormat(String date) {
         if (date == null)
             return null;
@@ -875,4 +917,6 @@ public class IsantePlusReportsServiceImpl extends BaseOpenmrsService implements 
             throw new RuntimeException("Erreur lecture fichier SQL", e);
         }
     }
+
+
 }

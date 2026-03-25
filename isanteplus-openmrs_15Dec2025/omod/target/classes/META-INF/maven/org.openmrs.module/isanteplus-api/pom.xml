@@ -111,6 +111,14 @@
       <artifactId>providermanagement-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.openmrs.module</groupId>
+      <artifactId>idgen-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openmrs.module</groupId>
+      <artifactId>appui-omod</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
     </dependency>

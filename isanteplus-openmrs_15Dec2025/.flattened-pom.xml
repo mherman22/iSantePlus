@@ -46,7 +46,6 @@
     <serializationxstreamVersion>0.2.12</serializationxstreamVersion>
     <reportingVersion>1.12.0</reportingVersion>
     <jsonVersion>20160212</jsonVersion>
-    <xds-senderVersion>1.0.0</xds-senderVersion>
     <registrationAppVersion>1.10.0-SNAPSHOT</registrationAppVersion>
     <metadatamappingVersion>1.3.1</metadatamappingVersion>
     <coreappsVersion>1.19.0</coreappsVersion>

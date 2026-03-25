@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import org.apache.commons.io.IOUtils;
@@ -33,9 +35,13 @@ import org.joda.time.Months;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openmrs.*;
+import org.openmrs.api.*;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.appframework.domain.ComponentState;
+import org.openmrs.module.appui.UiSessionContext;
+import org.openmrs.module.idgen.IdentifierSource;
+import org.openmrs.module.idgen.service.IdentifierSourceService;
 import org.openmrs.module.isanteplus.*;
 import org.openmrs.module.isanteplus.api.IsantePlusService;
 import org.openmrs.module.isanteplus.api.db.IsantePlusDAO;
@@ -753,16 +759,13 @@ public class IsantePlusServiceImpl extends BaseOpenmrsService implements IsanteP
 
         for (Obs obs : Context.getObsService().getObservationsByPersonAndConcept(patient.getPerson(), testsOrdered)) {
             if (obs != null) {
-
-                //Integer result = Integer.parseInt(obs.getValueCoded().toString());
                 Integer result = obs.getValueCoded().getConceptId();
                 Concept resultTest = Context.getConceptService().getConcept(result);
 
                 for (Obs obs1 : Context.getObsService().getObservationsByPersonAndConcept(patient.getPerson(), resultTest)) {
-                    if (obs.getEncounter().getEncounterId() == obs1.getEncounter().getEncounterId()) {
+                    if (obs.getEncounter().getEncounterType().equals(obs1.getEncounter().getEncounterType())) {
                         IsantePlusObs obsres = new IsantePlusObs(obs1);
                         labHistory.add(obsres);
-
                     }
                 }
             }
@@ -1299,6 +1302,436 @@ public class IsantePlusServiceImpl extends BaseOpenmrsService implements IsanteP
         }
 
         return result;
+    }
+
+    @Override
+    public Person createPerson(PersonService personService,
+                               UiSessionContext sessionContext,
+                               Date now,
+                               String firstName,
+                               String lastName,
+                               String gender,
+                               LocalDate birthDate) {
+
+        Person person = new Person();
+
+        person.setGender(gender.trim());
+        person.setBirthdate(convertLocalDateToDate(birthDate));
+        person.setCreator(sessionContext.getCurrentUser());
+        person.setDateCreated(now);
+        person.setUuid(UUID.randomUUID().toString());
+
+        PersonName name = new PersonName(lastName.trim(), null, firstName.trim());
+        name.setPreferred(true);
+        name.setCreator(sessionContext.getCurrentUser());
+        name.setDateCreated(now);
+        name.setUuid(UUID.randomUUID().toString());
+
+        person.addName(name);
+
+        return personService.savePerson(person);
+    }
+
+    // Méthode utilitaire pour convertir LocalDate en Date
+    private Date convertLocalDateToDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    @Override
+    public Patient createPatient(PatientService patientService,
+                                 UiSessionContext sessionContext,
+                                 Person person) {
+
+        PatientIdentifierType type =
+                patientService.getPatientIdentifierTypeByUuid("05a29f94-c0ed-11e2-94be-8c13b969e334");
+
+        IdentifierSourceService iss = Context.getService(IdentifierSourceService.class);
+
+        IdentifierSource source = iss.getIdentifierSource(1);
+
+        String newId = iss.generateIdentifiers(source, 1, null).get(0);
+
+        PatientIdentifier identifier =
+                new PatientIdentifier(newId, type, sessionContext.getSessionLocation());
+
+        Patient patient = new Patient(person);
+        patient.addIdentifier(identifier);
+
+        return patientService.savePatient(patient);
+    }
+
+    @Override
+    public Visit createVisit(VisitService visitService,
+                             UiSessionContext sessionContext,
+                             Patient patient) {
+
+        VisitType visitType = visitService.getVisitTypeByUuid("7b0f5697-27e3-40c4-8bae-f4049abfb4ed");
+
+        Visit visit = new Visit(patient, visitType, new Date());
+
+        visit.setLocation(sessionContext.getSessionLocation());
+        visit.setCreator(sessionContext.getCurrentUser());
+        visit.setUuid(UUID.randomUUID().toString());
+
+        return visitService.saveVisit(visit);
+    }
+
+    @Override
+    public Encounter createEncounter(EncounterService encounterService,
+                                     FormService formService,
+                                     UiSessionContext sessionContext,
+                                     Patient patient,
+                                     Visit visit) {
+
+        EncounterType type =
+                encounterService.getEncounterTypeByUuid("77f833ac-79bd-4822-991d-533fcccaf996");
+
+        Form form = formService.getFormByUuid("0cc54a35-e6c8-4f90-9db2-2f24262abbd1");
+
+        Encounter encounter = new Encounter();
+
+        encounter.setEncounterType(type);
+        encounter.setForm(form);
+        encounter.setPatient(patient);
+        encounter.setVisit(visit);
+        encounter.setLocation(sessionContext.getSessionLocation());
+        encounter.setEncounterDatetime(new Date());
+        encounter.setUuid(UUID.randomUUID().toString());
+
+        return encounterService.saveEncounter(encounter);
+    }
+
+    @Override
+    public void saveNumericObs(ObsService obsService,
+                               ConceptService conceptService,
+                               UiSessionContext sessionContext,
+                               Person person,
+                               Encounter encounter,
+                               Integer conceptId,
+                               Double value) {
+
+        if (value == null) return;
+
+        Obs obs = new Obs();
+
+        obs.setPerson(person);
+        obs.setConcept(conceptService.getConcept(conceptId));
+        obs.setEncounter(encounter);
+        obs.setObsDatetime(encounter.getEncounterDatetime());
+        obs.setLocation(sessionContext.getSessionLocation());
+        obs.setValueNumeric(value);
+        obs.setUuid(UUID.randomUUID().toString());
+
+        obsService.saveObs(obs, null);
+    }
+
+    @Override
+    public void saveVitalSigns(ObsService obsService,
+                               ConceptService conceptService,
+                               UiSessionContext sessionContext,
+                               Person person,
+                               Encounter encounter,
+                               Double poids, Double taille, Double fr, Double sao2,
+                               Double fc, Double tasys, Double tadias,
+                               Double glycemie, Double temperature,
+                               Double pc, Double pb,
+                               Double ge, Double gv, Double gm,
+                               String typeDouleur, Double scoreDouleur) {
+
+        if (poids != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5089, poids);
+
+        if (taille != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5090, taille);
+
+        if (fr != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5242, fr);
+
+        if (sao2 != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5092, sao2);
+
+        if (fc != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5087, fc);
+
+        if (tasys != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5085, tasys);
+
+        if (tadias != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5086, tadias);
+
+        if (glycemie != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 887, glycemie);
+
+        if (temperature != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5088, temperature);
+
+        if (pc != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 5314, pc);
+
+        if (pb != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 1343, pb);
+
+        if (ge != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 1419, ge);
+
+        if (gv != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 1420, gv);
+
+        if (gm != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 1421, gm);
+
+        if (scoreDouleur != null)
+            saveNumericObs(obsService, conceptService, sessionContext, person, encounter, 114403, scoreDouleur);
+
+
+        // Type douleur (concept codé)
+        if (typeDouleur != null && !typeDouleur.trim().isEmpty()) {
+
+            Obs obs = new Obs();
+
+            obs.setPerson(person);
+            obs.setConcept(conceptService.getConcept(114403));
+            obs.setEncounter(encounter);
+            obs.setObsDatetime(encounter.getEncounterDatetime());
+            obs.setLocation(sessionContext.getSessionLocation());
+            obs.setCreator(sessionContext.getCurrentUser());
+            obs.setDateCreated(encounter.getDateCreated());
+            obs.setValueCoded(conceptService.getConcept(Integer.parseInt(typeDouleur.trim())));
+            obs.setUuid(UUID.randomUUID().toString());
+
+            obsService.saveObs(obs, null);
+        }
+    }
+
+    @Override
+    public void saveEmergencyContact(ObsService obsService,
+                                     ConceptService conceptService,
+                                     UiSessionContext sessionContext,
+                                     Person person,
+                                     Encounter encounter,
+                                     String contactName,
+                                     String contactPhone,
+                                     String relation) {
+
+        if ((contactName == null || contactName.trim().isEmpty())
+                && (contactPhone == null || contactPhone.trim().isEmpty())
+                && (relation == null || relation.trim().isEmpty())) {
+            return;
+        }
+
+        Concept contactConcept = conceptService.getConcept(IsantePlusConstants.EMERGENCY_CONTACT_CONCEPT_ID);
+
+        Obs groupObs = new Obs();
+        groupObs.setPerson(person);
+        groupObs.setConcept(contactConcept);
+        groupObs.setEncounter(encounter);
+        groupObs.setObsDatetime(encounter.getEncounterDatetime());
+        groupObs.setLocation(sessionContext.getSessionLocation());
+        groupObs.setCreator(sessionContext.getCurrentUser());
+        groupObs.setDateCreated(encounter.getDateCreated());
+        groupObs.setVoided(false);
+        groupObs.setUuid(UUID.randomUUID().toString());
+
+        Set<Obs> children = new HashSet<>();
+
+        // Nom contact
+        if (contactName != null && !contactName.trim().isEmpty()) {
+
+            Obs nameObs = new Obs();
+            nameObs.setConcept(conceptService.getConceptByUuid(IsantePlusConstants.EMERGENCY_CONTACT_NAME_CONCEPT_UUID));
+            nameObs.setValueText(contactName.trim());
+            nameObs.setPerson(person);
+            nameObs.setEncounter(encounter);
+            nameObs.setObsDatetime(encounter.getEncounterDatetime());
+            nameObs.setLocation(sessionContext.getSessionLocation());
+            nameObs.setCreator(sessionContext.getCurrentUser());
+            nameObs.setObsGroup(groupObs);
+            nameObs.setUuid(UUID.randomUUID().toString());
+
+            children.add(nameObs);
+        }
+
+        // Telephone
+        if (contactPhone != null && !contactPhone.trim().isEmpty()) {
+
+            Obs phoneObs = new Obs();
+            phoneObs.setConcept(conceptService.getConceptByUuid(IsantePlusConstants.EMERGENCY_CONTACT_PHONE_CONCEPT_UUID));
+            phoneObs.setValueText(contactPhone.trim());
+            phoneObs.setPerson(person);
+            phoneObs.setEncounter(encounter);
+            phoneObs.setObsDatetime(encounter.getEncounterDatetime());
+            phoneObs.setLocation(sessionContext.getSessionLocation());
+            phoneObs.setCreator(sessionContext.getCurrentUser());
+            phoneObs.setObsGroup(groupObs);
+            phoneObs.setUuid(UUID.randomUUID().toString());
+
+            children.add(phoneObs);
+        }
+
+        // Relation
+        if (relation != null && !relation.trim().isEmpty()) {
+
+            Obs relationObs = new Obs();
+            relationObs.setConcept(conceptService.getConceptByUuid(IsantePlusConstants.EMERGENCY_CONTACT_RELATION_CONCEPT_UUID));
+            relationObs.setValueCoded(conceptService.getConcept(Integer.parseInt(relation.trim())));
+            relationObs.setPerson(person);
+            relationObs.setEncounter(encounter);
+            relationObs.setObsDatetime(encounter.getEncounterDatetime());
+            relationObs.setLocation(sessionContext.getSessionLocation());
+            relationObs.setCreator(sessionContext.getCurrentUser());
+            relationObs.setObsGroup(groupObs);
+            relationObs.setUuid(UUID.randomUUID().toString());
+
+            children.add(relationObs);
+        }
+
+        groupObs.setGroupMembers(children);
+
+        obsService.saveObs(groupObs, "Emergency contact");
+    }
+
+    @Override
+    public void savePatientInformation(ObsService obsService,
+                                       ConceptService conceptService,
+                                       UiSessionContext sessionContext,
+                                       Person person,
+                                       Encounter encounter,
+                                       String ageGroup,
+                                       String arrivalModes,
+                                       List<String> evaluations) {
+
+        // Age group
+        if (ageGroup != null && !ageGroup.trim().isEmpty()) {
+
+            Obs ageObs = new Obs();
+
+            ageObs.setPerson(person);
+            ageObs.setConcept(conceptService.getConcept(159614));
+            ageObs.setEncounter(encounter);
+            ageObs.setObsDatetime(encounter.getEncounterDatetime());
+            ageObs.setLocation(sessionContext.getSessionLocation());
+            ageObs.setCreator(sessionContext.getCurrentUser());
+            ageObs.setDateCreated(encounter.getDateCreated());
+            ageObs.setValueCoded(conceptService.getConcept(Integer.parseInt(ageGroup.trim())));
+            ageObs.setUuid(UUID.randomUUID().toString());
+
+            obsService.saveObs(ageObs, null);
+        }
+
+        // Arrival mode
+        if (arrivalModes != null && !arrivalModes.trim().isEmpty()) {
+
+            Obs arrivalObs = new Obs();
+
+            arrivalObs.setPerson(person);
+            arrivalObs.setConcept(conceptService.getConcept(159614));
+            arrivalObs.setEncounter(encounter);
+            arrivalObs.setObsDatetime(encounter.getEncounterDatetime());
+            arrivalObs.setLocation(sessionContext.getSessionLocation());
+            arrivalObs.setCreator(sessionContext.getCurrentUser());
+            arrivalObs.setDateCreated(encounter.getDateCreated());
+            arrivalObs.setValueCoded(conceptService.getConcept(Integer.parseInt(arrivalModes.trim())));
+            arrivalObs.setUuid(UUID.randomUUID().toString());
+
+            obsService.saveObs(arrivalObs, null);
+        }
+
+        // Evaluations
+        if (evaluations != null && !evaluations.isEmpty()) {
+
+            for (String evaluation : evaluations) {
+
+                if (evaluation != null && !evaluation.trim().isEmpty()) {
+
+                    Obs obs = new Obs();
+
+                    obs.setPerson(person);
+                    obs.setConcept(conceptService.getConcept(159614));
+                    obs.setEncounter(encounter);
+                    obs.setObsDatetime(encounter.getEncounterDatetime());
+                    obs.setLocation(sessionContext.getSessionLocation());
+                    obs.setCreator(sessionContext.getCurrentUser());
+                    obs.setDateCreated(encounter.getDateCreated());
+                    obs.setValueCoded(conceptService.getConcept(Integer.parseInt(evaluation.trim())));
+                    obs.setUuid(UUID.randomUUID().toString());
+
+                    obsService.saveObs(obs, null);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void saveMedicalDecision(ObsService obsService,
+                                    ConceptService conceptService,
+                                    UiSessionContext sessionContext,
+                                    Person person,
+                                    Encounter encounter,
+                                    String disposition,
+                                    String intervention) {
+
+        // Disposition
+        if (disposition != null && !disposition.trim().isEmpty()) {
+
+            Obs dispositionObs = new Obs();
+
+            dispositionObs.setPerson(person);
+            dispositionObs.setConcept(conceptService.getConcept(159614));
+            dispositionObs.setEncounter(encounter);
+            dispositionObs.setObsDatetime(encounter.getEncounterDatetime());
+            dispositionObs.setLocation(sessionContext.getSessionLocation());
+            dispositionObs.setCreator(sessionContext.getCurrentUser());
+            dispositionObs.setDateCreated(encounter.getDateCreated());
+            dispositionObs.setValueCoded(conceptService.getConcept(Integer.parseInt(disposition.trim())));
+            dispositionObs.setUuid(UUID.randomUUID().toString());
+
+            obsService.saveObs(dispositionObs, null);
+        }
+
+        // Intervention
+        if (intervention != null && !intervention.trim().isEmpty()) {
+
+            Obs interventionObs = new Obs();
+
+            interventionObs.setPerson(person);
+            interventionObs.setConcept(conceptService.getConcept(161011));
+            interventionObs.setEncounter(encounter);
+            interventionObs.setObsDatetime(encounter.getEncounterDatetime());
+            interventionObs.setLocation(sessionContext.getSessionLocation());
+            interventionObs.setCreator(sessionContext.getCurrentUser());
+            interventionObs.setDateCreated(encounter.getDateCreated());
+            interventionObs.setValueText(intervention.trim());
+            interventionObs.setUuid(UUID.randomUUID().toString());
+
+            obsService.saveObs(interventionObs, null);
+        }
+    }
+
+    @Override
+    public void saveSignature(ObsService obsService,
+                              ConceptService conceptService,
+                              UiSessionContext sessionContext,
+                              Person person,
+                              Encounter encounter,
+                              String signature) {
+
+        if (signature == null || signature.trim().isEmpty()) {
+            return;
+        }
+
+        Obs obs = new Obs();
+
+        obs.setPerson(person);
+        obs.setConcept(conceptService.getConcept(1473));
+        obs.setEncounter(encounter);
+        obs.setObsDatetime(encounter.getEncounterDatetime());
+        obs.setLocation(sessionContext.getSessionLocation());
+        obs.setCreator(sessionContext.getCurrentUser());
+        obs.setDateCreated(encounter.getDateCreated());
+        obs.setValueText(signature.trim());
+        obs.setUuid(UUID.randomUUID().toString());
+
+        obsService.saveObs(obs, null);
     }
 
 }

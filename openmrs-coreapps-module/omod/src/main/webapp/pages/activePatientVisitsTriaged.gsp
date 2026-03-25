@@ -187,31 +187,32 @@ body {
 
                 <div class="visit-meta">
                     <span><b>ID:</b> ${ ui.encodeHtmlContent(ui.format(triage.patient.patientIdentifier)) }</span>
-                    <span><b>Date arrivée:</b> ${ ui.format(latest?.encounterDatetime) }</span>
+                    <span><b>Date arrivée:</b> ${ ui.format(latest?.visit.startDatetime) }</span>
                 </div>
 
-                <div class="visit-info">
-                    <% if (triage.triageLevel == 'resuscitation') { %>
-                    <span class="visit-type" style="background:#40a6d1;">Resuscitation</span>
-                    <% } else if (triage.triageLevel == 'critical') { %>
-                    <span class="visit-type" style="background:#cc0000;">Critical</span>
-                    <% } else if (triage.triageLevel == 'potential') { %>
-                    <span class="visit-type" style="background:#f0f000; color:#000;">Potential</span>
-                    <% } else if (triage.triageLevel == 'semi') { %>
-                    <span class="visit-type" style="background:#3fbf4e;">Semi</span>
-                    <% } else { %>
-                    <span class="visit-type" style="background:#999;">Normal</span>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap; gap: 10px">
+                    <% if (latest) { %>
+                    <div class="visit-info">
+                        <b>Dernière visite:</b> ${ ui.encodeHtmlContent(ui.format(latest.encounterType)) } —
+                    ${ ui.encodeHtmlContent(ui.format(latest.location)) }
+                    @ ${ ui.format(latest.encounterDatetime) }
+                    </div>
                     <% } %>
-                </div>
 
-                <% if (latest) { %>
-                <div class="visit-info">
-                    <b>Dernière visite:</b> ${ ui.encodeHtmlContent(ui.format(latest.encounterType)) } —
-                ${ ui.encodeHtmlContent(ui.format(latest.location)) }
-                @ ${ ui.format(latest.encounterDatetime) }
+                    <div class="visit-info" style="display: flex; width: 20%; ">
+                        <% if (triage.triageLevel == 'resuscitation') { %>
+                        <span class="visit-type" style="background:#40a6d1;">Resuscitation</span>
+                        <% } else if (triage.triageLevel == 'critical') { %>
+                        <span class="visit-type" style="background:#cc0000;">Critical</span>
+                        <% } else if (triage.triageLevel == 'potential') { %>
+                        <span class="visit-type" style="background:#f0f000; color:#000;">Potential</span>
+                        <% } else if (triage.triageLevel == 'semi') { %>
+                        <span class="visit-type" style="background:#3fbf4e;">Semi</span>
+                        <% } else { %>
+                        <span align="center" class="visit-type" style="background:#c3c3c3; font-size: 14px; width: 100%">Normal</span>
+                        <% } %>
+                    </div>
                 </div>
-                <% } %>
-
             </div>
 
             <% } %>

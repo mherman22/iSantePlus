@@ -4,34 +4,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.isanteplus.PatientSearchInfos;
 import org.openmrs.module.isanteplus.api.IsantePlusService;
+import org.openmrs.ui.framework.SimpleObject;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Collections;
 
 public class FindPatientCriteriaFragmentController {
 
-    public void get() {
-    }
+    public SimpleObject findPatientByCriteria(@RequestParam("criteria") String criteria) {
 
-    public void findPatientByCriteria(@RequestParam("criteria") String criteria,
-                                      HttpServletRequest request,
-                                      HttpServletResponse response) {
-
-        if (criteria == null || criteria.trim().isEmpty()) {
-            return; // rien si vide
-        }
-
-        List<PatientSearchInfos> results = Context.getService(IsantePlusService.class).getAllPatientSearchInfos(criteria);
+        List<PatientSearchInfos> results;
+        if (criteria == null || criteria.trim().isEmpty())
+            results = Collections.emptyList();
+        else
+            results = Context.getService(IsantePlusService.class)
+                    .getAllPatientSearchInfos(criteria);
 
         try {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            new ObjectMapper().writeValue(response.getWriter(), results);
-            response.getWriter().flush();
+            ObjectMapper mapper = new ObjectMapper();
+            return SimpleObject.create("patientsLoad", mapper.writeValueAsString(results));
         } catch (Exception e) {
-            throw new RuntimeException("Erreur AJAX findPatientByCriteria", e);
+            throw new RuntimeException(e);
         }
     }
 }

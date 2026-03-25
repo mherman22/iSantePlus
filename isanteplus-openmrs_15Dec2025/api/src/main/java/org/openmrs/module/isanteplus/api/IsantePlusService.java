@@ -14,14 +14,17 @@
 package org.openmrs.module.isanteplus.api;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openmrs.*;
-import org.openmrs.api.OpenmrsService;
+import org.openmrs.api.*;
 import org.openmrs.module.appframework.domain.ComponentState;
+import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.isanteplus.*;
 import org.openmrs.module.isanteplus.liquibase.InitialiseFormsHistory;
 import org.openmrs.module.isanteplus.mapped.FormHistory;
@@ -169,4 +172,78 @@ public interface IsantePlusService extends OpenmrsService {
 	List<PatientSearchInfos> getAllPatientSearchInfos(String var1);
     Map<String, List<LocationAddress>> getLocationAddressesGroupedByNature(List<String> natures);
 
+    Person createPerson(PersonService personService,
+                        UiSessionContext sessionContext,
+                        Date now,
+                        String firstName,
+                        String lastName,
+                        String gender,
+                        LocalDate birthDate);
+
+    Patient createPatient(PatientService patientService,
+                          UiSessionContext sessionContext,
+                          Person person);
+
+    Visit createVisit(VisitService visitService,
+                      UiSessionContext sessionContext,
+                      Patient patient);
+
+    Encounter createEncounter(EncounterService encounterService,
+                              FormService formService,
+                              UiSessionContext sessionContext,
+                              Patient patient,
+                              Visit visit);
+
+    void saveNumericObs(ObsService obsService,
+                        ConceptService conceptService,
+                        UiSessionContext sessionContext,
+                        Person person,
+                        Encounter encounter,
+                        Integer conceptId,
+                        Double value);
+
+    void saveVitalSigns(ObsService obsService,
+                        ConceptService conceptService,
+                        UiSessionContext sessionContext,
+                        Person person,
+                        Encounter encounter,
+                        Double poids, Double taille, Double fr, Double sao2,
+                        Double fc, Double tasys, Double tadias,
+                        Double glycemie, Double temperature,
+                        Double pc, Double pb,
+                        Double ge, Double gv, Double gm,
+                        String typeDouleur, Double scoreDouleur);
+
+    void saveEmergencyContact(ObsService obsService,
+                              ConceptService conceptService,
+                              UiSessionContext sessionContext,
+                              Person person,
+                              Encounter encounter,
+                              String contactName,
+                              String contactPhone,
+                              String relation);
+
+    void savePatientInformation(ObsService obsService,
+                                ConceptService conceptService,
+                                UiSessionContext sessionContext,
+                                Person person,
+                                Encounter encounter,
+                                String ageGroup,
+                                String arrivalModes,
+                                List<String> evaluations);
+
+    void saveMedicalDecision(ObsService obsService,
+                             ConceptService conceptService,
+                             UiSessionContext sessionContext,
+                             Person person,
+                             Encounter encounter,
+                             String disposition,
+                             String intervention);
+
+    void saveSignature(ObsService obsService,
+                       ConceptService conceptService,
+                       UiSessionContext sessionContext,
+                       Person person,
+                       Encounter encounter,
+                       String signature);
 }

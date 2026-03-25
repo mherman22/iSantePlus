@@ -54,6 +54,7 @@ body {
     color: #586674;
     white-space: nowrap;
     transition: all 0.2s ease;
+    /*border: 1px solid red;*/
 }
 
 .tab:hover {
@@ -106,15 +107,22 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(11, 74, 123, 0.25);
 }
 
-.tab1-infos1, .tab1-infos2, .tab1-infos3 {
+.tab1-infos1, .tab1-infos2, .tab1-infos3, .tab3-infos1 {
     display: flex;
     flex-direction: row;
     gap: 15px;
+    /*border: 1px solid red;*/
 }
 
 .tab1-infos4 {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    gap: 15px;
+}
+.tab5-infos1 {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     gap: 15px;
 }
@@ -137,10 +145,131 @@ fieldset {
     gap: 15px;
     width: 100%;
     border: 1px solid #e6e9ee;
-    padding: 15px;
+    padding: 10px;
     border-radius: 6px;
     margin: 16px 0;
 }
+.tabTitle {
+    color: #307084;
+}
+.glasgow {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #dde1e2;
+}
+.glasgow-strong {
+    font-size: x-large;
+    margin-top: 40px;
+    height: 30px
+}
+
+.check-group {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    /*border: 1px solid red;*/
+}
+.div-check {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    /*gap: 10px;*/
+    margin: 5px;
+    /*border: 1px solid green;*/
+}
+.div-check-2 {
+    display: flex;
+    width: 100%;
+    /*border: 1px solid red;*/
+}
+
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin: 15px;
+}
+
+input[type="checkbox"]:disabled,
+input[type="radio"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+input:disabled + label {
+    color: gray;
+    cursor: not-allowed;
+}
+
+textarea {
+    height: 100px;
+}
+.form-span {
+    display: flex;
+    width: 95%;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 6px;
+    float: left;
+    /*border: 1px solid red;*/
+}
+
+.button-group {
+    display: flex;
+    float: right;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+/* bouton retour */
+.btn-back{
+    background:white;
+    color:#444;
+    border: none;
+    padding: 8px 12px;
+}
+
+.btn-back:hover {
+    /*transform:translateY(-2px);*/
+    box-shadow:0 6px 18px rgba(0,0,0,0.01);
+    background:#f8f8f8;
+}
+
+/* bouton suivant */
+.btn-next{
+    background:white;
+    color:#444;
+    border: none;
+    padding: 8px 12px;
+}
+#btn-submit{
+    background: #0b4a7b;
+    color: white;
+    padding: 8px 26px;
+}
+#btn-submit:hover{
+    background: #083456;
+}
+
+.btn-next:hover{
+    /*transform:translateY(-1px);*/
+    box-shadow:0 6px 18px rgba(0,0,0,0.01);
+    background:#f8f8f8;
+}
+
+.span-hint {
+    /*float: right;*/
+    /*margin-right: 11%;*/
+    font-size: 13px;
+    color: #437490;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
 
 @keyframes fadeIn {
     from {
@@ -159,7 +288,6 @@ fieldset {
         font-size: 13px;
         padding: 8px 12px;
     }
-
     .panels {
         padding: 15px;
     }
@@ -167,14 +295,38 @@ fieldset {
         flex-direction: column;
         align-items: center;
     }
-    .tab1-infos1, .tab1-infos2, .tab1-infos3, .tab1-infos4 {
+    .tab1-infos1, .tab1-infos2, .tab1-infos3, .tab1-infos4, .tab3-infos1 {
+        flex-direction: column;
+    }
+    .glasgow {
+        flex-direction: column;
+    }
+    .glasgow-strong {
+        margin: auto;
+        margin-top: -10px;
+        margin-bottom: -30px;
+    }
+    .check-group {
+        flex-direction: column;
+    }
+    .div-check-2 {
+        flex-direction: column;
+        width: 100%;
+    }
+    .button-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+@media (max-width: 912px) {
+    .check-group {
         flex-direction: column;
     }
 }
 </style>
 
 <script type="text/javascript">
-    jQuery(function () {
+    jQuery(function (jq) {
 
         const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
         const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
@@ -247,6 +399,238 @@ fieldset {
         // Initialisation
         activateTab(tabs[0]);
 
+        function swapValueToText(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            const opt = select.options[select.selectedIndex];
+            if (!opt) return;
+
+            opt.value = opt.textContent.trim();
+        }
+
+        // check / uncheck radio button
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('click', function () {
+
+                if (this.previousChecked) {
+                    this.checked = false;
+                }
+                document.querySelectorAll('input[name="' + this.name + '"]').forEach(r => {
+                    r.previousChecked = false;
+                });
+
+                this.previousChecked = this.checked;
+            });
+        });
+
+        // select / unseclect alert and cunfus
+        const avpu = document.getElementById("avpu");
+        const confus = document.getElementById("confus");
+
+        avpu.addEventListener("change", function () {
+            if (avpu.value === "120744") {
+                confus.checked = false;
+                confus.disabled = true;
+            } else {
+                confus.disabled = false;
+            }
+        });
+
+        // select Paires exclusives
+        function makeExclusive(id1, id2) {
+            const el1 = document.getElementById(id1);
+            const el2 = document.getElementById(id2);
+
+            el1.addEventListener("change", function () {
+                if (el1.checked) {
+                    el2.checked = false;
+                }
+            });
+
+            el2.addEventListener("change", function () {
+                if (el2.checked) {
+                    el1.checked = false;
+                }
+            });
+        }
+
+        // Paires exclusives
+        makeExclusive("agite", "consolable");
+        makeExclusive("humide", "seche");
+        makeExclusive("chaude", "froide");
+
+
+        // Checkbox Normale
+        const normale = document.getElementById("normale");
+        // Liste des autres checkboxes à contrôler (sauf Apnée)
+        const autresResp = ["respiratoire", "stridor", "grognement", "sifflement"].map(id => document.getElementById(id));
+
+        normale.addEventListener("change", function() {
+            if (normale.checked) {
+                // Normale cochée → décocher et désactiver les autres
+                autresResp.forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = true;
+                });
+            } else {
+                // Normale décochée → réactiver les autres
+                autresResp.forEach(cb => cb.disabled = false);
+            }
+        });
+
+
+
+        function pushAddresses() {
+            [
+                "departement",
+                "commune",
+                "sectionCommunale",
+                "localite"
+            ].forEach(swapValueToText);
+        }
+
+        function fillSelect(selectId, items, placeholder) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">' + placeholder + '</option>';
+
+            items.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.id;              // pour JS
+                opt.textContent = item.name;      // affichage
+                opt.dataset.name = item.name;     // 🔥 pour le submit
+                select.appendChild(opt);
+            });
+        }
+
+        function QuickAddress(departementId, communeId, sectionId, localiteId) {
+
+            const departementEl = document.getElementById(departementId);
+            const communeEl = document.getElementById(communeId);
+            const sectionEl = document.getElementById(sectionId);
+            const localiteEl = document.getElementById(localiteId);
+
+            if (!departementEl || !communeEl || !sectionEl || !localiteEl) {
+                console.warn("QuickAddress: élément manquant");
+                return;
+            }
+
+            // Département → Commune
+            departementEl.addEventListener("change", function () {
+                const deptId = parseInt(this.value);
+
+                const communes = cityVillages.filter(c => c.parent === deptId);
+                fillSelect(communeId, communes, "-- Sélectionner --");
+                fillSelect(sectionId, [], "-- Sélectionner --");
+                fillSelect(localiteId, [], "-- Sélectionner --");
+            });
+
+            // Commune → Section communale
+            communeEl.addEventListener("change", function () {
+                const communeIdVal = parseInt(this.value);
+
+                const sections = municipalSections.filter(s => s.parent === communeIdVal);
+                fillSelect(sectionId, sections, "-- Sélectionner --");
+                fillSelect(localiteId, [], "-- Sélectionner --");
+            });
+
+            // Section communale → Localité
+            sectionEl.addEventListener("change", function () {
+                const sectionIdVal = parseInt(this.value);
+
+                const locs = localities.filter(l => l.parent === sectionIdVal);
+                fillSelect(localiteId, locs, "-- Sélectionner --");
+            });
+        }
+
+        QuickAddress("departement", "commune", "sectionCommunale", "localite");
+
+        // ----------------------
+        // SUBMIT (CREATE)
+        // ----------------------
+        jq("#form").on("submit", function (e) {
+            e.preventDefault();
+
+            pushAddresses();
+
+            if (!jq("#signature").val().trim()) {
+                alert("Veuillez saisir les initiales de l'infirmier(ère).");
+                return;
+            }
+
+            const payload = jq(this).serialize(); // x-www-form-urlencoded (attendu par @RequestParam)
+            console.log("payload==", payload)
+
+            jq.ajax({
+                url: "${ ui.pageLink('isanteplus','triage',null) }",
+                type: "POST",
+                data: payload,
+                success: function () {
+                    jq().toastmessage('showSuccessToast', "Patient enregistré avec succès !")
+                    setTimeout(() => location.reload(), 600);
+                },
+                error: function (xhr) {
+                    console.error(xhr);
+                    jq().toastmessage('showErrorToast', "Erreur lors de l'enregistrement (" + xhr.status + ").")
+                }
+            });
+        });
+
+        // Fonction pour interdire le signe négatif
+        function preventNegativeInput(event) {
+            const value = event.target.value;
+            // Si la valeur contient un signe '-' ou est une chaîne vide, on la remplace par 0
+            if (value.includes("-") || value === "") {
+                event.target.value = "";
+            }
+        }
+
+        // Ajouter un événement de saisie pour interdire les signes négatifs
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', preventNegativeInput);
+        });
+
+        jq("#locationInput").on("input", function () {
+            let crit = jq(this).val();
+            if (crit.length >= 2) {
+                jq("#locationOptions").load(
+                    "${ ui.pageLink('isanteplus', 'triage') }?app=isanteplus.triage&critere=" + encodeURIComponent(crit)
+                );
+            }
+        });
+
+        function calculerIMC() {
+            const poids = parseFloat(document.getElementById("poids").value);
+            const taille = parseFloat(document.getElementById("taille").value);
+
+            if (!isNaN(poids) && !isNaN(taille) && taille > 0) {
+                const bmi = poids / ((taille/100) * (taille/100));
+                const bmiTronque = Math.floor(bmi * 10) / 10; // troncature à 1 décimale
+                document.getElementById("imc").value = bmiTronque;
+            } else {
+                document.getElementById("imc").value = "";
+            }
+        }
+        document.getElementById("poids").addEventListener("input", calculerIMC);
+        document.getElementById("taille").addEventListener("input", calculerIMC);
+
+        function calculerGlasgow() {
+            const e = parseInt(document.getElementById("ge").value) || 0;
+            const v = parseInt(document.getElementById("gv").value) || 0;
+            const m = parseInt(document.getElementById("gm").value) || 0;
+
+            const total = e + v + m;
+            document.getElementById("glasgow").value = total;
+        }
+
+        // recalcul chaque fois qu’un champ change
+        document.getElementById("ge").addEventListener("input", calculerGlasgow);
+        document.getElementById("gv").addEventListener("input", calculerGlasgow);
+        document.getElementById("gm").addEventListener("input", calculerGlasgow);
+
+        // au chargement de la page, si les champs sont déjà remplis
+        document.addEventListener("DOMContentLoaded", calculerGlasgow);
+
     });
 </script>
 
@@ -293,6 +677,15 @@ fieldset {
                 Examen clinique
             </button>
 
+            <button class="tab"
+                    role="tab"
+                    id="tab-5"
+                    aria-selected="false"
+                    aria-controls="panel-5"
+                    tabindex="-1">
+                Décision médicale
+            </button>
+
         </div>
 
         <form id="form" method="POST" class="panels">
@@ -301,20 +694,20 @@ fieldset {
                  class="panel"
                  role="tabpanel"
                  aria-labelledby="tab-1">
-                <h2>Informations personnelles</h2>
+                <h2 class="tabTitle">Informations personnelles</h2>
 
-                <div class="info-pers" style="margin-top: -10px">
+                <div class="info-pers">
 
                     <div class="tab1-infos1">
                         <div class="form-group">
                             <label for="firstName">Prénom <span class="asterix">*</span></label>
-                            <input type="text" class="form-control" name="firstName" value="${firstName != null ? firstName : ''}" id="firstName" placeholder=""
+                            <input type="text" class="form-control" name="firstName" value="" id="firstName" placeholder=""
                                    required>
                         </div>
 
                         <div class="form-group">
                             <label for="lastName">Nom <span class="asterix">*</span></label>
-                            <input type="text" class="form-control" name="lastName" value="${lastName != null ? lastName : ''}" id="nom" placeholder=""
+                            <input type="text" class="form-control" name="lastName" value="" id="nom" placeholder=""
                                    required>
                         </div>
                     </div>
@@ -322,7 +715,7 @@ fieldset {
                     <div class="tab1-infos2">
                         <div class="form-group">
                             <label for="birthDate">Date de naissance</label>
-                            <input type="date" class="form-control" name="birthDate" id="birthDate" value="${dateOfBirth != null ? dateOfBirth : ''}"
+                            <input type="date" class="form-control" name="birthDate" id="birthDate" value=""
                                    placeholder="mm/dd/yy">
                             <span class="span-hint" style="font-size: small">mm/dd/yy</span>
                         </div>
@@ -331,16 +724,16 @@ fieldset {
                             <label for="gender">Sexe <span class="asterix">*</span></label>
                             <select class="form-select" name="gender" id="gender" required>
                                 <option value="">-- Sélectionner --</option>
-                                <option value="M" ${(gender != null ? gender : '') == 'M' ? 'selected' : ''}>Masculin</option>
-                                <option value="F" ${(gender != null ? gender : '') == 'F' ? 'selected' : ''}>Féminin</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Féminin</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="tab1-infos3">
                         <div class="form-group">
-                            <label for="phone">Téléphone</label>
-                            <input type="tel" class="form-control" name="phone" value="${phoneNumber != null ? phoneNumber : ''}" id="phone"
+                            <label for="phone">Téléphone du patient</label>
+                            <input type="tel" class="form-control" name="phone" value="" id="phone"
                                    placeholder="+509 0000-0000">
                         </div>
 
@@ -370,7 +763,7 @@ fieldset {
                     </div>
 
                     <fieldset>
-                        <legend>Contact</legend>
+                        <legend><b>Une personne de Contact</b></legend>
 
                         <div class="tab1-infos4">
                             <div class="form-group">
@@ -386,14 +779,14 @@ fieldset {
                                 <select class="form-select" name="relation" id="relation">
                                     <option value=""></option>
                                     <% relationshipsList.each { relation -> %>
-                                    <option value="${relation.answerConcept}" ${relationship == relation.answerConcept ? 'selected' : ''}>${relation.name}</option>
+                                    <option value="${relation.answerConcept}">${relation.name}</option>
                                     <% } %>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="contactPhone"
-                                       style="font-size: 14px"><strong>Contact</strong>  (Téléphone)
+                                       style="font-size: 14px">Téléphone du contact
                                 </label>
                                 <input type="tel" class="form-control" name="contactPhone"
                                        id="telephone"
@@ -401,6 +794,11 @@ fieldset {
                             </div>
                         </div>
                     </fieldset>
+                    <div class="button-group">
+                        <button id="btn-next" type="button" class="btn-nav btn-next">
+                            Suivant <i class="icon-double-angle-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -410,7 +808,55 @@ fieldset {
                  aria-labelledby="tab-2"
                  hidden>
                 <h2>Adresse du patient</h2>
-                <p>Contenu du deuxième onglet...</p>
+                <fieldset>
+                    <legend>Adresse hiérarchisée</legend>
+
+                    <div class="form-group">
+                        <label for="departement">Département</label>
+                        <select class="form-select" name="departement" id="departement" required>
+                            <option value="">-- Sélectionner --</option>
+                            <% stateProvinces.each { stateProvince -> %>
+                            <option value="${stateProvince.id}">
+                                ${stateProvince.name}
+                            </option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="commune">Commune</label>
+                        <select class="form-select" name="commune" id="commune" required>
+                            <option value="">-- Sélectionner --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sectionCommunale">Section Communale</label>
+                        <select class="form-select" name="sectionCommunale" id="sectionCommunale" required>
+                            <option value="">-- Sélectionner --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="localite">Localité</label>
+                        <select class="form-select" name="localite" id="localite" required>
+                            <option value="">-- Sélectionner --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additionalAdresses">Adresse fixe</label>
+                        <input type="text" class="form-control" name="additionalAdresses" id="additionalAdresses" placeholder="">
+                    </div>
+                </fieldset>
+                <div class="button-group">
+                    <button id="btn-back" type="button" class="btn-nav btn-back">
+                        <i class="icon-double-angle-left"></i> Retour
+                    </button>
+                    <button id="btn-next" type="button" class="btn-nav btn-next">
+                        Suivant <i class="icon-double-angle-right"></i>
+                    </button>
+                </div>
             </div>
 
             <div id="panel-3"
@@ -418,8 +864,151 @@ fieldset {
                  role="tabpanel"
                  aria-labelledby="tab-3"
                  hidden>
+
                 <h2>Modificateurs</h2>
-                <p>Contenu du deuxième onglet...</p>
+
+                <div class="info-pers">
+
+                    <div class="tab3-infos1">
+                        <div class="form-group">
+                            <label for="poids">Poids</label>
+                            <input type="number" style="" class="form-control vitals" name="poids" id="poids"
+                                   placeholder="">
+                            <span class="span-hint">(3 – 200 kg)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="taille">Taille /cm</label>
+                            <input type="number" class="form-control vitals" name="taille" id="taille" placeholder="">
+                            <span class="span-hint">(40 – 250 cm)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imc">IMC</label>
+                            <input type="number" class="form-control vitals" id="imc" placeholder=""
+                                   disabled>
+                        </div>
+                    </div>
+
+                    <div class="tab3-infos1">
+                        <div class="form-group">
+                            <label for="fc">Pouls</label>
+                            <input type="number" class="form-control vitals" name="fc" id="fc" placeholder="">
+                            <span class="span-hint">(40 – 180 bpm)</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="tasys">Systol.</label>
+                            <input type="number" class="form-control vitals" name="tasys" id="tasys" placeholder="">
+                            <span class="span-hint">(70 – 200 mmHg)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tadias">Diastol.</label>
+                            <input type="number" class="form-control vitals" name="tadias" id="tadias" placeholder="">
+                            <span class="span-hint">(40 – 120 mmHg)</span>
+                        </div>
+                    </div>
+
+                    <div class="tab3-infos1">
+                        <div class="form-group">
+                            <label for="fr">Respiration</label>
+                            <input type="number" class="form-control vitals" name="fr" id="resp" placeholder="">
+                            <span class="span-hint">(12 – 40 /min)</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="typeDouleur">Type de Douleur</label>
+                            <select class="form-select" name="typeDouleur" id="typeDouleur">
+                                <option value=""></option>
+                                <option value="159347">Aiguë</option>
+                                <option value="152065">Chronique</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scoreDouleur">Score de Douleur</label>
+                            <input type="number" class="form-control vitals" min="0" name="scoreDouleur"
+                                   id="scoreDouleur"
+                                   placeholder="">
+                            <span class="span-hint">(0 – 10)</span>
+                        </div>
+                    </div>
+
+                    <div class="tab3-infos1">
+                        <div class="form-group">
+                            <label for="temp">Température</label>
+                            <input type="number" class="form-control vitals" name="temp" id="temp" placeholder="">
+                            <span class="span-hint">(35 – 42 °C)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="glycemie">Glycémie</label>
+                            <input type="number" class="form-control vitals" name="glycemie" id="glycemie"
+                                   placeholder="">
+                            <span class="span-hint">(2 – 25 mmol/L)</span>
+                        </div>
+                    </div>
+
+                    <div class="tab3-infos1">
+                        <div class="form-group" style="">
+                            <label for="pc">Périmètre Crânien</label>
+                            <input type="number" class="form-control vitals" name="pc" id="pc" placeholder="">
+                            <span class="span-hint">(30 – 60 cm)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sao2">SpO₂</label>
+                            <input type="number" class="form-control vitals" name="sao2" id="sao2" placeholder="">
+                            <span class="span-hint">(70 – 100 %)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pb">Périmètre brachial</label>
+                            <input type="number" class="form-control vitals" name="pb" id="pb" placeholder="">
+                            <span class="span-hint">(10 – 40 cm)</span>
+                        </div>
+                    </div>
+
+                    <fieldset class="glasgow">
+                        <legend><b>Glasgow</b></legend>
+
+                        <div class="form-group">
+                            <label for="ge"><strong>E</strong></label>
+                            <input type="number" class="form-control" name="ge" id="ge" placeholder="">
+                        </div>
+
+                        <strong class="glasgow-strong">+</strong>
+
+                        <div class="form-group">
+                            <label for="gv"><strong>V</strong></label>
+                            <input type="number" class="form-control" name="gv" id="gv" placeholder="">
+                        </div>
+
+                        <strong class="glasgow-strong">+</strong>
+
+                        <div class="form-group">
+                            <label for="gm"><strong>M</strong></label>
+                            <input type="number" class="form-control" name="gm" id="gm" placeholder="">
+                        </div>
+
+                        <strong class="glasgow-strong">=</strong>
+
+                        <div class="form-group">
+                            <label for="gm"><strong>Score</strong></label>
+                            <div style="display: flex;">
+                                <input type="number" class="form-control" name="glasgow" id="glasgow" placeholder="" disabled>
+                                <span style="margin-top: 15px; margin-left: 2px"><strong> /</strong></span>
+                                <span style="margin-top: 15px; margin-left: 2px"><strong>15</strong></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="button-group">
+                        <button id="btn-back" type="button" class="btn-nav btn-back">
+                            <i class="icon-double-angle-left"></i> Retour
+                        </button>
+                        <button id="btn-next" type="button" class="btn-nav btn-next">
+                            Suivant <i class="icon-double-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div id="panel-4"
@@ -428,7 +1017,204 @@ fieldset {
                  aria-labelledby="tab-4"
                  hidden>
                 <h2>Examen clinique</h2>
-                <p>Contenu du troisième onglet...</p>
+
+                <fieldset>
+                    <legend><b>A (Voies aériennes)</b></legend>
+                    <div class="tab4-infos1">
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <div class="form-span" style="width: 98%;">
+                                        <label for="avpu">AVPU</label>
+                                        <select class="form-select" name="avpu" id="avpu" style="width: 100%;">
+                                            <option value="">-- Sélectionner --</option>
+                                            <option value="120744">Alerte</option>
+                                            <option value="120749">Réagit aux stimuli Verbaux</option>
+                                            <option value="120749">Réagit aux stimuli douloureux</option>
+                                            <option value="120749">Ne réagit pas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="radio" name="avpu_radio" value="agite" id="agite">
+                                    <label for="agite">Agité</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="radio" name="avpu_radio" value="consolable" id="consolable">
+                                    <label for="consolable">Consolable</label>
+                                </div>
+                            </div>
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" name="evaluation" id="irritable">
+                                    <label for="irritable">Irritable</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="checkbox" name="evaluation" id="confus">
+                                    <label for="confus">Confus</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><b>B (Respiration)</b></legend>
+                    <div class="tab4-infos1">
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" name="respiration_radio" id="normale">
+                                    <label for="normale">Normale</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="checkbox" id="respiratoire">
+                                    <label for="respiratoire">Détresse Respiratoire</label>
+                                </div>
+                            </div>
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" id="stridor">
+                                    <label for="stridor">Stridor</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="checkbox" id="apnee">
+                                    <label for="apnee">Apnée</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" id="grognement">
+                                    <label for="grognement">Grognement</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="checkbox" id="sifflement">
+                                    <label for="sifflement">Sifflement</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><b>C (Circulation)</b></legend>
+                    <div class="tab4-infos1">
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="radio" name="humidite_radio" id="humide">
+                                    <label for="humide">Humide</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="radio" name="humidite_radio" id="seche">
+                                    <label for="seche">Sèche</label>
+                                </div>
+                            </div>
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="radio" name="temperature_radio" id="froide">
+                                    <label for="froide">Froide</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="radio" name="temperature_radio" id="chaude">
+                                    <label for="chaude">Chaude</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" id="marbrure">
+                                    <label for="marbrure">Marbrure</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="checkbox" id="petechie">
+                                    <label for="petechie">Pétéchie</label>
+                                </div>
+                            </div>
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" id="pale">
+                                    <label for="pale">Pâle</label>
+                                </div>
+                                <div class="div-check">
+                                    <input type="checkbox" id="cyanosee">
+                                    <label for="cyanosee">Cyanosée</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="check-group">
+                            <div class="div-check-2">
+                                <div class="div-check">
+                                    <input type="checkbox" id="purpura">
+                                    <label for="purpura">Purpura</label>
+                                </div>
+                                <div class="div-check" style="">
+                                    <div class="form-span" >
+                                        <label for="trc">TRC</label>
+                                        <select id="trc" style="width: 80%">
+                                            <option value="">-- Sélectionner --</option>
+                                            <option value="120749">≤ 2 secondes</option>
+                                            <option value="120749">> 2 secondes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="button-group">
+                    <button id="btn-back" type="button" class="btn-nav btn-back">
+                        <i class="icon-double-angle-left"></i> Retour
+                    </button>
+                    <button id="btn-next" type="button" class="btn-nav btn-next">
+                        Suivant <i class="icon-double-angle-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="panel-5"
+                 class="panel"
+                 role="tabpanel"
+                 aria-labelledby="tab-5"
+                 hidden>
+                <h2>Décision médicale et disposition du patient</h2>
+
+                <br/>
+                <div class="tab5-infos1">
+                    <div class="form-group">
+                        <label for="lastName">Intervention</label>
+                        <textarea type="" class="form-control" name="intervention"
+                                  id="nom" placeholder=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="disposition">Disposition</label>
+                        <select class="form-select" name="disposition" id="disposition">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="137593">Réanimation</option>
+                            <option value="137593">Consultation</option>
+                            <option value="137593">Parti sans autorisation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signature">Signature du prestataire : <span class="asterix">*</span></label>
+                        <input type="text" class="form-control" name="signature" id="signature" placeholder="" required>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="btn-back" type="button" class="btn-nav btn-back">
+                        <i class="icon-double-angle-left"></i> Retour
+                    </button>
+                    <button id="btn-submit" type="submit" class="btn-next">Sauvegarder</button>
+                </div>
             </div>
 
         </form>

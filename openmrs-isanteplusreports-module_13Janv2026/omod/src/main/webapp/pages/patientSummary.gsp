@@ -168,7 +168,22 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient ]) }
 				<p><strong>${ ui.message("isanteplusreports.name") }:</strong> ${ui.format(patient.getGivenName())}</p>
 				<p><strong>${ ui.message("isanteplusreports.sex") }:</strong> ${ui.format(patient.getGender())}</p>
 				<p><strong>${ ui.message("isanteplusreports.age") }:</strong> ${ui.format(patient.getAge())}</p>
-				<p><strong>${ ui.message("isanteplusreports.address") }:</strong> ${ui.format(patient.getPersonAddress())}</p>
+				<p><strong>${ ui.message("isanteplusreports.address") } actuelle:</strong> ${ui.format(patient.getPersonAddress())}</p>
+
+				<%	if(patientAddressHistoryList) { %>
+				<div style="margin-top: 10px; border: 1px solid gray; padding: 10px">
+				<h2>Historique des adresses</h2>
+				<% patientAddressHistoryList.each { address -> %>
+				<p style="margin-top: 10px">. ${address?.address2 ?: ''},
+				${address?.address1 ?: ''},
+				${address?.cityVillage ?: ''},
+				${address?.stateProvince ?: ''},
+				${address?.country ?: ''}</p>
+				<% } %>
+			</div>
+				<% } %>
+
+
 			</div>
 		</div>
 

@@ -26,6 +26,7 @@ org/openmrs/module/isanteplus/page/controller/IsanteplusLoginPageController.clas
 org/openmrs/module/isanteplus/page/controller/LoggedInUsersController.class
 org/openmrs/module/isanteplus/page/controller/ManageIsantePlusPageController.class
 org/openmrs/module/isanteplus/fragment/controller/FormsHistoryFragmentController.class
+org/openmrs/module/isanteplus/page/controller/Triage1PageController.class
 org/openmrs/module/isanteplus/fragment/controller/IsanteplusHeaderFragmentController.class
 org/openmrs/module/isanteplus/page/controller/TriagePageController.class
 org/openmrs/module/isanteplus/fragment/controller/IsanteplusPatientHeaderFragmentController$ExtraPatientIdentifierType.class

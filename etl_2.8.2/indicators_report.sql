@@ -73,7 +73,7 @@ USE isanteplus;
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.concept_id = 1284
 	AND pdiag.answer_concept_id = 160146
-	AND pdiag.suspected_confirmed = 159393
+	AND pdiag.suspected_confirmed = 509166392
 	 or pdiag.answer_concept_id = 121605
 	AND pdiag.voided <> 1
 	AND pdiag.encounter_date IS NOT NULL
@@ -152,6 +152,7 @@ USE isanteplus;
 	and pdiag.concept_id in (1284, 159614) and pdiag.answer_concept_id in (116399, 130305, 158843, 131028) /*Laryngite*/
 	and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 509166382 /*Amygdales blanchatres*/
 	AND pdiag.voided <> 1
+	AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -189,14 +190,28 @@ USE isanteplus;
 	
 /*7.1 : Cas possible de Meningite Suspect*/
 	INSERT INTO isanteplus.indicators (indicator_id,indicator_type_id,patient_id,location_id,encounter_id, indicator_date, voided, created_date, last_updated_date)
-	
-	SELECT DISTINCT 7, 7, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now() 
-	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
-	WHERE p.patient_id = pdiag.patient_id
-	AND pdiag.encounter_date = pdiag1.encounter_date
-	AND pdiag.concept_id = 159614 AND pdiag.answer_concept_id = 509166387
-	AND pdiag1.concept_id = 159614 AND pdiag.answer_concept_id in (509166388, 509166389, 116334, 139084, 1836, 512)
-	AND pdiag.voided <> 1
+
+    SELECT DISTINCT
+        7,
+        7,
+        pdiag.patient_id,
+        pdiag.location_id,
+        pdiag.encounter_id,
+        pdiag.encounter_date,
+        pdiag.voided,
+        NOW(),
+        NOW()
+    FROM isanteplus.patient_diagnosis pdiag
+             JOIN isanteplus.patient_diagnosis pdiag1
+                  ON pdiag.encounter_id = pdiag1.encounter_id
+             JOIN isanteplus.patient p
+                  ON p.patient_id = pdiag.patient_id
+    WHERE pdiag.concept_id = 159614
+      AND pdiag.answer_concept_id = 509166387
+      AND pdiag1.concept_id = 159614
+      AND pdiag1.answer_concept_id IN (509166388, 509166389, 116334, 139084, 1836, 512)
+      AND pdiag.voided <> 1
+      AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -249,11 +264,11 @@ USE isanteplus;
 /*10.1 : Paralysie flasque aigue(PFA)*/
 	INSERT INTO isanteplus.indicators (indicator_id,indicator_type_id,patient_id,location_id,encounter_id,
 										indicator_date,voided,created_date,last_updated_date)
-	SELECT DISTINCT DISTINCT 10, 10, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now() 
+	SELECT DISTINCT DISTINCT 10, 10, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.concept_id = 159614 AND pdiag.answer_concept_id = 509166415 /*Faiblesse soudaine d'un membre*/
-	AND (TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 15) 
+	AND (TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 15)
 	AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
@@ -298,6 +313,7 @@ USE isanteplus;
 	and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 6023 /*Irritabilité*/
 	and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 121605 /*Morsure par animal*/
 	AND pdiag.voided <> 1
+	AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -320,15 +336,25 @@ USE isanteplus;
 /*13.1 : Cas possible de Rougeole*/
 	INSERT INTO isanteplus.indicators (indicator_id, indicator_type_id, patient_id, location_id, encounter_id, indicator_date, voided, created_date, last_updated_date)
 	
-	SELECT DISTINCT 13, 13, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now() 
-	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
-	WHERE p.patient_id = pdiag.patient_id
-	AND pdiag.patient_id = pdiag1.patient_id	
-	AND pdiag.encounter_date = pdiag1.encounter_date
-	and pdiag.concept_id = 159614 
-	and pdiag.answer_concept_id = 509166383 /*Eruption maculo-papulaire*/
-	and pdiag1.answer_concept_id = 140238 /*Fièvre*/
-	AND pdiag.voided <> 1
+	SELECT 
+    13, 
+    13, 
+    pdiag.patient_id, 
+    pdiag.location_id, 
+    pdiag.encounter_id, 
+    pdiag.encounter_date, 
+    pdiag.voided, 
+    NOW(), 
+    NOW()
+FROM isanteplus.patient_diagnosis pdiag
+JOIN isanteplus.patient_diagnosis pdiag1 
+    ON pdiag.patient_id = pdiag1.patient_id
+    AND pdiag.encounter_id = pdiag1.encounter_id
+WHERE pdiag.concept_id = 159614
+AND pdiag.answer_concept_id = 509166383
+AND pdiag1.answer_concept_id = 140238
+AND pdiag.voided <> 1
+AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -367,12 +393,14 @@ USE isanteplus;
 	SELECT DISTINCT 15, 15, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1, isanteplus.patient_diagnosis pdiag2
 	WHERE p.patient_id = pdiag.patient_id
-	  AND pdiag.encounter_date = pdiag1.encounter_date
-	  AND pdiag.encounter_date = pdiag2.encounter_date
+	  AND pdiag.encounter_id = pdiag1.encounter_id
+	  AND pdiag.encounter_id = pdiag2.encounter_id
 	  and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 509166399 /*Fièvre de moins de 3 semaines*/
 	  and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 509166400 /*Altération de l’état général*/
 	  and pdiag2.concept_id = 159614 and pdiag2.answer_concept_id in (509166401, 509166384, 130324, 133499, 138905)
 	  AND pdiag.voided <> 1
+	  AND pdiag1.voided <> 1
+	  AND pdiag2.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -385,7 +413,7 @@ USE isanteplus;
 	pdiag.voided, now(), now() FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.concept_id = 1284
-	AND pdiag.answer_concept_id = 113205
+	AND pdiag.answer_concept_id = 509166378
 	AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
@@ -397,7 +425,7 @@ USE isanteplus;
 	SELECT DISTINCT 16, 16, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag
 	WHERE p.patient_id = pdiag.patient_id
-	  and pdiag.concept_id = 159614 and pdiag.answer_concept_id IN (134213, 113478, 509166384, 509166385)
+	  and pdiag.concept_id = 159614 and pdiag.answer_concept_id IN (117698, 134213, 113478, 509166384, 509166385)
 	  AND (TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 1)
 	  AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
@@ -424,9 +452,8 @@ USE isanteplus;
 	SELECT DISTINCT 17, 17, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
 	WHERE p.patient_id = pdiag.patient_id
-	  AND pdiag.encounter_date = pdiag1.encounter_date
-	  AND pdiag.concept_id = 159614 and pdiag.answer_concept_id = 110540 /*Pleurs excessifs*/
-	  AND pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 119775 /*Spasme musculaire*/
+	  AND pdiag.encounter_id = pdiag1.encounter_id
+	  AND pdiag.concept_id = 159614 and pdiag.answer_concept_id in (110540, 119775) /*Pleurs excessifs*//*Spasme musculaire*/
 	  AND (TIMESTAMPDIFF(DAY, p.birthdate, CURDATE()) BETWEEN 3 and 28)
 	  AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
@@ -488,17 +515,21 @@ USE isanteplus;
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1, isanteplus.patient_diagnosis pdiag2, isanteplus.patient_diagnosis pdiag3,
               			    isanteplus.patient_diagnosis pdiag4
 	WHERE p.patient_id = pdiag.patient_id
-	  AND pdiag.encounter_date = pdiag1.encounter_date
-	  AND pdiag.encounter_date = pdiag2.encounter_date
-	  AND pdiag.encounter_date = pdiag3.encounter_date
-	  AND pdiag.encounter_date = pdiag4.encounter_date
-	  and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 509166387 /*Fièvre aigue*/
+	  AND pdiag.encounter_id = pdiag1.encounter_id
+	  AND pdiag.encounter_id = pdiag2.encounter_id
+	  AND pdiag.encounter_id = pdiag3.encounter_id
+	  AND pdiag.encounter_id = pdiag4.encounter_id
+	  and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 163282 /*Fièvre < 1 semaine*/
 	  and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 139084 /*CÉPHALÉE*/
 	  and pdiag2.concept_id = 159614 and pdiag2.answer_concept_id = 162629 /*Douleur Retro-orbitaire*/
-	  and pdiag3.concept_id = 159614 and pdiag3.answer_concept_id in (121, 150167) /*Myalgies*/
+	  and pdiag3.concept_id = 159614 and pdiag3.answer_concept_id = 121 /*Myalgies*/
 	  and pdiag4.concept_id = 159614 and pdiag4.answer_concept_id = 148437 /*Arthralgies*/
 	  AND pdiag.voided <> 1
-	   ON DUPLICATE KEY 
+	  AND pdiag1.voided <> 1
+	  AND pdiag2.voided <> 1
+	  AND pdiag3.voided <> 1
+	  AND pdiag4.voided <> 1
+	   ON DUPLICATE KEY
        UPDATE last_updated_date = NOW(),
 	      voided = pdiag.voided;
 	
@@ -522,12 +553,14 @@ USE isanteplus;
 	SELECT DISTINCT 21, 21, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1, isanteplus.patient_diagnosis pdiag2
 	WHERE p.patient_id = pdiag.patient_id
-	AND pdiag.encounter_date = pdiag1.encounter_date
-	AND pdiag.encounter_date = pdiag2.encounter_date
+	AND pdiag.encounter_id = pdiag1.encounter_id
+	AND pdiag.encounter_id = pdiag2.encounter_id
 	and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 129510 /*Polyurie*/
 	and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 118483 /*Polyphagie*/
 	and pdiag2.concept_id = 159614 and pdiag2.answer_concept_id = 140939 /*Polydispie*/
 	AND pdiag.voided <> 1
+	AND pdiag1.voided <> 1
+	AND pdiag2.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -581,13 +614,15 @@ USE isanteplus;
 	SELECT DISTINCT 24, 24, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	  FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1, isanteplus.patient_diagnosis pdiag2
 	 WHERE p.patient_id = pdiag.patient_id
-	   AND pdiag.encounter_date = pdiag1.encounter_date
-	   AND pdiag.encounter_date = pdiag2.encounter_date
+	   AND pdiag.encounter_id = pdiag1.encounter_id
+	   AND pdiag.encounter_id = pdiag2.encounter_id
 	   and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 509166405 /*Fièvre continue >= 3 jours*/
 	   and ((pdiag1.concept_id = 159614 and pdiag1.answer_concept_id in (139084, 148437, 6031, 151, 996, 142412))
 	   and (pdiag2.concept_id = 159614 and pdiag2.answer_concept_id in (139084, 148437, 6031, 151, 996, 142412)))
 	   AND pdiag.voided <> 1
-	    ON DUPLICATE KEY 
+	   AND pdiag1.voided <> 1
+	   AND pdiag2.voided <> 1
+	    ON DUPLICATE KEY
 	UPDATE last_updated_date = NOW(),
 	       voided = pdiag.voided;
 	
@@ -612,12 +647,13 @@ USE isanteplus;
 	SELECT DISTINCT 25, 25, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	  FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
 	 WHERE p.patient_id = pdiag.patient_id
-	   AND pdiag.encounter_date = pdiag1.encounter_date
+	   AND pdiag.encounter_id = pdiag1.encounter_id
 	   and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 127740 /*Fièvre récurrente*/
 	   and ((pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 118729) /*Oedème des membres inférieurs*/
 	    OR (pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 135480)) /*Lymphœdème*/
 	   AND pdiag.voided <> 1
-	    ON DUPLICATE KEY 
+	   AND pdiag1.voided <> 1
+	    ON DUPLICATE KEY
 	UPDATE last_updated_date = NOW(),
 	       voided = pdiag.voided;
 	
@@ -642,10 +678,11 @@ USE isanteplus;
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.patient_id = pdiag1.patient_id	
-	AND pdiag.encounter_date = pdiag1.encounter_date
+	AND pdiag.encounter_id = pdiag1.encounter_id
 	and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 509166394 /*Fièvre (> 38.0°C)*/
 	and pdiag1.concept_id in (1284, 159614) and pdiag1.answer_concept_id in (113224, 143264, 158843, 122496)
 	AND pdiag.voided <> 1
+	AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -671,10 +708,11 @@ USE isanteplus;
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.patient_id = pdiag1.patient_id	
-	AND pdiag.encounter_date = pdiag1.encounter_date
+	AND pdiag.encounter_id = pdiag1.encounter_id
 	and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 509166394 /*Fièvre > 38 ᴼ C*/
 	and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 136443 /*Ictère*/
 	AND pdiag.voided <> 1
+	AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -688,7 +726,6 @@ USE isanteplus;
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.concept_id = 1284
 	AND pdiag.answer_concept_id = 124957
-	 OR (pdiag.concept_id = 159614 AND pdiag.answer_concept_id in (114739, 124105, 119775, 119029))
 	AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
@@ -700,10 +737,11 @@ USE isanteplus;
 	SELECT DISTINCT 28, 28, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date, pdiag.voided, now(), now()
 	FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag, isanteplus.patient_diagnosis pdiag1
 	WHERE p.patient_id = pdiag.patient_id
-	AND pdiag.encounter_date = pdiag1.encounter_date
+	AND pdiag.encounter_id = pdiag1.encounter_id
 	and pdiag.concept_id = 159614 and pdiag.answer_concept_id = 509166390 /*Contraction musculaire douloureuse*/
 	and pdiag1.concept_id = 159614 and pdiag1.answer_concept_id = 509166391 /*Porte d'entree recente du clostridium Tetani*/
 	AND pdiag.voided <> 1
+	AND pdiag1.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
 	voided = pdiag.voided;
@@ -715,8 +753,8 @@ USE isanteplus;
 	SELECT DISTINCT 29, 29, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date,
 	pdiag.voided, now(), now() FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag
 	WHERE p.patient_id = pdiag.patient_id
-	AND pdiag.concept_id = 1284
-	AND pdiag.answer_concept_id = 150452
+	AND pdiag.concept_id = 159614
+	AND pdiag.answer_concept_id = 119964
 	AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
@@ -778,7 +816,7 @@ USE isanteplus;
 	voided = pdiag.voided;
 	
 	
-/* 34 : Lèpre suspecte */
+/* 34 : Lèpre */
 	INSERT INTO isanteplus.indicators (indicator_id,indicator_type_id,patient_id,location_id,encounter_id,
 										indicator_date,voided,created_date,last_updated_date)
 	SELECT DISTINCT 24, 24, pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date,
@@ -786,8 +824,6 @@ USE isanteplus;
 	WHERE p.patient_id = pdiag.patient_id
 	AND pdiag.concept_id = 1284
 	AND pdiag.answer_concept_id = 116344
-	AND pdiag.suspected_confirmed = 159393
-	 or (pdiag.concept_id = 159614 AND pdiag.answer_concept_id in (116344, 509166397, 509166398))
 	AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),
@@ -828,8 +864,8 @@ USE isanteplus;
 	SELECT DISTINCT 37,37,pdiag.patient_id, pdiag.location_id, pdiag.encounter_id, pdiag.encounter_date,
 	pdiag.voided, now(), now() FROM isanteplus.patient p, isanteplus.patient_diagnosis pdiag
 	WHERE p.patient_id = pdiag.patient_id
-	AND pdiag.concept_id = 1284
-	AND pdiag.answer_concept_id = 158358
+	AND pdiag.concept_id = 159614
+	AND pdiag.answer_concept_id IN (126582,152292)
 	AND pdiag.voided <> 1
 	ON DUPLICATE KEY UPDATE
 	last_updated_date = NOW(),

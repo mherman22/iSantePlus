@@ -1115,7 +1115,6 @@ legend {
     .demo {
         width: 100%;
     }
-
 }
 
 #btn-submit:hover {

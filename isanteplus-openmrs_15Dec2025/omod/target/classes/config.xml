@@ -29,7 +29,7 @@
 		<require_module version="1.3.1">org.openmrs.module.metadatamapping</require_module>
 		<require_module version="1.2.2">org.openmrs.module.metadatasharing</require_module>
 		<require_module version="1.0.0-SNAPSHOT">org.openmrs.module.haiticore</require_module>
-		<require_module version="1.0.0">org.openmrs.module.xdssender</require_module>
+<!--		<require_module version="${xds-senderVersion}">org.openmrs.module.xdssender</require_module>-->
 		 <require_module version="1.8.0">
             org.openmrs.module.appui
         </require_module>

@@ -135,7 +135,8 @@
             for (let w = 1; w <= columnCount; w++) {
                 const th = document.createElement("th");
                 th.textContent = "" + w;
-                th.style.textAlign = "center"
+                th.style.textAlign = "center";
+                th.style.fontSize = "11px";
                 tableHeader.appendChild(th);
             }
 
@@ -275,6 +276,7 @@
                 const th = document.createElement("th");
                 th.textContent = tableMonth[w];
                 th.style.textAlign = "center";
+                th.style.fontSize = "11px";
                 tableHeader.appendChild(th);
             }
 

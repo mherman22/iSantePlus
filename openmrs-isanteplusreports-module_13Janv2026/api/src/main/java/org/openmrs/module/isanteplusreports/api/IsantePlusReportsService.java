@@ -20,6 +20,7 @@ import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.isanteplusreports.IsantePlusReportsConfig;
 import org.openmrs.module.isanteplusreports.IsantePlusReportsObs;
 import org.openmrs.module.isanteplusreports.Item;
+import org.openmrs.module.isanteplusreports.model.PatientAddressHistory;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.dataset.DataSet;
 import org.openmrs.module.reporting.indicator.Indicator;
@@ -117,4 +118,7 @@ public interface IsantePlusReportsService extends OpenmrsService {
 	List<org.openmrs.module.isanteplusreports.psychosocial.model.PatientSummary> getPatientsByIdentifiersPsychosocial(String sqlFile, String ids);
 
 	List<org.openmrs.module.isanteplusreports.derlSurveillance.model.PatientSummary> getPatientsByIdentifiersDerlSurveillance(String sqlFile, String ids);
+
+	List<PatientAddressHistory> getAddressHistory(Integer patientId);
+
 }

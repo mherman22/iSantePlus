@@ -254,17 +254,25 @@ body {
             const end = start + itemsPerPage;
 
             patients.slice(start, end).forEach(p => {
+                const metaSpans = [];
+
+                if (p.gender) metaSpans.push("<span><b>Sexe:</b> " + p.gender + "</span>");
+                if (p.patientAge) metaSpans.push("<span><b>Âge:</b> " + p.patientAge + "</span>");
+                if (p.birthDate) metaSpans.push("<span><b>Naissance:</b> " + p.birthDate + "</span>");
+                if (p.identifier) metaSpans.push("<span><b>iSantePlusID:</b> " + p.identifier + "</span>");
+                if (p.stId) metaSpans.push("<span><b>code-ST:</b> " + p.stId + "</span>");
+                if (p.nationalId) metaSpans.push("<span><b>code-National:</b> " + p.nationalId + "</span>");
+                if (p.pcId) metaSpans.push("<span><b>code-PC:</b> " + p.pcId + "</span>");
+                if (p.isanteId) metaSpans.push("<span><b>isanteID:</b> " + p.isanteId + "</span>");
+
                 const card = jq(
                     "<div class='patient-card' data-patient-id='"+p.patientId+"'>" +
-                    "<div class='patient-name'>"+(p.fullName||"")+"</div>" +
-                    "<div class='patient-meta'>" +
-                    "<span><b>Sexe:</b> "+(p.gender||"")+"</span>" +
-                    "<span><b>Âge:</b> "+(p.patientAge||"")+"</span>" +
-                    "<span><b>Naissance:</b> "+(p.birthDate||"")+"</span>" +
-                    "</div>" +
-                    "<div class='patient-address'>"+(p.adresses||"")+"</div>" +
+                    "<div class='patient-name'>" + (p.fullName || "") + "</div>" +
+                    (metaSpans.length ? "<div class='patient-meta'>" + metaSpans.join('') + "</div>" : "") +
+                    (p.adresses ? "<div class='patient-address'>" + p.adresses + "</div>" : "") +
                     "</div>"
                 );
+
                 card.click(() => openPatient(p));
                 container.append(card);
             });
@@ -314,9 +322,9 @@ body {
         });
 
         // AJAX search
-        input.on('keyup', function(){
+        input.on('keyup', function() {
             const criteria = jq(this).val().trim();
-            if(criteria.length<2){
+            if(criteria.length < 2) {
                 loadHistory();
                 return;
             }
@@ -325,16 +333,16 @@ body {
                 url: "${ ui.actionLink('isanteplus','findPatientCriteria','findPatientByCriteria') }",
                 type: "POST",
                 data: { criteria: criteria },
-                success: function(response){
-                    patients = response || [];
+                dataType: "json",
+                success: function(response) {
+                    patients = JSON.parse(response.patientsLoad || "[]");
                     currentPage = 1;
                     renderPatients();
                 },
-                complete: function(){ spinner.hide(); }
+                complete: function() { spinner.hide(); }
             });
         });
 
         loadHistory();
-
     });
 </script>

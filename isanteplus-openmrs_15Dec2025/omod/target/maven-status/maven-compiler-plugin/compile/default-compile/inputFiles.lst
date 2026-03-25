@@ -20,6 +20,7 @@
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/ViralLoadHistoryPageController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/ViralLoadGraphFragmentController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/registrationToggleMedicalPOA.java
+/home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/Triage1PageController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/BmiGraphFragmentController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/fragment/controller/IsanteplusPatientHeaderFragmentController.java
 /home/jeejen/openmrs/svr-dev/watched-projects/isanteplus/omod/src/main/java/org/openmrs/module/isanteplus/page/controller/DrugsHistoryPageController.java

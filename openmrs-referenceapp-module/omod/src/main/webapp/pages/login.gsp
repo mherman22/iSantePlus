@@ -101,7 +101,7 @@ ${ui.includeFragment("referenceapplication", "infoAndErrorMessages")}
 </script>
 
 <header>
-    <div class="logo" >
+    <div class="logo">
         <div style="float: left; height: 30px; margin-top: 10px; margin-bottom: 10px"> <a href="${ui.pageLink("referenceapplication", "home")}">
             <% if (enableIsantePlusUI) { %>
             <!-- isantePlus changed logo in the next line -->
@@ -110,12 +110,14 @@ ${ui.includeFragment("referenceapplication", "infoAndErrorMessages")}
             <img src="${ui.resourceLink("referenceapplication", "images/openMrsLogo.png")}"/>
             <% } %>
         </a></div>
-        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; "><span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.8</span></div>
+        <div style="float: right;  height: 15px; margin-top: 19px; margin-bottom: 10px; ">
+            <span style="margin-left: -2px; margin-top: 20px;  font-size:small;">v2.8.8</span>
+        </div>
     </div>
 </header>
 
 <header>
-    <div class="logo" >
+    <div class="logo">
         <div style="float: left; height: 30px; margin-top: 10px; margin-bottom: 10px"> <a href="${ui.pageLink("referenceapplication", "home")}">
             <% if (enableIsantePlusUI) { %>
             <!-- isantePlus changed logo in the next line -->

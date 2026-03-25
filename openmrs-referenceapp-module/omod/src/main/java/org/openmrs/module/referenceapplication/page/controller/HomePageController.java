@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.AdministrationService;
+import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.context.AppContextModel;
 import org.openmrs.module.appframework.service.AppFrameworkService;
@@ -49,18 +50,6 @@ public class HomePageController {
                              UiSessionContext sessionContext) {
 
         AppContextModel contextModel = sessionContext.generateAppContextModel();
-
-        AdministrationService administrationService = Context.getAdministrationService();
-
-//        for(GlobalProperty globalProperty : administrationService.getAllGlobalProperties()) {
-//            System.out.println("getDatatypeClassname======="+globalProperty.getDatatypeClassname());
-//            System.out.println("getProperty================"+globalProperty.getProperty());
-//            System.out.println("getPropertyValue==========="+globalProperty.getPropertyValue());
-//            System.out.println("getDatatypeConfig=========="+globalProperty.getDatatypeConfig());
-//            System.out.println("getDescription============="+globalProperty.getDescription());
-//            System.out.println("getValue==================="+globalProperty.getValue());
-//            System.out.println("------------------------------------------------------------------------------------------------------");
-//        }
 
         model.addAttribute("extensions", appFrameworkService.getExtensionsForCurrentUser(ReferenceApplicationConstants.HOME_PAGE_EXTENSION_POINT_ID, contextModel));
         model.addAttribute("authenticatedUser", Context.getAuthenticatedUser());

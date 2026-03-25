@@ -163,10 +163,20 @@ visit_type
 
 
 
+1 - (Laryngite + Amygdales blanchâtres) → Diphtérie
 
+2 - (Éruption cutanée maculopapuleuse + Fièvre) → Rougeole / Rubéole
 
+3 - Paralysie soudaine d’un membre + (Âge < 15 ans) → Paralysie flasque aiguë (PFA)
 
+4 - (Microcéphalie, ou Purpura, ou Ecchymoses, ou Taches cutanées, ou Macules) + (Âge < 1 an) → Syndrome de rubéole congénitale
 
+5 - (Pleurs excessifs, ou Spasmes musculaires) + (Âge entre 3 et 28 jours) → Tétanos néonatal
 
+6 - Fièvre aiguë + (Raideur de nuque, ou Troubles de la conscience, ou Léthargie, ou Céphalée, ou Éruption cutanée, ou Fontanelle bombée) → Méningite bactérienne
+
+7 - (Irritabilité + Morsure par un animal) → Rage humaine
+
+8 - (Fièvre > 38 °C + Ictère) → Syndrome ictérique fébrile
 
 

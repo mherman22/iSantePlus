@@ -45,7 +45,7 @@ set p.last_address=
     case when ((padd.address1 <> '' and padd.address1 is not null) and (padd.address2 <> '' and padd.address2 is not null))
     then CONCAT(padd.address1,' ',padd.address2)
     when ((padd.address1 <> '' and padd.address1 is not null) and (padd.address2 = '' or padd.address2 is null))
-    then padd.address1 else padss2
+    then padd.address1 else padd.address2
 end
 where p.patient_id = padd.person_id
 	     and padd.voided = 0;

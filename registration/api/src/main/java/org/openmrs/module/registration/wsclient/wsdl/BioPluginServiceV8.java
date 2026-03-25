@@ -4,7 +4,6 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceFeature;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BioPluginServiceV8 extends Service {
