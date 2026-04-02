@@ -11,5 +11,7 @@ public class RegistrationConstants {
 	public static final String CONTACT_RELATION_CONCEPT_UUID = "164352AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	
 	public static final String CONTACT_PHONE_CONCEPT_UUID = "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-	
+
+	public static final String REPORTS_SQL_PATH = "sql/";
+
 }

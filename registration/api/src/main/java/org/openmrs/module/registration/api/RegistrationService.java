@@ -66,4 +66,7 @@ public interface RegistrationService extends OpenmrsService {
 	String verifyPatient(String biometricXml, String patientId, int locationId);
 
 	String registerPatient(String biometricXml, String patientId, int locationId);
+
+	void executeSqlFile(String sqlFile);
+
 }

@@ -20,7 +20,6 @@ public class FindPatientCriteriaFragmentController {
         else
             results = Context.getService(IsantePlusService.class)
                     .getAllPatientSearchInfos(criteria);
-
         try {
             ObjectMapper mapper = new ObjectMapper();
             return SimpleObject.create("patientsLoad", mapper.writeValueAsString(results));

@@ -20,9 +20,15 @@ package org.openmrs.module.htmlformentryui;
 public class HtmlFormEntryUiConstants {
 
     public static final String MODULE_ID = "htmlformentryui";
+    public static final String INDICATORS_REPORTS_SQL = "indicator_report.sql";
 
     public static final String HTMLFORMENTRY_UI_MESSAGE_TAG_NAME = "uimessage";
 
     public static final String HTMLFORMENTRY_UI_INCLUDE_TAG_NAME = "uiInclude";
+
+    public static final String SSP_CONSULTATION_FORM_PEDIATRIC_FIRST = "709610ff-5e39-4a47-9c27-a60e740b0944";
+    public static final String SSP_CONSULTATION_FORM_PEDIATRIC = "fdb5b14f-555f-4282-b4c1-9286addf0aae";
+    public static final String SSP_CONSULTATION_FORM_ADULT_FIRST = "12f4d7c3-e047-4455-a607-47a40fe32460";
+    public static final String SSP_CONSULTATION_FORM_ADULT = "a5600919-4dde-4eb8-a45b-05c204af8284";
 
 }

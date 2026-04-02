@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.Visit;
 import org.openmrs.api.FormService;
@@ -29,19 +28,19 @@ public class IsantePlusFormsFragmentController {
 
     public void controller(FragmentConfiguration config, FragmentModel model,
                            @RequestParam("patientId") Patient patient,
-                           @InjectBeans PatientDomainWrapper wrapper,
+//                           @InjectBeans PatientDomainWrapper wrapper,
                            @SpringBean("adtService") AdtService adtService,
                            UiSessionContext sessionContext,
                            @SpringBean("coreResourceFactory") ResourceFactory resourceFactory,
                            @SpringBean("htmlFormEntryService") HtmlFormEntryService htmlFormEntryService,
                            @SpringBean("formService") FormService formService,
-                           HttpServletRequest request,
+//                           HttpServletRequest request,
                            @RequestParam(value = "visitId", required = false) Visit visit) {
 
         VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient,
                 adtService.getLocationThatSupportsVisits(sessionContext.getSessionLocation()));
 
-        // ✅ Visit sécurisé (LE POINT CLÉ)
+        // Visit sécurisé (LE POINT CLÉ)
         Visit visitToUse = visit != null
                 ? visit
                 : (activeVisit != null ? activeVisit.getVisit() : null);
@@ -49,7 +48,7 @@ public class IsantePlusFormsFragmentController {
         model.put("isActiveVisit", visitToUse != null);
         model.put("showObygnForms", StringUtils.isNotBlank(patient.getGender()) && "F".equals(patient.getGender()));
 
-        // 🚨 Si aucun visit → STOP (évite NPE)
+        // Si aucun visit → STOP (évite NPE)
         if (visitToUse == null) {
             model.put("primaryCareForms", new ArrayList<>());
             model.put("labForms", new ArrayList<>());
@@ -66,7 +65,7 @@ public class IsantePlusFormsFragmentController {
         Integer patientAge = patient.getAge();
         String patientSex = patient.getGender();
 
-        // ✅ Helper pour éviter répétition
+        // Helper pour éviter répétition
         java.util.function.Function<String, IsantePlusHtmlForm> form = file ->
                 new IsantePlusHtmlForm(file, resourceFactory, formService, htmlFormEntryService, patient, visitToUse);
 
@@ -180,4 +179,5 @@ public class IsantePlusFormsFragmentController {
         model.put("patientId", patient.getPatientId());
         model.put("visitId", visitToUse.getVisitId());
     }
+
 }

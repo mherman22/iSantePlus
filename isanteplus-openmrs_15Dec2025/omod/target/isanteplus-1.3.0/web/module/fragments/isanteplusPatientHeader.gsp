@@ -9,6 +9,9 @@
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script>
+    var sessionContextRole = ${ui.toJson(sessionContextRole)};
+</script>
 
 <script type="text/javascript">
     var addMessage = "${ ui.message("coreapps.patient.identifier.add") }";
@@ -69,7 +72,7 @@
 
         });
 
-        jq(".demographics .name").click(function () {
+        jq(".name").click(function () {
             emr.navigateTo({
                 url: "${ ui.urlBind("/" + contextPath + config.dashboardUrl, [ patientId: patient.patient.id ] ) }"
             });
@@ -417,6 +420,8 @@
                 </div>
                 <% } %>
 
+                <% if(sessionContextRole != "Organizational: Archivist") { %>
+
                 <% if (config.artInitiationDate != null) { %>
                 <div class="patient-data-item">
                     <i>${ ui.message("isanteplus.artInitiationDate") }</i>
@@ -460,7 +465,7 @@
                         </div>
                         <% } %>
                     <% } %>
-                <% } %>
+                <% }} %>
             </div>
         </div>
 

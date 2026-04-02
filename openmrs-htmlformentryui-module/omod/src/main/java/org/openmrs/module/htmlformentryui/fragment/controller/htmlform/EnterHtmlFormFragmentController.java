@@ -16,10 +16,7 @@ package org.openmrs.module.htmlformentryui.fragment.controller.htmlform;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
-import org.openmrs.Encounter;
-import org.openmrs.Form;
-import org.openmrs.Patient;
-import org.openmrs.Visit;
+import org.openmrs.*;
 import org.openmrs.api.FormService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
@@ -58,6 +55,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static org.openmrs.module.htmlformentryui.HtmlFormEntryUiConstants.*;
+
 /**
  *
  */
@@ -77,7 +76,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
      * @param encounter
      * @param visit
      * @param returnUrl
-     * @param automaticValidation defaults to true. If you don't want HFE's automatic validation, set it to false
+     * @param automaticValidation  defaults to true. If you don't want HFE's automatic validation, set it to false
      * @param model
      * @param httpSession
      * @throws Exception
@@ -134,13 +133,12 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
         FormEntrySession fes;
         if (encounter != null) {
             fes = new FormEntrySession(patient, encounter, FormEntryContext.Mode.EDIT, hf, null, httpSession, automaticValidation, !automaticValidation);
-        }
-        else {
+        } else {
             fes = new FormEntrySession(patient, hf, FormEntryContext.Mode.ENTER, null, httpSession, automaticValidation, !automaticValidation);
         }
 
         VisitDomainWrapper visitDomainWrapper = getVisitDomainWrapper(visit, encounter, adtService);
-        setupVelocityContext(fes, visitDomainWrapper, ui, sessionContext,featureToggles);
+        setupVelocityContext(fes, visitDomainWrapper, ui, sessionContext, featureToggles);
         setupFormEntrySession(fes, visitDomainWrapper, ui, sessionContext, returnUrl);
         setupModel(model, fes, visitDomainWrapper, createVisit);
 
@@ -148,6 +146,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
 
     /**
      * Creates a simple object to record if there is an authenticated user
+     *
      * @return the simple object
      */
     public SimpleObject checkIfLoggedIn() {
@@ -156,6 +155,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
 
     /**
      * Tries to authenticate with the given credentials
+     *
      * @param user the username
      * @param pass the password
      * @return a simple object to record if successful
@@ -164,8 +164,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
         try {
             Context.authenticate(user, pass);
             context.setSessionLocation(emrApiProperties.getUnknownLocation());
-        }
-        catch (ContextAuthenticationException ex) {
+        } catch (ContextAuthenticationException ex) {
 
         }
 
@@ -175,6 +174,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
 
     /**
      * Handles a form submit request
+     *
      * @param patient
      * @param hf
      * @param encounter
@@ -186,22 +186,20 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
      */
     @Transactional
     public SimpleObject submit(UiSessionContext sessionContext,
-                         @RequestParam("personId") Patient patient,
-                         @RequestParam("htmlFormId") HtmlForm hf,
-                         @RequestParam(value = "encounterId", required = false) Encounter encounter,
-                         @RequestParam(value = "visitId", required = false) Visit visit,
-                         @RequestParam(value = "createVisit", required = false) Boolean createVisit,
-                         @RequestParam(value = "returnUrl", required = false) String returnUrl,
-                         @SpringBean("adtService") AdtService adtService,
-                         @SpringBean("featureToggles") FeatureToggleProperties featureToggles,
-                         UiUtils ui,
-                         HttpServletRequest request) throws Exception {
+                               @RequestParam("personId") Patient patient,
+                               @RequestParam("htmlFormId") HtmlForm hf,
+                               @RequestParam(value = "encounterId", required = false) Encounter encounter,
+                               @RequestParam(value = "visitId", required = false) Visit visit,
+                               @RequestParam(value = "createVisit", required = false) Boolean createVisit,
+                               @RequestParam(value = "returnUrl", required = false) String returnUrl,
+                               @SpringBean("adtService") AdtService adtService,
+                               @SpringBean("featureToggles") FeatureToggleProperties featureToggles,
+                               UiUtils ui,
+                               HttpServletRequest request) throws Exception {
 
         // TODO formModifiedTimestamp and encounterModifiedTimestamp
 
         boolean editMode = encounter != null;
-
-
 
         FormEntrySession fes;
         if (encounter != null) {
@@ -211,7 +209,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
         }
 
         VisitDomainWrapper visitDomainWrapper = getVisitDomainWrapper(visit, encounter, adtService);
-        setupVelocityContext(fes, visitDomainWrapper, ui, sessionContext,featureToggles);
+        setupVelocityContext(fes, visitDomainWrapper, ui, sessionContext, featureToggles);
         setupFormEntrySession(fes, visitDomainWrapper, ui, sessionContext, returnUrl);
         fes.getHtmlToDisplay();  // needs to happen before we validate or process a form
 
@@ -246,6 +244,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
             keepTimeComponentOfEncounterIfDateComponentHasNotChanged(fes.getContext().getPreviousEncounterDate(), formEncounter);
         }
 
+
         // create a visit if necessary (note that this currently only works in real-time mode)
         if (createVisit != null && (createVisit) && visit == null) {
             visit = adtService.ensureActiveVisit(patient, sessionContext.getSessionLocation());
@@ -256,11 +255,9 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
         if (visit != null) {
             try {
                 new EncounterDomainWrapper(formEncounter).attachToVisit(visit);
-            }
-            catch (EncounterDateBeforeVisitStartDateException e) {
+            } catch (EncounterDateBeforeVisitStartDateException e) {
                 validationErrors.add(new FormSubmissionError("general-form-error", "Encounter datetime should be after the visit start date"));
-            }
-            catch (EncounterDateAfterVisitStopDateException e) {
+            } catch (EncounterDateAfterVisitStopDateException e) {
                 validationErrors.add(new FormSubmissionError("general-form-error", "Encounter datetime should be before the visit stop date"));
             }
 
@@ -271,6 +268,19 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
 
         // Do actual encounter creation/updating
         fes.applyActions();
+
+        HtmlFormEntryService htmlFormEntryService = Context.getService(HtmlFormEntryService.class);
+        EncounterType encounterType = formEncounter.getForm().getEncounterType();
+
+        System.out.println("===========1===========");
+        if (encounterType.getUuid().equals(SSP_CONSULTATION_FORM_PEDIATRIC_FIRST) ||
+                encounterType.getUuid().equals(SSP_CONSULTATION_FORM_PEDIATRIC) ||
+                encounterType.getUuid().equals(SSP_CONSULTATION_FORM_ADULT_FIRST) ||
+                encounterType.getUuid().equals(SSP_CONSULTATION_FORM_ADULT)) {
+
+            htmlFormEntryService.executeSqlFile(INDICATORS_REPORTS_SQL);
+            System.out.println("===========2===========");
+        }
 
         request.getSession().setAttribute(UiCommonsConstants.SESSION_ATTRIBUTE_INFO_MESSAGE,
                 ui.message(editMode ? "htmlformentryui.editHtmlForm.successMessage" : "htmlformentryui.enterHtmlForm.successMessage", ui.format(hf.getForm()), ui.escapeJs(ui.format(patient))));
@@ -318,7 +328,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
         model.addAttribute("currentDate", (new DateMidnight()).toDate());
         model.addAttribute("command", fes);
         model.addAttribute("visit", visitDomainWrapper);
-        if (createVisit!=null) {
+        if (createVisit != null) {
             model.addAttribute("createVisit", createVisit.toString());
         } else {
             model.addAttribute("createVisit", "false");
@@ -334,8 +344,7 @@ public class EnterHtmlFormFragmentController extends BaseHtmlFormFragmentControl
 
         if (visit == null) {
             return null;
-        }
-        else {
+        } else {
             return adtService.wrap(visit);
         }
     }

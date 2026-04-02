@@ -5,7 +5,10 @@
 %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<script>
+    var sessionContextRole = ${ui.toJson(sessionContextRole)};
+    console.log("sessionContextRole===",sessionContextRole)
+</script>
 <style>
 
 body {
@@ -147,6 +150,12 @@ body {
     border-color: #448091;
 }
 
+.icon-map-marker{
+    margin-right: 3px;
+    font-size: 15px;
+    color: darkgreen;
+}
+
 /* Spinner */
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -269,7 +278,7 @@ body {
                     "<div class='patient-card' data-patient-id='"+p.patientId+"'>" +
                     "<div class='patient-name'>" + (p.fullName || "") + "</div>" +
                     (metaSpans.length ? "<div class='patient-meta'>" + metaSpans.join('') + "</div>" : "") +
-                    (p.adresses ? "<div class='patient-address'>" + p.adresses + "</div>" : "") +
+                    (p.adresses ? "<div class='patient-address'><i class='icon-map-marker'></i>" + p.adresses + "</div>" : "") +
                     "</div>"
                 );
 
@@ -293,7 +302,7 @@ body {
             let end = Math.min(totalPages, start+4);
             if (end-start<4) start = Math.max(1, end-4);
 
-            for(let i=start;i<=end;i++){
+            for(let i=start;i<=end;i++) {
                 const btn = jq('<div class="page-btn">'+i+'</div>');
                 if(i===currentPage) btn.addClass('active');
                 btn.click(() => {currentPage=i; renderPatients();});
@@ -307,15 +316,20 @@ body {
 
         function openPatient(p) {
             let hist = JSON.parse(localStorage.getItem('patientsConsultes')) || [];
-            hist = hist.filter(x => x.patientId!==p.patientId);
+            hist = hist.filter(x => x.patientId !== p.patientId);
             hist.unshift(p);
-            if(hist.length>50) hist.pop();
+            if (hist.length > 50) hist.pop();
             localStorage.setItem('patientsConsultes', JSON.stringify(hist));
-            window.location.href="/openmrs/coreapps/clinicianfacing/patient.page?patientId="+p.patientId;
+
+            if (sessionContextRole === "Organizational: Archivist") {
+                window.location.href = "/openmrs/registrationapp/registrationSummary.page?patientId=" + p.patientId;
+            } else {
+                window.location.href = "/openmrs/coreapps/clinicianfacing/patient.page?patientId=" + p.patientId;
+            }
         }
 
         // Clear history
-        jq('#clearHistory').click(function(e){
+        jq('#clearHistory').click(function(e) {
             e.preventDefault();
             localStorage.removeItem('patientsConsultes');
             loadHistory();
@@ -336,6 +350,7 @@ body {
                 dataType: "json",
                 success: function(response) {
                     patients = JSON.parse(response.patientsLoad || "[]");
+                    console.log(patients)
                     currentPage = 1;
                     renderPatients();
                 },

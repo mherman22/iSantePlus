@@ -9,8 +9,11 @@
  */
 package org.openmrs.module.registration.api.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
 import org.openmrs.api.UserService;
+import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.registration.*;
 import org.openmrs.module.registration.api.RegistrationService;
@@ -18,13 +21,21 @@ import org.openmrs.module.registration.api.dao.RegistrationDao;
 import org.openmrs.module.registration.util.BioPluginResponseParser;
 import org.openmrs.module.registration.wsclient.BioPluginSoapClient;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.openmrs.module.registration.RegistrationConstants.REPORTS_SQL_PATH;
 
 public class RegistrationServiceImpl extends BaseOpenmrsService implements RegistrationService {
 
     RegistrationDao dao;
 
     UserService userService;
+
+    private static Log log = LogFactory.getLog(RegistrationServiceImpl.class);
 
     /**
      * Injected in moduleApplicationContext.xml
@@ -231,6 +242,37 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements Regis
     @Override
     public String registerPatient(String biometricXml, String patientId, int locationId) {
         return BioPluginResponseParser.registerResponse(getClient().register(biometricXml, patientId, locationId));
+    }
+
+    @Override
+    public void executeSqlFile(String sqlFile) {
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(REPORTS_SQL_PATH + sqlFile)) {
+
+            if (is == null) {
+                log.warn("Le fichier SQL n'a pas été trouvé: " + sqlFile);
+                return;
+            }
+
+            // Lire le contenu du fichier SQL
+            String sqlContent = new BufferedReader(new InputStreamReader(is))
+                    .lines()
+                    .collect(Collectors.joining("\n"));
+
+            // Séparer les instructions SQL par ';'
+            String[] statements = sqlContent.split(";");
+
+            // Récupérer la session Hibernate réelle
+            DbSession session = dao.getSession();
+
+            for (String stmt : statements) {
+                stmt = stmt.trim();
+                if (!stmt.isEmpty()) {
+                    session.createSQLQuery(stmt).executeUpdate();
+                }
+            }
+        } catch (Exception e) {
+            log.error("Erreur lors de l'exécution du fichier SQL: " + sqlFile, e);
+        }
     }
 
 }

@@ -58,6 +58,11 @@ public class PatientPageController {
                              @SpringBean("coreAppsProperties") CoreAppsProperties coreAppsProperties,
                              UiSessionContext sessionContext) {
 
+
+        if (!Context.hasPrivilege(CoreAppsConstants.ARCHIVIST_PRIVILEGE_ACCESS)) {
+            return new Redirect("registrationapp", "registrationSummary", "patientId=" + patient.getId());
+        }
+
         if (!Context.hasPrivilege(CoreAppsConstants.PRIVILEGE_PATIENT_DASHBOARD)) {
             return new Redirect("coreapps", "noAccess", "");
         } else if (patient.isVoided() || patient.isPersonVoided()) {

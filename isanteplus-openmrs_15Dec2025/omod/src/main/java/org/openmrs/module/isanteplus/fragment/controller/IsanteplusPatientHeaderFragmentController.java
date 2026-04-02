@@ -55,6 +55,13 @@ public class IsanteplusPatientHeaderFragmentController {
             wrapper = (PatientDomainWrapper) patient;
         }
 
+		model.addAttribute("sessionContextRole", sessionContext.getCurrentUser()
+				.getAllRoles()
+				.stream()
+				.map(Role::getRole) // 👈 IMPORTANT
+				.findFirst()
+				.orElse(null));
+
 
 		AtomicReference<Boolean> isFingerprint = new AtomicReference<>(false);
 		List<PatientIdentifierType> patientIdentifierTypeList = new ArrayList<>(Collections.emptyList());
