@@ -1,0 +1,21 @@
+[
+    {
+        "id": "isanteplus.triage",
+        "description": "isanteplus.triage.app.description",
+        "order": 11,
+        "config": {
+            "patientPageUrl": "isanteplus/triage.page?app=isanteplus.registration"
+        },
+        "extensions": [
+            {
+                "id": "org.openmrs.module.isanteplus.activeVisitsHomepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "label": "isanteplus.emergency.app.label",
+                "url": "isanteplus/triage.page?app=isanteplus.triage",
+                "icon": "icon-ambulance",
+                "requiredPrivilege": "App: isanteplus.triage"
+            }
+        ]
+    }
+]

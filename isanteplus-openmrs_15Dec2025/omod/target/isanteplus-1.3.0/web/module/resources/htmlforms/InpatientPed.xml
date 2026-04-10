@@ -1,0 +1,1421 @@
+<htmlform formUuid="d7923cc5-84fe-4814-8ef0-47820d02f705"
+	formName="Fiche d'Hospitalisation Pédiatrique" formVersion="1.0"
+	formEncounterType="ed18f81f-a013-411e-b371-4fb0176b4500"
+	formDescription="Saisie Hospitalisation Pédiatrique">
+	<style>
+		.section {
+		border: 1px solid $headerColor;
+		padding: 1px;
+		text-align: left;
+		margin-bottom: 1em;
+		}
+		.section_b {
+		background-color: #2F4F4F;
+		color:#FFFFFF;
+		padding: 2px;
+		text-align: center;
+		margin-bottom: 1em;
+		}
+		.sectionHeader {
+		background-color: $headerColor;
+		color: $fontOnHeaderColor;
+		display: block;
+		padding: 1px;
+		font-weight: bold;
+		}
+		.lienvisible#first{display: block}
+		.toggle-button{
+		height:auto; background:#132959; border:1px solid #FFFFFF;
+		color:#FFFAF4;
+		width:100%";
+		}
+		.contener
+		{
+		width:100%;
+		height:100%;
+		border:1px solid;
+		margin:0px;
+		padding:0px;
+		background:#87CEEB; border:1px solid #FFFFFF;
+		}
+		.hide{
+		margin:0px;
+		padding:0px;
+		}
+		a:link
+		{
+		text-decoration:none;
+		}
+		table.baseline-aligned td {
+		vertical-align: baseline;
+		}
+		#sauvegarde
+		{
+		background:#c1e5f1;
+		position:relative;
+		bottom:0px;
+		width:100%;
+		margin:0px;
+		padding-top:0px;
+		padding-bottom:5px;
+		padding-left:0px;
+		padding-right:0px;
+		height:50px;
+		}
+		#dateVisite{
+		background:#c1e5f1;
+		top:0px;
+		width:100%;
+		}
+		#scroll{
+		width: 99%;
+		margin-right:1%;
+		margin-left:0px;
+		margin-bottom:0px;
+		height:520px;
+		overflow: scroll;
+		border: 1px solid black;
+		text-align: justify;
+		padding: 5px;
+		}
+		#contenerGeneral
+		{
+		height:100%;
+		width:100%;
+		margin:0px;
+		padding:0px;
+		bottom:0px;
+        background: white;
+		}
+		form input[type="checkbox"], form input[type="radio"], .form
+		input[type="checkbox"], .form input[type="radio"] {
+		float: none;
+		display: inline-block;
+		}
+
+		form input[type="textarea"]{
+		border: 1px solid red;
+		}
+
+		form label, .form label {
+		display: inline-block;
+		}
+
+		.sansbordure
+		{
+		border: 0;
+		}
+
+		.error {
+		color: red;
+		background-color: white;
+		}
+
+
+		#divMotifCons1 {
+		width: 100%;
+		margin: 10px
+		padding: 10px;
+		}
+
+		<!--  START      MODIFICATION MACKENDY AND JEEJEN-->
+		.tableTdMotif1 {
+		width: 16.66%;
+		}
+
+		.tableTdImpresClin {
+		width: 25%;
+		}
+
+		<!--        END MODIFICATION MACKENDY AND JEEJEN-->
+
+		.clear {
+		float: right;
+		margin-top: -29px;
+		margin-right: 10px;
+		}
+
+		.icon-remove-sign:hover {
+		color: #aa007f;
+		}
+
+
+
+	</style>
+
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery( '.toggle-button' ).on( 'click', function() {
+		// À décommenter si tu veux masquer toutes les autres div
+		jQuery( '.togglable' ).not( this.getAttribute( 'data-target' ) ).hide( 'slow'
+		);
+
+		jQuery( this.getAttribute( 'data-target' ) ).toggle( 'slow' );
+		});
+		});
+	</script>
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery( '.titre' ).on( 'change', function() {
+		/*jQuery( this.getAttribute(
+		'ch-target' ) ).show();*/
+
+
+		var m =jQuery(this).find(".master").attr("id");
+		if(getValue(''+m+'.value')&gt;0 || getValue(''+m+'.value') != null)
+		{
+		jQuery( this.getAttribute( 'ch-target' ) ).show();
+		}
+		else{
+		if(getValue(''+m+'.value') == null){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+
+		}
+		if(getValue(''+m+'.value') == ''){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+
+
+		});
+
+		jQuery( '#date_cancer_col' ).on( 'change', function() {
+
+		if(getValue('date_cancer_col.value') != '') {
+		setValue('cancer_col.value', '151185');
+		}
+		});
+		jQuery( '#cancer_col' ).on( 'change', function() {
+
+		if(getValue('cancer_col.value') != '151185') {
+		setValue('date_cancer_col.value', '');
+		}
+		});
+
+		jQuery( '#date_depistage_prostate' ).on( 'change', function() {
+
+		if(getValue('date_depistage_prostate.value') != '') {
+		setValue('depistage_prostate.value', '163464');
+		}
+		});
+
+		jQuery( '#depistage_prostate' ).on( 'change', function() {
+
+		if(getValue('depistage_prostate.value') != '163464') {
+		setValue('date_depistage_prostate.value', '');
+		}
+		});
+
+		});
+	</script>
+
+	<script type="text/javascript">
+
+		/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+		var calculateBmi = function(wt, ht) {
+		var bmi = null
+		if (wt &amp;&amp; ht) {
+		bmi = wt / ((ht/100) * (ht/100));
+		}
+		return bmi ;
+		}
+		// functions to handle updating the bmi when in ENTER mode
+		var updateBmi = function() {
+		var wt = htmlForm.getValueIfLegal('weight.value');
+		var ht = htmlForm.getValueIfLegal('height.value');
+
+		var bmi = calculateBmi(wt, ht);
+
+		if (bmi == null || isNaN(bmi)) {
+		jQuery('#calculated-bmi-wrapper').hide();
+		} else {
+		jQuery('#no-calculated-bmi').hide();
+		jQuery('#calculated-bmi-wrapper').show();
+		jQuery('#calculated-bmi').html(bmi.toFixed(1));
+		jQuery('#hidden-calculated-bmi').val(bmi.toFixed(1));
+		}
+		};
+
+		jQuery(function() {
+		jQuery(".hide").hide();
+		jQuery(".lienvisible").click(function() {
+		// on recupere le lien dans le DOM
+		var $link = jQuery(this);
+
+		// on recupere la balise hide suivant le lien dans le DOM
+		var $hide = $link.next('.hide');
+		if(jQuery('.hide').slideUp('slow'))
+		{
+		$hide.stop().slideDown('slow');
+		//$('.hide').css('display', 'none');
+
+		}
+		else
+		{
+		if($hide.stop().slideDown('slow'))
+		{
+		jQuery('.hide').slideUp('slow');
+		//jQuery('.hide').show() ;
+		}
+		}
+
+		// on remonte toutes les balises hide
+		//$j('.hide').slideUp('slow');
+		// on stoppe l'animation (slideUp de la ligne precedente)
+		// on desend notre div
+		//$hide.stop().slideDown('slow');
+		});
+
+		/*)))))))))))))))))))))*/
+		jQuery('htmlform').each(function(index, form) {
+		jQuery(form).find('#calculated-bmi-continue').hide();
+		jQuery(form).find('#no-calculated-bmi').hide();
+
+		var wt = jQuery(form).find('#weight').find('.value').text();
+		var ht = jQuery(form).find('#height').find('.value').text();
+
+		var bmi = calculateBmi(wt, ht);
+
+		if (bmi != null &amp;&amp; !isNaN(bmi)) {
+		jQuery(form).find('#calculated-bmi-wrapper').show();
+		jQuery(form).find('#calculated-bmi').html(bmi.toFixed(1));
+		jQuery(form).find('#calculated-bmi-view').html(bmi.toFixed(1));
+		jQuery(form).find('#hidden-calculated-bmi').val(bmi.toFixed(1));
+		}
+		});
+
+		jQuery('#calculated-bmi-wrapper').each(function(){
+		jQuery('#calculated-bmi-wrapper').hide();
+
+		getField('weight.value').change(updateBmi)
+		getField('height.value').change(updateBmi);
+
+		updateBmi();
+		});
+
+		});
+	</script>
+
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery('.titre').each(function() {
+		var m =jQuery(this).find(".master").attr("id");
+		if(getValue(''+m+'.value')&gt;0)
+		{
+		jQuery( this.getAttribute( 'ch-target' ) ).show();
+		}
+		else{
+		if(getValue(''+m+'.value') == null){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+		}
+		if(getValue(''+m+'.value') == ''){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+		});
+
+		});
+
+	</script>
+	<script type="text/javascript">
+		if(jQuery){
+		jQuery(document).ready(function() {
+		//if ( jQuery.browser.msie ) {
+		jQuery(":checkbox").click(function() {
+		jQuery(this).change();
+		});
+		//}
+		jQuery(".checkboxGroup").each(function() {
+		var group = jQuery(this);
+		var uncheckAll = function() {
+		group.find("input[type$='checkbox']").attr("checked",false);
+		group.find("input[type$='checkbox']").change();
+		}
+
+
+		//Debut checkbox examen Clinique
+		group.find("#normal1").find("input[type$='checkbox']").click(function(){
+		group.find("#anormal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#anormal1").find("input[type$='checkbox']").change();
+		group.find("#pasconduit1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#pasconduit1").find("input[type$='checkbox']").change();
+		}
+		);
+		group.find("#anormal1").find("input[type$='checkbox']").click(function(){
+		group.find("#normal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#normal1").find("input[type$='checkbox']").change();
+		group.find("#pasconduit1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#pasconduit1").find("input[type$='checkbox']").change();
+		}
+		);
+		group.find("#pasconduit1").find("input[type$='checkbox']").click(function(){
+		group.find("#normal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#normal1").find("input[type$='checkbox']").change();
+		group.find("#anormal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#anormal1").find("input[type$='checkbox']").change();
+		}
+		);
+
+
+		group.find("#trigger").find("input[type$='checkbox']").click(function(){
+		var res = group.find(".titre").attr("id");
+		var idm = group.find(".master").attr("id");
+
+		if(getValue(''+idm+'.value') == null || getValue(''+idm+'.value') == '')
+		{
+		group.find("#confirmation").find("input[type$='radio']").attr("checked",false);
+		group.find("#confirmation").find("input[type$='radio']").change();
+		group.find("#primary").find("input[type$='radio']").attr("checked",false);
+		group.find("#primary").find("input[type$='radio']").change();
+
+		jQuery( group.find(".cacher") ).hide();
+		var idcacher = '#' + group.find(".cacher").attr("id") + '';
+		//alert(idcacher);
+		jQuery(''+idcacher+'').hide();
+		}
+		});
+
+		group.find("#trigger").find("input[type$='text']").change(function(){
+		var res = group.find(".titre").attr("id");
+		var idm = group.find(".master").attr("id");
+
+		if(getValue(''+idm+'.value') == null || getValue(''+idm+'.value') == '')
+		{
+		group.find("#confirmation").find("input[type$='radio']").attr("checked",false);
+		group.find("#confirmation").find("input[type$='radio']").change();
+		group.find("#primary").find("input[type$='radio']").attr("checked",false);
+		group.find("#primarygetF").find("input[type$='radio']").change();
+		jQuery( group.find(".cacher") ).hide();
+		var idcacher = '#' + group.find(".cacher").attr("id") + '';
+		jQuery(''+idcacher+'').hide();
+		}
+		});
+
+		});
+		});
+		}
+
+	</script>
+
+	<script type="text/javascript">
+		if(jQuery) {
+		jQuery(document).ready(function() {
+		var gp = jQuery(this);
+
+		gp.find("#remaq").find("textarea").css("width", "120px");
+		gp.find("#remaq").find("textarea").change();
+
+		//if ( jQuery.browser.msie ) {
+		jQuery(":checkbox").click(function() {
+		jQuery(this).change();
+		});
+		//}
+
+		jQuery(".checkboxGeneral").each(function() {
+		var group = jQuery(this);
+		var uncheckAll = function() {
+		group.find("input[type$='checkbox']").attr("checked",false);
+		group.find("input[type$='checkbox']").change();
+		}
+
+		// group.find("#id58").css("color", "red");
+
+		group.find("#id58").click(function() {
+
+		var idm = group.find(".master").attr("id");
+
+		if(getValue(''+idm+'.value') == null || getValue(''+idm+'.value') == '') {
+		} else {
+		var ddd = document.getElementById("adenopathie");
+		var ddd1 = document.getElementById("oedeme");
+		var ddd2 = document.getElementById("douleur");
+
+		if(getValue(''+idm+'.value') == 135488) {
+		group.find("#adenopathie").find("input[type$='checkbox']").attr("checked", true);
+		group.find("#adenopathie").find("input[type$='checkbox']").attr("disabled", true);
+		group.find("#adenopathie").find("input[type$='checkbox']").change();
+		ddd.style.display = "initial";
+		} if(getValue(''+idm+'.value') == 460) {
+		group.find("#oedeme").find("input[type$='checkbox']").attr("checked",true);
+		group.find("#oedeme").find("input[type$='checkbox']").attr("disabled",true);
+		group.find("#oedeme").find("input[type$='checkbox']").change();
+		ddd1.style.display = "initial";
+		} if(getValue(''+idm+'.value') == 151) {
+		group.find("#douleur").find("input[type$='checkbox']").attr("checked",true);
+		group.find("#douleur").find("input[type$='checkbox']").attr("disabled",true);
+		group.find("#douleur").find("input[type$='checkbox']").change();
+		ddd2.style.display = "initial";
+		}
+		}
+		});
+		});
+		});
+		}
+	</script>
+
+	<script type="text/javascript">
+		beforeSubmit.push(function() {
+
+		if ((getValue('asthme1.value') != null) ||
+		(getValue('asthme2.value') != null) ||
+		(getValue('asthme3.value') != null)) {
+		setValue('asthme.value', '140234');
+		}
+
+		if ((getValue('cancer1.value') != null) ||
+		(getValue('cancer2.value') != null) ||
+		(getValue('cancer3.value') != null)) {
+		setValue('cancer.value', '151521');
+		}
+
+		if ((getValue('cardiopathie1.value') != null) ||
+		(getValue('cardiopathie2.value') != null) ||
+		(getValue('cardiopathie3.value') != null)) {
+		setValue('cardiopathie.value', '163114');
+		}
+
+		if ((getValue('diabete1.value') != null) ||
+		(getValue('diabete2.value') != null) ||
+		(getValue('diabete3.value') != null)) {
+		setValue('diabete.value', '140228');
+		}
+
+		if ((getValue('epilepsie1.value') != null) ||
+		(getValue('epilepsie2.value') != null) ||
+		(getValue('epilepsie3.value') != null)) {
+		setValue('epilepsie.value', '152450');
+		}
+
+		if ((getValue('hta1.value') != null) ||
+		(getValue('hta2.value') != null) ||
+		(getValue('hta3.value') != null)) {
+		setValue('hta.value', '151927');
+		}
+
+		if ((getValue('tuberculose1.value') != null) ||
+		(getValue('tuberculose2.value') != null) ||
+		(getValue('tuberculose3.value') != null)) {
+		setValue('tuberculose.value', '152460');
+		}
+
+		if ((getValue('mdr1.value') != null) ||
+		(getValue('mdr2.value') != null) ||
+		(getValue('mdr3.value') != null)) {
+		setValue('mdr.value', '164102');
+		}
+
+
+		var labelsList = "\n";
+		var valid = true;
+
+		jQuery('.field-error').each(function() {
+		if (!jQuery(this).is(':empty')){
+		var parent = jQuery(this).parent();
+		var label = parent[0].firstChild.data;
+
+		if (label !== undefined) {
+		labelsList += label + "\n";
+		}
+		valid = false;
+		}
+		});
+
+		if (!valid) {
+		alert("La sauvegarde a échoué à cause d'une erreur dans la fiche, veuillez corriger les champs avec erreur" +
+		labelsList);
+		}
+		return valid;
+
+		});
+	</script>
+
+	<script type="text/javascript">
+		<!--	Start	Alert Pour Diphterie -->
+
+		jQuery(function() {
+		getField('mod_amygdales_blanchatres.value').click(function() {
+		<!--		var myToast-->
+
+		if((getValue('id677.value') != null || getValue('id68.value') != null || getValue('odynophagie_toast.value') != null) &amp;&amp; getValue('mod_amygdales_blanchatres.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Diphterie ...");
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('id677.value').click(function() {
+		if((getValue('id677.value') != null || getValue('id68.value') != null || getValue('odynophagie_toast.value') != null) &amp;&amp; getValue('mod_amygdales_blanchatres.value') != null){		$().toastmessage('showWarningToast', "Cas possible de Diphterie ...");
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('id68.value').click(function() {
+		if((getValue('id677.value') != null || getValue('id68.value') != null || getValue('odynophagie_toast.value') != null) &amp;&amp; getValue('mod_amygdales_blanchatres.value') != null){		$().toastmessage('showWarningToast', "Cas possible de Diphterie ...");
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('odynophagie_toast.value').click(function() {
+		if((getValue('id677.value') != null || getValue('id68.value') != null || getValue('odynophagie_toast.value') != null) &amp;&amp; getValue('mod_amygdales_blanchatres.value') != null){		$().toastmessage('showWarningToast', "Cas possible de Diphterie ...");
+		}
+		});
+		});
+
+
+		<!--	End	Alert Pour Diphterie -->
+
+
+		<!--	Start	Alert Pour  Rougeole -->
+
+		jQuery(function() {
+		getField('eruption_maculo_populaire.value').click(function() {
+		if(getValue('eruption_maculo_populaire.value') != null &amp;&amp; getValue('fievre_38.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Rougeole/Rubeole...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('fievre_38.value').click(function() {
+		if(getValue('eruption_maculo_populaire.value') != null &amp;&amp; getValue('fievre_38.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Rougeole/Rubeole...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Rougeole -->
+
+
+		<!--	Start	Alert Pour  PFA - Paralysie Flasque Aigue -->
+		jQuery(function() {
+		getField('paralysie_soudaine_membre_toast.value').click(function() {
+		if(getValue('paralysie_soudaine_membre_toast.value') != null &amp;&amp; agePatient &lt; 15 ){
+		$().toastmessage('showWarningToast', "Cas possible de PFA - Paralysie Flasque Aigue...")
+		}
+		});
+		});
+
+
+		<!--	End	Alert Pour  PFA - Paralysie Flasque Aigue -->
+
+
+
+
+		<!--	Start	Alert Pour  Syndrome de Rubéole Congénitale -->
+
+
+		jQuery(function() {
+		getField('microcephalie_toast.value').click(function() {
+		if(getValue('microcephalie_toast.value') != null || getValue('purpura_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('macule_toast.value') != null &amp;&amp; agePatient &lt; 1  ){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome de Rubéole Congénitale...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('purpura_toast.value').click(function() {
+		if(getValue('microcephalie_toast.value') != null || getValue('purpura_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('macule_toast.value') != null &amp;&amp; agePatient &lt; 1  ){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome de Rubéole Congénitale...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('ecchymoses_toast.value').click(function() {
+		if(getValue('microcephalie_toast.value') != null || getValue('purpura_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('macule_toast.value') != null &amp;&amp; agePatient &lt; 1  ){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome de Rubéole Congénitale...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('macule_toast.value').click(function() {
+		if(getValue('microcephalie_toast.value') != null || getValue('purpura_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('macule_toast.value') != null &amp;&amp; agePatient &lt; 1  ){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome de Rubéole Congénitale...")
+		}
+		});
+		});
+
+
+
+		<!--	End	Alert Pour  Syndrome de Rubéole Congénitale -->
+
+
+
+		<!--		&lt;!&ndash;	Start	Alert Pour  Coqueluche &ndash;&gt;-->
+
+		<!--		jQuery(function() {-->
+		<!--		getField('toux_coq_chant.value').click(function() {-->
+		<!--		if(getValue('toux_coq_chant.value') != null &amp;&amp; getValue('id64.value') != null){-->
+		<!--		$().toastmessage('showWarningToast', "Cas possible de Coqueluche ...")-->
+		<!--		}-->
+		<!--		});-->
+		<!--		});-->
+
+		<!--		jQuery(function() {-->
+		<!--		getField('id64.value').click(function() {-->
+		<!--		if(getValue('toux_coq_chant.value') != null &amp;&amp; getValue('id64.value') != null){-->
+		<!--		$().toastmessage('showWarningToast', "Cas possible de Coqueluche ...")-->
+		<!--		}-->
+		<!--		});-->
+		<!--		});-->
+
+		<!--		&lt;!&ndash;	End	Alert Pour  Coqueluche&ndash;&gt;-->
+
+		<!--	Start	Alert Pour  Tetanos Neonatal -->
+
+		jQuery(function() {
+		getField('fievre_aigue.value').click(function() {
+		var agePatient = document.getElementById("age_patient").innerHTML
+		var ageInDays = agePatient * 365;
+
+		<!--		alert(getValue('fievre_aigue.value') != null || getValue('raideur_nuque.value') != null  &amp;&amp; getValue('age_patient.value') &lt; 3 &amp;&amp; getValue('age_patient.value') &gt; 28)-->
+		if(getValue('fievre_aigue.value') != null &amp;&amp; ageInDays &gt; 3 &amp;&amp; ageInDays &lt; 28){
+		$().toastmessage('showWarningToast', "Cas possible de Tetanos Neonatal ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('raideur_nuque.value').click(function() {
+
+		var agePatient = document.getElementById("age_patient").innerHTML
+
+		<!--		alert( getValue('raideur_nuque.value') != null || getValue('fievre_aigue.value') != null &amp;&amp; getValue('age_patient.value') &lt; 3 &amp;&amp; getValue('age_patient.value') &gt; 28)-->
+		if(getValue('raideur_nuque.value') != null &amp;&amp; agePatient &lt; 3 &amp;&amp; agePatient &gt; 28){
+		$().toastmessage('showWarningToast', "Cas possible de Tetanos Neonatal ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Tetanos Neonatal-->
+
+		<!--	Start	Alert Pour  Méningite bactérienne -->
+
+		jQuery(function() {
+		getField('fievre_aigue.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('lethargie_Toast.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('cephaleeToast.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('fontanelle_bombee_Toast.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('eruption_cutanees_toast.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('raideur_nuque.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('troubles_conscience_toast.value').click(function() {
+
+		if(getValue('fievre_aigue.value') != null &amp;&amp; (getValue('lethargie_Toast.value') != null || getValue('cephaleeToast.value') != null || getValue('fontanelle_bombee_Toast.value') != null  || getValue('eruption_cutanees_toast.value') != null  || getValue('raideur_nuque.value') != null || getValue('troubles_conscience_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de Méningite bactérienne ...")
+		}
+		});
+		});
+
+
+
+		<!--	End	Alert Pour  Méningite bactérienne-->
+
+
+		<!--	Start	Alert Pour  Typhoide -->
+
+		jQuery(function() {
+		getField('anorexie_toast.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('douleurs_abdominales_toast.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('constipation_toast.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('diarrhee_toast.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('id43.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('opisthotonos_toast.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('trismus_toast.value').click(function() {
+		var array_toast = [151, 996, 142412, 124957, 114739, 124105]
+		var array_sub = []
+
+		if(getValue('anorexie_toast.value') != null){
+		if(getValue('douleurs_abdominales_toast.value') != null){
+		array_sub.push(getValue('douleurs_abdominales_toast.value'))
+		}
+		if(getValue('constipation_toast.value') != null){
+		array_sub.push(getValue('constipation_toast.value'))
+
+		}
+		if(getValue('diarrhee_toast.value') != null){
+		array_sub.push(getValue('diarrhee_toast.value'))
+		}
+		if(getValue('id43.value') != null){
+		array_sub.push(getValue('id43.value'))
+		}
+		if(getValue('opisthotonos_toast.value') != null){
+		array_sub.push(getValue('opisthotonos_toast.value'))
+		}
+		if(getValue('trismus_toast.value') != null){
+		array_sub.push(getValue('trismus_toast.value'))
+		}
+
+		if(array_sub.length &gt;= 2){
+		$().toastmessage('showWarningToast', "Cas possible de Typhoide ...")
+
+		}
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Typhoide-->
+
+		<!--	Start	Alert Pour  Tétanos -->
+
+		jQuery(function() {
+		getField('raideur_musculaire_toast.value').click(function() {
+		if(getValue('raideur_musculaire_toast.value') != null &amp;&amp; getValue('id38.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Tétanos ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('id38.value').click(function() {
+		if(getValue('id38.value') != null &amp;&amp; getValue('raideur_musculaire_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Tétanos ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Tétanos-->
+
+
+		<!--	Start	Alert Pour  Rage Humaine -->
+
+		jQuery(function() {
+		getField('fievre_1semaine_toast.value').click(function() {
+		if(getValue('fievre_1semaine_toast.value') != null &amp;&amp; getValue('histoire_fievre_48h_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Rage Humaine ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('histoire_fievre_48h_toast.value').click(function() {
+		if(getValue('histoire_fievre_48h_toast.value') != null &amp;&amp; getValue('fievre_1semaine_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Rage Humaine ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Rage Humaine-->
+
+
+		<!--	Start	Alert Pour  Dengue -->
+
+		jQuery(function() {
+		getField('myalgie_toast.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null  &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('arthralgie_toast.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null  &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('arthralgie_toast.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('eruption_cutanees_toast.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null  &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('courbatures_toast.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('douleurs_abdominales_toast.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('id25.value').click(function() {
+		if(getValue('myalgie_toast.value') != null &amp;&amp; getValue('arthralgie_toast.value') != null &amp;&amp; getValue('eruption_cutanees_toast.value') != null  &amp;&amp; getValue('courbatures_toast.value') != null &amp;&amp; getValue('douleurs_abdominales_toast.value') != null  &amp;&amp; getValue('id25.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Dengue ...")
+		}
+		});
+		});
+
+
+		<!--	End	Alert Pour  Dengue-->
+
+
+
+		<!--	Start	Alert Pour  Filariose -->
+
+		jQuery(function() {
+		getField('lesion_noiratre_toast.value').click(function() {
+		if(getValue('lesion_noiratre_toast.value') != null &amp;&amp; getValue('id44.value') != null || getValue('toux_plus2_semaine_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Filariose ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('id44.value').click(function() {
+		if(getValue('lesion_noiratre_toast.value') != null &amp;&amp; getValue('id44.value') != null || getValue('toux_plus2_semaine_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Filariose ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('toux_plus2_semaine_toast.value').click(function() {
+		if(getValue('lesion_noiratre_toast.value') != null &amp;&amp; getValue('id44.value') != null || getValue('toux_plus2_semaine_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Filariose ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Filariose-->
+
+
+
+		<!--	Start	Alert Pour  Syndrome Icterique Fébrile -->
+
+		jQuery(function() {
+		getField('fievre_38_toast.value').click(function() {
+		if(getValue('fievre_38_toast.value') != null &amp;&amp; getValue('ictere_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome Icterique Fébrile ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('ictere_toast.value').click(function() {
+		if(getValue('ictere_toast.value') != null &amp;&amp; getValue('fievre_38_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome Icterique Fébrile ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Syndrome Icterique Fébrile-->
+
+
+
+
+
+
+
+
+		<!--		&lt;!&ndash;	Start	Alert Pour  Peste&ndash;&gt;-->
+
+		<!--		jQuery(function() {-->
+		<!--		getField('fievre_apparition_toast.value').click(function() {-->
+		<!--		if((getValue('fievre_apparition_toast.value') != null &amp;&amp; getValue('frissons_toast.value') != null &amp;&amp; getValue('maux_tete_toast.value') != null &amp;&amp; getValue('malaise_grave_toast.value') != null &amp;&amp; getValue('prostration_toast.value') != null &amp;&amp; getValue('adenopathie_doul_toast.value') != null) || (getValue('hemoptysie_toast.value') != null &amp;&amp; getValue('douleurs_thoraciques_toast.value') != null &amp;&amp; getValue('dyspnee_toast.value') != null)){-->
+		<!--		$().toastmessage('showWarningToast', "Cas possible de Syndrome Diabètee ...")-->
+		<!--		}-->
+		<!--		});-->
+		<!--		});-->
+
+
+		<!--		&lt;!&ndash;	End	Alert Pour  Peste&ndash;&gt;-->
+
+
+
+		<!--	Start	Alert Pour  Diabète -->
+
+		jQuery(function() {
+		getField('polyurie_toast.value').click(function() {
+		if(getValue('polyurie_toast.value') != null &amp;&amp; getValue('polydipsie_toast.value') != null &amp;&amp; getValue('polyphagie_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome Diabètee ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('polydipsie_toast.value').click(function() {
+		if(getValue('polyurie_toast.value') != null &amp;&amp; getValue('polydipsie_toast.value') != null &amp;&amp; getValue('polyphagie_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome Diabètee ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('polyphagie_toast.value').click(function() {
+		if(getValue('polyurie_toast.value') != null &amp;&amp; getValue('polydipsie_toast.value') != null &amp;&amp; getValue('polyphagie_toast.value') != null){
+		$().toastmessage('showWarningToast', "Cas possible de Syndrome Diabètee ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Diabète-->
+
+		<!--	Start	Alert Pour  IRA-->
+		<!--
+                jQuery(function() {
+                getField('fievre_38_toast.value').click(function() {
+                if(getValue('fievre_38_toast.value') != null &amp;&amp; (getValue('rhinite_toast.value') != null || getValue('toux_toast.value') != null || getValue('douleur_gorge_toast.value') != null || getValue('dyspnee_toast.value') != null)){
+                $().toastmessage('showWarningToast', "Cas possible de infection respiratoire aiguë ...")
+                }
+                });
+                });
+
+                jQuery(function() {
+                getField('rhinite_toast.value').click(function() {
+                if(getValue('fievre_38_toast.value') != null &amp;&amp; (getValue('rhinite_toast.value') != null || getValue('toux_toast.value') != null || getValue('douleur_gorge_toast.value') != null || getValue('dyspnee_toast.value') != null)){
+                $().toastmessage('showWarningToast', "Cas possible de infection respiratoire aiguë ...")
+                }
+                });
+                });
+
+                jQuery(function() {
+                getField('toux_toast.value').click(function() {
+                if(getValue('fievre_38_toast.value') != null &amp;&amp; (getValue('rhinite_toast.value') != null || getValue('toux_toast.value') != null || getValue('douleur_gorge_toast.value') != null || getValue('dyspnee_toast.value') != null)){
+                $().toastmessage('showWarningToast', "Cas possible de infection respiratoire aiguë ...")
+                }
+                });
+                });
+
+                jQuery(function() {
+                getField('douleur_gorge_toast.value').click(function() {
+                if(getValue('fievre_38_toast.value') != null &amp;&amp; (getValue('rhinite_toast.value') != null || getValue('toux_toast.value') != null || getValue('douleur_gorge_toast.value') != null || getValue('dyspnee_toast.value') != null)){
+                $().toastmessage('showWarningToast', "Cas possible de infection respiratoire aiguë ...")
+                }
+                });
+                });
+
+                jQuery(function() {
+                getField('dyspnee_toast.value').click(function() {
+                if(getValue('fievre_38_toast.value') != null &amp;&amp; (getValue('rhinite_toast.value') != null || getValue('toux_toast.value') != null || getValue('douleur_gorge_toast.value') != null || getValue('dyspnee_toast.value') != null)){
+                $().toastmessage('showWarningToast', "Cas possible de infection respiratoire aiguë ...")
+                }
+                });
+                }); -->
+
+		<!--	End	Alert Pour  IRA-->
+
+		<!--	Start	Alert Pour  Syndrome de fièvre hémorragique aigue-->
+		jQuery(function() {
+		getField('fievre_inf_3semaines_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+
+		jQuery(function() {
+		getField('alteration_etat_general_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('gingivorragie_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('ecchymoses_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('petechies_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('Epistaxis.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('hemoptysie_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		jQuery(function() {
+		getField('hematemese_toast.value').click(function() {
+		if(getValue('fievre_inf_3semaines_toast.value') != null &amp;&amp; getValue('alteration_etat_general_toast.value') != null  &amp;&amp; (getValue('gingivorragie_toast.value') != null || getValue('ecchymoses_toast.value') != null || getValue('petechies_toast.value') != null || getValue('Epistaxis.value') != null || getValue('hemoptysie_toast.value') != null || getValue('hematemese_toast.value') != null)){
+		$().toastmessage('showWarningToast', "Cas possible de fièvre hémorragique aigue ...")
+		}
+		});
+		});
+
+		<!--	End	Alert Pour  Syndrome de fièvre hémorragique aigue-->
+
+
+		<!-- Set location for consultation -->
+
+		jQuery(function() {
+		if (getValue('locationTypeValue.value') == '') {
+		setValue('locationTypeValue.value','Le site même');
+		}if (getValue('locationTypeValue.value') == '') {
+		setValue('locationTypeValue.value','Le site même');
+		}if ((getValue('locationTypeValue.value') == 'Point fixe ou satellite') || (getValue('locationTypeValue.value') == 'Clinique privée') || (getValue('locationTypeValue.value') == 'Maison privée') || (getValue('locationTypeValue.value') == 'Télémédecine')) {
+		jQuery('#locationValue').hide()
+		}
+
+		//jQuery('#locationType:not(:has(.required))').append('<span class="required">*</span>');
+		jQuery('#locationTypeValue').on( 'change', function() {
+		if (getValue('locationTypeValue.value') == 'Le site même') {
+		jQuery('#locationValue').show();
+		//jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+		} else if (getValue('locationTypeValue.value') == 'Site autre que celui du patient') {
+		jQuery('#locationValue').show();
+		//jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+		} else {
+		jQuery('#locationValue').hide()
+		}
+		});
+		});
+
+
+	</script>
+
+	<ifMode mode="ENTER">
+		<lookup complexExpression="
+				#set( $encounter = 0 )
+				#set( $encounter = $fn.latestEncounter('12f4d7c3-e047-4455-a607-47a40fe32460') )
+				#if( $encounter != 0 )
+
+				 &lt;script type=&quot;text/javascript&quot;>
+				 alert('Cette fiche, doit etre en un seul exemplaire');
+						var url = window.location.search;
+						var idurl=url.substring(url.lastIndexOf(&quot;=&quot;)+1);
+							var cheminComplet = document.location.href;
+							var longueur = window.location.protocol + &quot;//&quot; + window.location.host + &quot;/&quot;;
+							var souschaine=cheminComplet.substring(longueur.length,cheminComplet.indexOf(&quot;/&quot;,longueur.length));
+							window.location = window.location.protocol + &quot;//&quot; + window.location.host + &quot;/&quot;+ souschaine +&quot;/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=$encounter.patient.uuid&amp;formUuid=$encounter.form.uuid&amp;encounterId=$encounter.uuid&quot;;
+				&lt;/script>
+
+			#end
+		"/>
+
+	</ifMode>
+	<div id="contenerGeneral">
+		<div id="dateVisite">
+			<b align="center" id="sauvegarde">
+				<center>Hospitalisation Pédiatrique</center>
+			</b>
+			<br/>
+			<table>
+				<tr>
+					<td>Date visite:</td>
+					<td>
+						<encounterDate default="today" />
+						<br />
+					</td>
+					<td>
+						<h4 style="color: #d66f08"><i class="icon-map-marker"></i>Lieu de consultation</h4>
+						<span style="" id="locationType">
+							<obs conceptId="CIEL:163529" answers="Le site même,Point fixe ou satellite,Clinique privée,Maison privée,Télémédecine,Site autre que celui du patient"
+								 id="locationTypeValue" default="Le site même"/>
+						</span>
+
+						<div style="" id="locationValue">
+							<encounterLocation default="SessionAttribute:emrContext.sessionLocationId" />
+						</div>
+					</td>
+					<td style="">
+						<submit submitClass="confirm right" submitCode="general.save" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!--	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>-->
+	<!--	<script src="multiselect-dropdown.js" ></script>-->
+</htmlform>
+

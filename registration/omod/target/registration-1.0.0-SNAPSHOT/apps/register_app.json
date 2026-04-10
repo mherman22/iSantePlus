@@ -1,0 +1,21 @@
+[
+  {
+    "id": "register",
+    "description": "Register a new patient",
+    "order": 11,
+    "config": {
+      "patientPageUrl": "registration/register.page?app=register"
+    },
+    "extensions": [
+      {
+        "id": "${project.parent.groupId}.${project.parent.artifactId}.activeVisitsHomepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Register a new patient",
+        "url": "registration/register.page?app=register",
+        "icon": "icon-user",
+        "requiredPrivilege": "App: register"
+      }
+    ]
+  }
+]

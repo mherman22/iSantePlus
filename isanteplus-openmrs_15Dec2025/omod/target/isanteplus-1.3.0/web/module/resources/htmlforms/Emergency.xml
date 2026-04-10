@@ -1,0 +1,1281 @@
+<htmlform formUuid="1f573abc-b010-4953-90d2-838514126154"
+	formName="Fiche des Urgences" formVersion="1.0"
+	formEncounterType="afb0fc27-c02b-4958-9984-040ee3422f3a"
+	formDescription="Saisie urgence">
+	<style>
+		.section {
+		border: 1px solid $headerColor;
+		padding: 1px;
+		text-align: left;
+		margin-bottom: 1em;
+		}
+		.section_b {
+		background-color: #2F4F4F;
+		color:#FFFFFF;
+		padding: 2px;
+		text-align: center;
+		margin-bottom: 1em;
+		}
+		.sectionHeader {
+		background-color: $headerColor;
+		color: $fontOnHeaderColor;
+		display: block;
+		padding: 1px;
+		font-weight: bold;
+		}
+		.lienvisible#first{display: block}
+		.toggle-button{
+		height:auto; background:#132959; border:1px solid #FFFFFF;
+		color:#FFFAF4;
+		width:100%";
+		}
+		.contener
+		{
+		width:100%;
+		height:100%;
+		border:1px solid;
+		margin:0px;
+		padding:0px;
+		background:#87CEEB; border:1px solid #FFFFFF;
+		}
+		.hide{
+		margin:0px;
+		padding:0px;
+		}
+		a:link
+		{
+		text-decoration:none;
+		}
+		table.baseline-aligned td {
+		vertical-align: baseline;
+		}
+		#sauvegarde
+		{
+		background:#c1e5f1;
+		position:relative;
+		bottom:0px;
+		width:100%;
+		margin:0px;
+		padding-top:0px;
+		padding-bottom:5px;
+		padding-left:0px;
+		padding-right:0px;
+		height:50px;
+		}
+		#dateVisite{
+		background:#c1e5f1;
+		top:0px;
+		width:100%;
+		}
+		#scroll{
+		width: 99%;
+		margin-right:1%;
+		margin-left:0px;
+		margin-bottom:0px;
+		height:520px;
+		overflow: scroll;
+		border: 1px solid black;
+		text-align: justify;
+		padding: 5px;
+		}
+		#contenerGeneral
+		{
+		height:100%;
+		width:100%;
+		margin:0px;
+		padding:0px;
+		bottom:0px;
+        background: white;
+		}
+		form input[type="checkbox"], form input[type="radio"], .form
+		input[type="checkbox"], .form input[type="radio"] {
+		float: none;
+		display: inline-block;
+		}
+
+		form input[type="textarea"]{
+		border: 1px solid red;
+		}
+
+		form label, .form label {
+		display: inline-block;
+		}
+
+		.sansbordure
+		{
+		border: 0;
+		}
+
+		.error {
+		color: red;
+		background-color: white;
+		}
+
+
+		#divMotifCons1 {
+		width: 100%;
+		margin: 10px
+		padding: 10px;
+		}
+
+		<!--  START      MODIFICATION MACKENDY AND JEEJEN-->
+		.tableTdMotif1 {
+		width: 16.66%;
+		}
+
+		.tableTdImpresClin {
+		width: 25%;
+		}
+
+		<!--        END MODIFICATION MACKENDY AND JEEJEN-->
+
+		.clear {
+		float: right;
+		margin-top: -29px;
+		margin-right: 10px;
+		}
+
+		.icon-remove-sign:hover {
+		color: #aa007f;
+		}
+
+		<!--MODIFICATION SCHNEIDER-->
+
+		.display-flex {
+			display:flex;
+		}
+
+		.mr-5{
+			margin-right: 5px;
+		}
+
+		.mr-15{
+			margin-right: 15px;
+		}
+
+		.locationRightAlign {
+			margin-left: auto;
+			margin-right: 0px;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery( '.toggle-button' ).on( 'click', function() {
+		// À décommenter si tu veux masquer toutes les autres div
+		jQuery( '.togglable' ).not( this.getAttribute( 'data-target' ) ).hide( 'slow'
+		);
+
+		jQuery( this.getAttribute( 'data-target' ) ).toggle( 'slow' );
+		});
+		});
+	</script>
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery( '.titre' ).on( 'change', function() {
+		/*jQuery( this.getAttribute(
+		'ch-target' ) ).show();*/
+
+
+		var m =jQuery(this).find(".master").attr("id");
+		if(getValue(''+m+'.value')&gt;0 || getValue(''+m+'.value') != null)
+		{
+		jQuery( this.getAttribute( 'ch-target' ) ).show();
+		}
+		else{
+		if(getValue(''+m+'.value') == null){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+
+		}
+		if(getValue(''+m+'.value') == ''){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+		});
+
+		});
+	</script>
+
+	<script type="text/javascript">
+
+		/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+		var calculateBmi = function(wt, ht) {
+		var bmi = null
+		if (wt &amp;&amp; ht) {
+		bmi = wt / ((ht/100) * (ht/100));
+		}
+		return bmi ;
+		}
+		// functions to handle updating the bmi when in ENTER mode
+		var updateBmi = function() {
+		var wt = htmlForm.getValueIfLegal('weight.value');
+		var ht = htmlForm.getValueIfLegal('height.value');
+
+		var bmi = calculateBmi(wt, ht);
+
+		if (bmi == null || isNaN(bmi)) {
+		jQuery('#calculated-bmi-wrapper').hide();
+		} else {
+		jQuery('#no-calculated-bmi').hide();
+		jQuery('#calculated-bmi-wrapper').show();
+		jQuery('#calculated-bmi').html(bmi.toFixed(1));
+		jQuery('#hidden-calculated-bmi').val(bmi.toFixed(1));
+		}
+		};
+
+		jQuery(function() {
+		jQuery(".hide").hide();
+		jQuery(".lienvisible").click(function() {
+		// on recupere le lien dans le DOM
+		var $link = jQuery(this);
+
+		// on recupere la balise hide suivant le lien dans le DOM
+		var $hide = $link.next('.hide');
+		if(jQuery('.hide').slideUp('slow'))
+		{
+		$hide.stop().slideDown('slow');
+		//$('.hide').css('display', 'none');
+
+		}
+		else
+		{
+		if($hide.stop().slideDown('slow'))
+		{
+		jQuery('.hide').slideUp('slow');
+		//jQuery('.hide').show() ;
+		}
+		}
+
+		// on remonte toutes les balises hide
+		//$j('.hide').slideUp('slow');
+		// on stoppe l'animation (slideUp de la ligne precedente)
+		// on desend notre div
+		//$hide.stop().slideDown('slow');
+		});
+
+		/*)))))))))))))))))))))*/
+		jQuery('htmlform').each(function(index, form) {
+		jQuery(form).find('#calculated-bmi-continue').hide();
+		jQuery(form).find('#no-calculated-bmi').hide();
+
+		var wt = jQuery(form).find('#weight').find('.value').text();
+		var ht = jQuery(form).find('#height').find('.value').text();
+
+		var bmi = calculateBmi(wt, ht);
+
+		if (bmi != null &amp;&amp; !isNaN(bmi)) {
+		jQuery(form).find('#calculated-bmi-wrapper').show();
+		jQuery(form).find('#calculated-bmi').html(bmi.toFixed(1));
+		jQuery(form).find('#calculated-bmi-view').html(bmi.toFixed(1));
+		jQuery(form).find('#hidden-calculated-bmi').val(bmi.toFixed(1));
+		}
+		});
+
+		jQuery('#calculated-bmi-wrapper').each(function(){
+		jQuery('#calculated-bmi-wrapper').hide();
+
+		getField('weight.value').change(updateBmi)
+		getField('height.value').change(updateBmi);
+
+		updateBmi();
+		});
+
+		});
+	</script>
+
+	<script type="text/javascript">
+		jQuery(function() {
+		jQuery('.titre').each(function() {
+		var m =jQuery(this).find(".master").attr("id");
+		if(getValue(''+m+'.value')&gt;0)
+		{
+		jQuery( this.getAttribute( 'ch-target' ) ).show();
+		}
+		else{
+		if(getValue(''+m+'.value') == null){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+		}
+		if(getValue(''+m+'.value') == ''){
+		jQuery( this.getAttribute( 'ch-target' ) ).hide();
+		}
+		});
+
+		});
+
+	</script>
+	<script type="text/javascript">
+		if(jQuery){
+		jQuery(document).ready(function() {
+		//if ( jQuery.browser.msie ) {
+		jQuery(":checkbox").click(function() {
+		jQuery(this).change();
+		});
+		//}
+		jQuery(".checkboxGroup").each(function() {
+		var group = jQuery(this);
+		var uncheckAll = function() {
+		group.find("input[type$='checkbox']").attr("checked",false);
+		group.find("input[type$='checkbox']").change();
+		}
+
+
+		//Debut checkbox examen Clinique
+		group.find("#normal1").find("input[type$='checkbox']").click(function(){
+		group.find("#anormal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#anormal1").find("input[type$='checkbox']").change();
+		group.find("#pasconduit1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#pasconduit1").find("input[type$='checkbox']").change();
+		}
+		);
+		group.find("#anormal1").find("input[type$='checkbox']").click(function(){
+		group.find("#normal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#normal1").find("input[type$='checkbox']").change();
+		group.find("#pasconduit1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#pasconduit1").find("input[type$='checkbox']").change();
+		}
+		);
+		group.find("#pasconduit1").find("input[type$='checkbox']").click(function(){
+		group.find("#normal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#normal1").find("input[type$='checkbox']").change();
+		group.find("#anormal1").find("input[type$='checkbox']").attr("checked",false);
+		group.find("#anormal1").find("input[type$='checkbox']").change();
+		}
+		);
+
+
+		group.find("#trigger").find("input[type$='checkbox']").click(function(){
+		var res = group.find(".titre").attr("id");
+		var idm = group.find(".master").attr("id");
+
+		if(getValue(''+idm+'.value') == null || getValue(''+idm+'.value') == '')
+		{
+		group.find("#confirmation").find("input[type$='radio']").attr("checked",false);
+		group.find("#confirmation").find("input[type$='radio']").change();
+		group.find("#primary").find("input[type$='radio']").attr("checked",false);
+		group.find("#primary").find("input[type$='radio']").change();
+
+		jQuery( group.find(".cacher") ).hide();
+		var idcacher = '#' + group.find(".cacher").attr("id") + '';
+		//alert(idcacher);
+		jQuery(''+idcacher+'').hide();
+		}
+		});
+
+		group.find("#trigger").find("input[type$='text']").change(function(){
+		var res = group.find(".titre").attr("id");
+		var idm = group.find(".master").attr("id");
+
+		if(getValue(''+idm+'.value') == null || getValue(''+idm+'.value') == '')
+		{
+		group.find("#confirmation").find("input[type$='radio']").attr("checked",false);
+		group.find("#confirmation").find("input[type$='radio']").change();
+		group.find("#primary").find("input[type$='radio']").attr("checked",false);
+		group.find("#primarygetF").find("input[type$='radio']").change();
+		jQuery( group.find(".cacher") ).hide();
+		var idcacher = '#' + group.find(".cacher").attr("id") + '';
+		jQuery(''+idcacher+'').hide();
+		}
+		});
+
+		});
+		});
+		}
+
+	</script>
+
+	<script type="text/javascript">
+		if(jQuery) {
+		jQuery(document).ready(function() {
+		var gp = jQuery(this);
+
+		gp.find("#remaq").find("textarea").css("width", "120px");
+		gp.find("#remaq").find("textarea").change();
+
+		//if ( jQuery.browser.msie ) {
+		jQuery(":checkbox").click(function() {
+		jQuery(this).change();
+		});
+		//}
+
+		jQuery(".checkboxGeneral").each(function() {
+		var group = jQuery(this);
+		var uncheckAll = function() {
+		group.find("input[type$='checkbox']").attr("checked",false);
+		group.find("input[type$='checkbox']").change();
+		}
+
+		// group.find("#id58").css("color", "red");
+
+		group.find("#id58").click(function() {
+
+		var idm = group.find(".master").attr("id");
+
+		if(getValue(''+idm+'.value') == null || getValue(''+idm+'.value') == '') {
+		} else {
+		var ddd = document.getElementById("adenopathie");
+		var ddd1 = document.getElementById("oedeme");
+		var ddd2 = document.getElementById("douleur");
+
+		if(getValue(''+idm+'.value') == 135488) {
+		group.find("#adenopathie").find("input[type$='checkbox']").attr("checked", true);
+		group.find("#adenopathie").find("input[type$='checkbox']").attr("disabled", true);
+		group.find("#adenopathie").find("input[type$='checkbox']").change();
+		ddd.style.display = "initial";
+		} if(getValue(''+idm+'.value') == 460) {
+		group.find("#oedeme").find("input[type$='checkbox']").attr("checked",true);
+		group.find("#oedeme").find("input[type$='checkbox']").attr("disabled",true);
+		group.find("#oedeme").find("input[type$='checkbox']").change();
+		ddd1.style.display = "initial";
+		} if(getValue(''+idm+'.value') == 151) {
+		group.find("#douleur").find("input[type$='checkbox']").attr("checked",true);
+		group.find("#douleur").find("input[type$='checkbox']").attr("disabled",true);
+		group.find("#douleur").find("input[type$='checkbox']").change();
+		ddd2.style.display = "initial";
+		}
+		}
+		});
+		});
+		});
+		}
+	</script>
+
+	<script type="text/javascript">
+		beforeSubmit.push(function() {
+
+		if ((getValue('asthme1.value') != null) ||
+		(getValue('asthme2.value') != null) ||
+		(getValue('asthme3.value') != null)) {
+		setValue('asthme.value', '140234');
+		}
+
+		if ((getValue('cancer1.value') != null) ||
+		(getValue('cancer2.value') != null) ||
+		(getValue('cancer3.value') != null)) {
+		setValue('cancer.value', '151521');
+		}
+
+		if ((getValue('cardiopathie1.value') != null) ||
+		(getValue('cardiopathie2.value') != null) ||
+		(getValue('cardiopathie3.value') != null)) {
+		setValue('cardiopathie.value', '163114');
+		}
+
+		if ((getValue('diabete1.value') != null) ||
+		(getValue('diabete2.value') != null) ||
+		(getValue('diabete3.value') != null)) {
+		setValue('diabete.value', '140228');
+		}
+
+		if ((getValue('epilepsie1.value') != null) ||
+		(getValue('epilepsie2.value') != null) ||
+		(getValue('epilepsie3.value') != null)) {
+		setValue('epilepsie.value', '152450');
+		}
+
+		if ((getValue('hta1.value') != null) ||
+		(getValue('hta2.value') != null) ||
+		(getValue('hta3.value') != null)) {
+		setValue('hta.value', '151927');
+		}
+
+		if ((getValue('tuberculose1.value') != null) ||
+		(getValue('tuberculose2.value') != null) ||
+		(getValue('tuberculose3.value') != null)) {
+		setValue('tuberculose.value', '152460');
+		}
+
+		if ((getValue('mdr1.value') != null) ||
+		(getValue('mdr2.value') != null) ||
+		(getValue('mdr3.value') != null)) {
+		setValue('mdr.value', '164102');
+		}
+
+
+		var labelsList = "\n";
+		var valid = true;
+
+		jQuery('.field-error').each(function() {
+		if (!jQuery(this).is(':empty')){
+		var parent = jQuery(this).parent();
+		var label = parent[0].firstChild.data;
+
+		if (label !== undefined) {
+		labelsList += label + "\n";
+		}
+		valid = false;
+		}
+		});
+
+		if (!valid) {
+		alert("La sauvegarde a échoué à cause d'une erreur dans la fiche, veuillez corriger les champs avec erreur" +
+		labelsList);
+		}
+		return valid;
+
+		});
+	</script>
+
+	<script type="text/javascript">
+		<!-- Set location for consultation -->
+
+		jQuery(function() {
+		if (getValue('locationTypeValue.value') == '') {
+		setValue('locationTypeValue.value','Le site même');
+		}if (getValue('locationTypeValue.value') == '') {
+		setValue('locationTypeValue.value','Le site même');
+		}if ((getValue('locationTypeValue.value') == 'Point fixe ou satellite') || (getValue('locationTypeValue.value') == 'Clinique privée') || (getValue('locationTypeValue.value') == 'Maison privée') || (getValue('locationTypeValue.value') == 'Télémédecine')) {
+		jQuery('#locationValue').hide()
+		}
+
+		//jQuery('#locationType:not(:has(.required))').append('<span class="required">*</span>');
+		jQuery('#locationTypeValue').on( 'change', function() {
+		if (getValue('locationTypeValue.value') == 'Le site même') {
+		jQuery('#locationValue').show();
+		//jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+		} else if (getValue('locationTypeValue.value') == 'Site autre que celui du patient') {
+		jQuery('#locationValue').show();
+		//jQuery('#locationValue:not(:has(.required))').append('<span class="required">*</span>');
+		} else {
+		jQuery('#locationValue').hide()
+		}
+		});
+		});
+	</script>
+
+	<ifMode mode="ENTER">
+		<lookup complexExpression="
+				#set( $encounter = 0 )
+				#set( $encounter = $fn.latestEncounter('12f4d7c3-e047-4455-a607-47a40fe32460') )
+				#if( $encounter != 0 )
+
+				 &lt;script type=&quot;text/javascript&quot;>
+				 alert('Cette fiche, doit etre en un seul exemplaire');
+						var url = window.location.search;
+						var idurl=url.substring(url.lastIndexOf(&quot;=&quot;)+1);
+							var cheminComplet = document.location.href;
+							var longueur = window.location.protocol + &quot;//&quot; + window.location.host + &quot;/&quot;;
+							var souschaine=cheminComplet.substring(longueur.length,cheminComplet.indexOf(&quot;/&quot;,longueur.length));
+							window.location = window.location.protocol + &quot;//&quot; + window.location.host + &quot;/&quot;+ souschaine +&quot;/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=$encounter.patient.uuid&amp;formUuid=$encounter.form.uuid&amp;encounterId=$encounter.uuid&quot;;
+				&lt;/script>
+
+			#end
+		"/>
+	</ifMode>
+	<div id="contenerGeneral">
+		<div id="dateVisite">
+			<b align="center" id="sauvegarde">
+				<br/>
+					<center >FICHE D'ÉVALUATION DU MEDECIN URGENCES</center>
+				<br/>
+			</b>
+			<table>
+				<tr>
+					<td class="display-flex">
+						<div class="display-flex mr-15">
+							<p style="margin-top: 0.8rem; margin-right: 5px;">Date visite:</p>
+							<encounterDate default="today" />
+						</div>
+						
+						<div class="display-flex locationRightAlign">
+							<h5 style="color: #d66f08; margin-right: 5px;"><i class="icon-map-marker"></i>Lieu de consultation</h5>
+							<span style="" id="locationType" class="mr-5">
+								<obs 
+									id="locationTypeValue" 
+									conceptId="CIEL:163529" 
+									answers="Le site même,Point fixe ou satellite,Clinique privée,Maison privée,Télémédecine,Site autre que celui du patient"
+									default="Le site même"
+								/>
+							</span>
+
+							<span style="" id="locationValue" class="mr-5">
+								<encounterLocation default="SessionAttribute:emrContext.sessionLocationId" />
+							</span>
+							<span>
+								<submit submitClass="confirm right" submitCode="general.save"/>
+							</span>	
+						</div>				
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="" style="height: 90%;">
+			<!-- <div>
+				<a href="#read">
+					<div href="#read" class="toggle-button" data-target="#div4">SIGNES VITAUX
+					</div>
+				</a>
+				<div id="div4" class="togglable" style="display: none;">
+					<table width="100%">
+						<tr>
+							<td>
+								<obs conceptId="CIEL:5089" id="weight" labelText="Poids"/>
+								kg
+							</td>
+							<td>
+								<obs conceptId="CIEL:5090" id="height" labelText="Taille"/>
+								cm
+							</td>
+							<td >
+								<obs conceptId="CIEL:5085" labelText="TA"/>
+								<obs conceptId="CIEL:5086" labelText=" / "/>
+								mmHg
+							</td>
+							<td>
+								<obs conceptId="CIEL:5088" labelText="Temp"/>
+								°C
+							</td>
+							<td>
+								<obs conceptId="CIEL:5087" labelText="Pouls"/>
+								bpm
+							</td>
+							<td>
+								<obs conceptId="CIEL:5242" labelText="FR"/>
+								rpm
+							</td>
+							<td>
+								<includeIf
+										velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
+									<span id="calculated-bmi-wrapper">
+										IMC:
+										<span id='calculated-bmi'></span>
+										Pds kg/T² m
+									</span>
+								</includeIf>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="9">
+								Nom et Prénom du Prestataire :
+								<obs conceptId="CIEL:1473"/>
+							</td>
+							<br/>
+						</tr>
+					</table>
+				</div>
+			</div> -->
+
+
+			<div>
+				<a href="#read">
+					<div class="toggle-button" data-target="#div8">EVALUATION</div>
+				</a>
+				<div id="div8" class="togglable" style="display: none;">
+					<br/>
+					<table class="tg">
+						<thead>
+							<tr>
+								<th colspan="5"> A (Voies aériennes)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:1115"
+											answerLabel="Normale" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:148787"
+											answerLabel="Oedème de Quincke (Angio&#339;dème)" id=""/>
+								</td>
+
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:150799"
+											answerLabel="Changement de la voix" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:116543"
+											answerLabel="Brûlure" id=""/>
+								</td>
+							</tr>
+							<tr>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="e854df80-f93c-46a3-ae41-13256c25636d"
+											answerLabel="Obstruction par le sang" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="dee9ee06-6955-43b1-8ee6-9401346836b7"
+											answerLabel="Obstruction par la langue" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="b26c596b-3e7a-406c-b741-04a3ed1ec10f"
+											answerLabel="Obstruction par sécrétion" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="803d15f8-84ea-45e4-bee5-c1f823abc80f"
+											answerLabel="Obstruction par vomi" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="ddfccb1a-4013-45cf-bf76-323b7b5db647"
+											answerLabel="Obstruction par corps étranger" id=""/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- <table class="tg">
+						<thead>
+							<tr>
+								<th colspan="5"> A (Voies aériennes)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:1115"
+											answerLabel="Normale" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:148787"
+											answerLabel="Oedème de Quincke" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:136119"
+											answerLabel="Stridor laryngé" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:150799"
+											answerLabel="Voix anormale" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:116543"
+											answerLabel="Brûlure" id=""/>
+								</td>
+							</tr>
+							<tr>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="e854df80-f93c-46a3-ae41-13256c25636d"
+											answerLabel="Obstruction par le sang" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="dee9ee06-6955-43b1-8ee6-9401346836b7"
+											answerLabel="Obstruction par la langue" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="b26c596b-3e7a-406c-b741-04a3ed1ec10f"
+											answerLabel="Obstruction par sécrétion" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="803d15f8-84ea-45e4-bee5-c1f823abc80f"
+											answerLabel="Obstruction par vomi" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="ddfccb1a-4013-45cf-bf76-323b7b5db647"
+											answerLabel="Obstruction par corps étranger" id=""/>
+								</td>
+							</tr>
+						</tbody>
+					</table> -->
+
+					<br/>
+
+					<table class="tg">
+						<thead>
+							<tr>
+								<th colspan="6"> B (Respiration)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="CIEL:1115"
+											answerLabel="Normale" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:136119"
+											answerLabel="Stridor" id=""/>
+								</td>
+								<td><obs conceptId="c049104e-00cb-48b6-a6de-e0c319c3af96" answerConceptId="CIEL:136119"
+											answerLabel="Stridor" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="ff7b3e8e-c751-4c7c-8f65-9b8c28b79026"
+											answerLabel="Respiration superficielle" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="ece811d5-13c5-4b19-8bb1-eb57fcbab846"
+											answerLabel="Signes de lutte respiratoire" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="b5cd1d93-f010-4df7-8350-0c257fcfa40f"
+											answerLabel="Respiration paradoxale" id=""/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<obsgroup groupingConceptId="e6229643-e9e4-473f-a5a4-1c4b72f3b771">
+										<span class="titre" ch-target="#cacher101" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id101"
+													answerConceptId="CIEL:1115"
+													answerLabel="Normale"/>
+										</span>
+										<br/>
+										<span id="cacher101" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="f7bfde89-1d35-4d6c-8d46-f46e4164078b">
+										<span class="titre" ch-target="#cacher102" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id102"
+													answerConceptId="bb319945-a2cd-43fb-a310-4588077974e0"
+													answerLabel="Râles crépitants"/>
+										</span>
+										<br/>
+										<span id="cacher102" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="234ae010-288a-46e4-a055-e490fb32f8f6">
+										<span class="titre" ch-target="#cacher103" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id103"
+													answerConceptId="bb319945-a2cd-43fb-a310-4588077974e0"
+													answerLabel="Râles sibilants"/>
+										</span>
+										<br/>
+										<span id="cacher103" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="cf08c14a-250e-432b-bb1d-91576784f987">
+										<span class="titre" ch-target="#cacher104" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id104"
+													answerConceptId="a07e2d38-bd31-4e12-8ed3-3d9556bf3ec0"
+													answerLabel="Râles ronflants"/>
+										</span>
+										<br/>
+										<span id="cacher104" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="cf08c14a-250e-432b-bb1d-91576784f987">
+										<span class="titre" ch-target="#cacher105" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id105"
+													answerConceptId="d8d59000-c554-4974-b257-22bb214a9740"
+													answerLabel="Silence"/>
+										</span>
+										<br/>
+										<span id="cacher105" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="cf08c14a-250e-432b-bb1d-91576784f987">
+										<span class="titre" ch-target="#cacher105" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id105"
+													answerConceptId="d8d59000-c554-4974-b257-22bb214a9740"
+													answerLabel="Wheezing"/><!--A changer de concept-->
+										</span>
+									</obsgroup>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- <table class="tg">
+						<thead>
+							<tr>
+								<th colspan="5"> B (Respiration)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="CIEL:1115"
+											answerLabel="Normale" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="5b88473c-05d0-48eb-88e5-7f28c08324c1"
+											answerLabel="Auscultation" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="ff7b3e8e-c751-4c7c-8f65-9b8c28b79026"
+											answerLabel="Respiration superficielle" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="ece811d5-13c5-4b19-8bb1-eb57fcbab846"
+											answerLabel="Signes de lutte respiratoire" id=""/>
+								</td>
+								<td><obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" answerConceptId="b5cd1d93-f010-4df7-8350-0c257fcfa40f"
+											answerLabel="Respiration paradoxale" id=""/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<obsgroup groupingConceptId="e6229643-e9e4-473f-a5a4-1c4b72f3b771">
+										<span class="titre" ch-target="#cacher101" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id101"
+													answerConceptId="CIEL:1115"
+													answerLabel="Normale"/>
+										</span>
+										<br/>
+										<span id="cacher101" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="f7bfde89-1d35-4d6c-8d46-f46e4164078b">
+										<span class="titre" ch-target="#cacher102" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id102"
+													answerConceptId="bb319945-a2cd-43fb-a310-4588077974e0"
+													answerLabel="Râles crépitants"/>
+										</span>
+										<br/>
+										<span id="cacher102" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="234ae010-288a-46e4-a055-e490fb32f8f6">
+										<span class="titre" ch-target="#cacher103" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id103"
+													answerConceptId="bb319945-a2cd-43fb-a310-4588077974e0"
+													answerLabel="Râles sibilants"/>
+										</span>
+										<br/>
+										<span id="cacher103" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="cf08c14a-250e-432b-bb1d-91576784f987">
+										<span class="titre" ch-target="#cacher104" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id104"
+													answerConceptId="a07e2d38-bd31-4e12-8ed3-3d9556bf3ec0"
+													answerLabel="Râles ronflants"/>
+										</span>
+										<br/>
+										<span id="cacher104" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+								<td>
+									<obsgroup groupingConceptId="cf08c14a-250e-432b-bb1d-91576784f987">
+										<span class="titre" ch-target="#cacher105" id="trigger">
+											<obs conceptId="4bb9932a-9112-4147-8085-a035c2130158" class="master" id="id105"
+													answerConceptId="d8d59000-c554-4974-b257-22bb214a9740"
+													answerLabel="Silence"/>
+										</span>
+										<br/>
+										<span id="cacher105" class="cacher" style="display:none">
+											<span id="confirmation">
+												<obs conceptId="CIEL:159394"
+														answerConceptIds="CIEL:5141,CIEL:5139"
+														answerLabels="Droit,Gauche" style="radio"/>
+											</span>
+										</span>
+									</obsgroup>
+								</td>
+							</tr>
+						</tbody>
+					</table> -->
+
+					<br/>
+
+					<table class="tg">
+						<thead>
+							<tr>
+								<th colspan="5"> C (Circulation)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>Peau : </strong></td>
+								<td>
+									<obs conceptId="df3043eb-bc03-4e90-b7a4-2032e3acf23f"
+											answerConceptIds="a86f5127-9474-4148-b077-1bb874b99ccf,c2b09231-65cb-4d6f-a389-1ecc6ecdaff7"
+											answerLabels="Pâle,cyanosée" style="radio"/>
+								</td>
+								<td>
+									<obs conceptId="df3043eb-bc03-4e90-b7a4-2032e3acf23f"
+											answerConceptIds="CIEL:163385,CIEL:163384"
+											answerLabels="Froide,Chaude" style="radio"/>
+								</td>
+								<td>
+									<obs conceptId="df3043eb-bc03-4e90-b7a4-2032e3acf23f"
+											answerConceptIds="ae5a2d09-a447-4d64-91b0-8a0a74c737a6,CIEL:141692"
+											answerLabels="Humide,Sèche" style="radio"/>
+								</td>
+								<td>TRC :
+									<obs conceptId="df3043eb-bc03-4e90-b7a4-2032e3acf23f"
+											answerConceptIds="46441ee2-a5fa-4b34-96a6-ca7f3e9c3fea,0776af95-8bd1-43be-913b-1c9fad4dae2c"
+											answerLabels="TRC ≤ 2 secondes,TRC > 2 secondes" style="radio"/>
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Pouls : </strong></td>
+								<td colspan="5">
+									<obs conceptId="aa39b623-11ec-42dd-8df4-ffebaa8cffe5"
+											answerConceptIds="CIEL:1115,CIEL:163382,9575c999-bbd2-4552-b375-0f2cfd7397b0,dbd92ae6-b756-49fe-813f-6b2d25852520"
+											answerLabels="Normaux,Faibles,Bondissants,Asymétriques" style="radio"/>
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Distension Jugulaire : </strong></td>
+								<td colspan="5">
+									<obs conceptId="17eae77e-541d-439f-aa3c-b2a6f63fcea4"
+											answerConceptIds="CIEL:1065,CIEL:1066"
+											answerLabels="Oui,Non" style="radio"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<br/>
+
+					<table class="tg">
+						<thead>
+							<tr>
+								<th colspan="5"> D (État neurologique)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>Taille pupille</strong></td>
+								<td><strong>Réactivité pupille</strong></td>
+								<td><strong>Mobilité des 4 membres</strong></td>
+							</tr>
+							<tr>
+								<td>
+									<obs conceptId="79b47d33-dbf7-4262-90c1-421353c740bf" labelText="Gauche" />
+									<obs conceptId="ee6e31be-7545-4f43-830c-2f0e10026f50" labelText="Droite" />
+									mm
+								</td>
+								<td>Gauche :
+									<obs conceptId="4c4cc8f7-7bc6-4eb3-b48d-a98b4339aebd"
+											answerConceptIds="CIEL:1065,CIEL:1066"
+											answerLabels="Oui,Non" style="radio"/><br/><br/><br/>
+									Droite :
+									<obs conceptId="05252fbc-df1e-40e4-aa4c-b27994c3ecac"
+											answerConceptIds="CIEL:1065,CIEL:1066"
+											answerLabels="Oui,Non" style="radio"/>
+								</td>
+								<td>
+									Mobilité des 4 membres :
+									<obs 
+										conceptId="05252fbc-df1e-40e4-aa4c-b27994c3ecac"
+											answerConceptIds="CIEL:1065,CIEL:1066"
+											answerLabels="Oui,Non" style="radio"
+									/><!--A changer de concept-->
+									<br/> 
+									<obs conceptId="CIEL:1284" class="master" id="id21"
+											answerConceptId="CIEL:142592"
+											answerLabel="Déficit, précisez:"
+											showCommentField="true" commentFieldLabel="" 
+									/><!--A changer de concept-->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<br/>
+
+					<table class="tg">
+						<thead>
+							<tr>
+								<th colspan="5"> E (Exposition / Contrôle de l’environnement)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<b>Générale</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Neuro-psych</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>ORL</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Cou</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Resp</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Cardio</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+								</td>
+								<td>
+									<b>Abdomen</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>GU</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Anus</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Lymph</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>MSK</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+									<b>Peau</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="2" /> <!--a remplacer-->
+									</obsgroup>
+								</td>	
+							</tr>
+						</tbody>
+					</table>
+
+					<br/>
+
+					
+				</div>
+			</div>
+
+			<div>
+				<a href="#read">
+					<div href="#read" class="toggle-button" data-target="#div10">CIAMPEDS</div>
+				</a>
+				<div id="div10" class="togglable" style="display: none;">
+					<table class="tg">
+						<tbody>
+							<tr>
+								<td>
+									<br/>
+									<b>C - Plainte principale</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<br/>
+									<b>I - Impression clinique</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<br/>
+									<b>A - Allergies</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<br/>
+									<b>M - Médicaments</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<br/>
+									<b>P - Antécédents</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<br/>
+									<b>E - Examen physique</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<br/>
+									<b>D - Données vitales</b>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+									<b>S - Situation sociale</b><br/>
+									<obsgroup groupingConceptId="2421bd25-726f-41be-953d-8173381b3ab0"><!--a remplacer-->
+										<obs conceptId="CIEL:161011" rows="3" /> <!--a remplacer-->
+									</obsgroup>
+								</td>	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div>
+				<a href="#read">
+					<div class="toggle-button" data-target="#div11">IMPRESSIONS
+						CLINIQUES / DIAGNOSTIQUES</div>
+				</a>
+				<div id="div11" class="togglable" style="display: none;">
+					<div>
+						<div id="data-collection">
+							<encounterDiagnoses required="false" selectedDiagnosesTarget="#encounter-diagnoses-target"/>
+							<br/>
+							<br/>
+							<br/>
+							<i>Remarque:</i>
+							<obs conceptId="CIEL:159395" rows="2" cols="90" />
+						</div>
+						<br/>
+						<i>* Notifiez le Ministère de la Santé pour le registre de
+							surveillance épidémiologique.</i>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<a href="#read">
+					<div href="#read" class="toggle-button" data-target="#div12">NOTES PRESTATAIRES</div>
+				</a>
+				<div id="div12" class="togglable" style="display: none;">
+					<div>
+						Évaluation :
+						<obs conceptId="CIEL:160632" rows="5" cols="80" id="remaq" />
+					</div>
+					<div>
+						<table class="tg">
+							<tbody>
+								<tr>
+								<td><strong>Plan : </strong></td>
+								<td colspan="5">
+									<obs conceptId="aa39b623-11ec-42dd-8df4-ffebaa8cffe5"
+											answerConceptIds="CIEL:1115,CIEL:163382,9575c999-bbd2-4552-b375-0f2cfd7397b0,dbd92ae6-b756-49fe-813f-6b2d25852520"
+											answerLabels="Poursuivre aux urgences,Hospitalisation,Soin intensifs,Transfert externe" style="radio"/> <!--a remplacer--> 
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="sauvegarde">
+			<center>
+				<span style="">
+					<submit submitClass="confirm right" submitCode="general.save"/>
+				</span>
+
+				<br/>
+				Fiche des urgences
+			</center>
+		</div>
+	</div>
+	<!--	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>-->
+	<!--	<script src="multiselect-dropdown.js" ></script>-->
+</htmlform>
