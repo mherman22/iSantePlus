@@ -91,8 +91,6 @@ registrationcore        (depends on: mpi-client, xds-sender)
 outgoing-exception      (depends on: registrationcore, xds-sender)
 ```
 
-Modules not listed above depend only on OpenMRS core and upstream community modules.
-
 ## Adding a New Module
 
 ### From an existing external repository
