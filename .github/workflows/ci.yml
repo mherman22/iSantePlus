@@ -36,16 +36,16 @@ jobs:
               - 'bom/**'
               - 'lib/**'
             core:
-              - 'isanteplus/**'
-              - 'isanteplusreports/**'
+              - 'isanteplus-openmrs_15Dec2025/**'
+              - 'openmrs-isanteplusreports-module_13Janv2026/**'
               - 'registration/**'
               - 'bom/**'
             upstream:
-              - 'coreapps/**'
-              - 'htmlformentry/**'
-              - 'htmlformentryui/**'
-              - 'allergyui/**'
-              - 'referenceapplication/**'
+              - 'openmrs-coreapps-module/**'
+              - 'openmrs-htmlformentry-module/**'
+              - 'openmrs-htmlformentryui-module/**'
+              - 'openmrs-allergyui-module/**'
+              - 'openmrs-referenceapp-module/**'
               - 'bom/**'
             any:
               - 'bom/**'
@@ -55,10 +55,10 @@ jobs:
               - 'registrationcore/**'
               - 'outgoing-exception/**'
               - 'labintegration/**'
-              - 'isanteplus/**'
-              - 'isanteplusreports/**'
+              - 'isanteplus-openmrs_15Dec2025/**'
+              - 'openmrs-isanteplusreports-module_13Janv2026/**'
               - 'registration/**'
-              - 'htmlformentry/**'
+              - 'openmrs-htmlformentry-module/**'
 
   # Build Sedish HIE modules (the most critical path)
   build-sedish:
@@ -117,7 +117,7 @@ jobs:
       - name: Build iSantePlus core modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,isanteplus,isanteplusreports,registration
+          -pl bom,isanteplus-openmrs_15Dec2025,openmrs-isanteplusreports-module_13Janv2026,registration
           -am
 
       - name: Upload core OMODs
@@ -126,8 +126,8 @@ jobs:
         with:
           name: core-omods
           path: |
-            isanteplus/omod/target/*.omod
-            isanteplusreports/omod/target/*.omod
+            isanteplus-openmrs_15Dec2025/omod/target/*.omod
+            openmrs-isanteplusreports-module_13Janv2026/omod/target/*.omod
             registration/omod/target/*.omod
           if-no-files-found: warn
 
@@ -149,7 +149,7 @@ jobs:
       - name: Build upstream fork modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,htmlformentry,allergyui,htmlformentryui,coreapps,referenceapplication
+          -pl bom,openmrs-htmlformentry-module,openmrs-allergyui-module,openmrs-htmlformentryui-module,openmrs-coreapps-module,openmrs-referenceapp-module
           -am
 
       - name: Upload upstream OMODs
@@ -158,11 +158,11 @@ jobs:
         with:
           name: upstream-omods
           path: |
-            coreapps/omod/target/*.omod
-            htmlformentry/omod/target/*.omod
-            htmlformentryui/omod/target/*.omod
-            allergyui/omod/target/*.omod
-            referenceapplication/omod/target/*.omod
+            openmrs-coreapps-module/omod/target/*.omod
+            openmrs-htmlformentry-module/omod/target/*.omod
+            openmrs-htmlformentryui-module/omod/target/*.omod
+            openmrs-allergyui-module/omod/target/*.omod
+            openmrs-referenceapp-module/omod/target/*.omod
           if-no-files-found: warn
 
   # Full reactor build on main (post-merge validation)

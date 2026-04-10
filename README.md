@@ -18,19 +18,19 @@ Central repository for all iSantePlus OpenMRS modules used in the Haiti Health I
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [isanteplus](isanteplus) | `isanteplus` | 1.3.0 | Core iSantePlus EMR module |
-| [isanteplusreports](isanteplusreports) | `isanteplusreports` | 1.1-SNAPSHOT | iSantePlus reporting |
+| [isanteplus-openmrs_15Dec2025](isanteplus-openmrs_15Dec2025) | `isanteplus` | 1.3.0 | Core iSantePlus EMR module |
+| [openmrs-isanteplusreports-module_13Janv2026](openmrs-isanteplusreports-module_13Janv2026) | `isanteplusreports` | 1.1-SNAPSHOT | iSantePlus reporting |
 | [registration](registration) | `registration` | 1.0.0-SNAPSHOT | Patient registration UI |
 
 ### OpenMRS Upstream Forks
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [coreapps](coreapps) | `coreapps` | 1.19.0-SNAPSHOT | Core application framework |
-| [htmlformentry](htmlformentry) | `htmlformentry` | 3.9.2 | HTML form entry engine |
-| [htmlformentryui](htmlformentryui) | `htmlformentryui` | 1.6.3 | HTML form entry UI widgets |
-| [allergyui](allergyui) | `allergyui` | 1.7.0 | Allergy management UI |
-| [referenceapplication](referenceapplication) | `referenceapplication` | 2.6.0 | Reference application framework |
+| [openmrs-coreapps-module](openmrs-coreapps-module) | `coreapps` | 1.19.0-SNAPSHOT | Core application framework |
+| [openmrs-htmlformentry-module](openmrs-htmlformentry-module) | `htmlformentry` | 3.9.2 | HTML form entry engine |
+| [openmrs-htmlformentryui-module](openmrs-htmlformentryui-module) | `htmlformentryui` | 1.6.3 | HTML form entry UI widgets |
+| [openmrs-allergyui-module](openmrs-allergyui-module) | `allergyui` | 1.7.0 | Allergy management UI |
+| [openmrs-referenceapp-module](openmrs-referenceapp-module) | `referenceapplication` | 2.6.0 | Reference application framework |
 
 ## Prerequisites
 
@@ -338,19 +338,19 @@ gh release download <tag> --pattern "*.omod"
 
 ```
 .github/workflows/     GitHub Actions CI/CD
-allergyui/             OpenMRS allergy UI (upstream fork)
+openmrs-allergyui-module/             OpenMRS allergy UI (upstream fork)
 bom/                   Bill of Materials (centralized version management)
-coreapps/              OpenMRS core apps (upstream fork)
-etl/                   ETL SQL scripts
-htmlformentry/         HTML form entry engine (upstream fork)
-htmlformentryui/       HTML form entry UI (upstream fork)
-isanteplus/            Core iSantePlus module
-isanteplusreports/     iSantePlus reports
+openmrs-coreapps-module/              OpenMRS core apps (upstream fork)
+etl_2.8.2/                   ETL SQL scripts
+openmrs-htmlformentry-module/         HTML form entry engine (upstream fork)
+openmrs-htmlformentryui-module/       HTML form entry UI (upstream fork)
+isanteplus-openmrs_15Dec2025/            Core iSantePlus module
+openmrs-isanteplusreports-module_13Janv2026/     iSantePlus reports
 labintegration/        Lab integration
 lib/maven-repo/        Vendored Maven dependencies (everest-core)
 mpi-client/            MPI client (OpenCR integration)
 outgoing-exception/    Outgoing message error handling
-referenceapplication/  Reference application (upstream fork)
+openmrs-referenceapp-module/  Reference application (upstream fork)
 registration/          Patient registration UI
 registrationcore/      Registration core (MPI import)
 xds-sender/            XDS.b document sender (SHR integration)

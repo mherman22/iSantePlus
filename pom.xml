@@ -23,10 +23,10 @@
         <module>xds-sender</module>
         <module>registrationcore</module>
         <module>outgoing-exception</module>
-        <module>htmlformentry</module>
+        <module>openmrs-htmlformentry-module</module>
         <module>registration</module>
-        <module>isanteplus</module>
-        <module>isanteplusreports</module>
+        <module>isanteplus-openmrs_15Dec2025</module>
+        <module>openmrs-isanteplusreports-module_13Janv2026</module>
     </modules>
 
     <!-- Shared repositories inherited by all modules when built from this reactor -->

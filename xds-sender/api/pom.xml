@@ -28,6 +28,13 @@
       <groupId>org.marc.everest</groupId>
       <artifactId>everest-core</artifactId>
     </dependency>
+    <!-- JAXB API — included in Java 8, removed in Java 11+ -->
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.1</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.marc.everest</groupId>
       <artifactId>everest-rmim-uv-cdar2</artifactId>
