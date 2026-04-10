@@ -274,28 +274,46 @@ The `lib/maven-repo/` directory contains `org.marc.everest` artifacts (v1.1.0) t
 
 The root `pom.xml` configures this directory as a local Maven repository so builds work without external authentication or access to defunct servers.
 
-## Getting an OMOD After Making Changes
+## Deploying OMODs to the Sedish HIE
 
-After modifying a module, build it and its dependencies:
+The Sedish HIE deployment ([charess-org/sedish](https://github.com/charess-org/sedish)) uses OMODs from `sedish/packages/emr-isanteplus/config/custom_modules/`. There are three ways to get OMODs from this repo.
 
+### Option 1: Download from GitHub Actions (no build needed)
+
+1. Go to the [Actions tab](../../actions)
+2. Click the latest successful **"Build, Test & Publish OMODs"** run
+3. Download the **omods** artifact (zip containing all OMODs)
+4. Extract and copy the needed OMODs:
+   ```bash
+   unzip omods.zip -d /tmp/omods
+   cp /tmp/omods/*.omod ../sedish/packages/emr-isanteplus/config/custom_modules/
+   ```
+
+### Option 2: Download from a release
+
+```bash
+gh release download <tag> --repo charess-org/iSantePlus --pattern "*.omod" \
+   --dir ../sedish/packages/emr-isanteplus/config/custom_modules/
+```
+
+### Option 3: Build locally and copy
+
+```bash
+mvn clean package -DskipTests
+cp openmrs-module-mpi-client/omod/target/*.omod ../sedish/packages/emr-isanteplus/config/custom_modules/
+cp openmrs-module-registrationcore/omod/target/*.omod ../sedish/packages/emr-isanteplus/config/custom_modules/
+cp openmrs-module-xds-sender/omod/target/*.omod ../sedish/packages/emr-isanteplus/config/custom_modules/
+# ... copy any other OMODs you need
+```
+
+To build a single module:
 ```bash
 mvn clean package -DskipTests -pl openmrs-module-registrationcore -am
 ```
 
-The `-am` flag ensures dependencies (labintegration, mpi-client, xds-sender) are built first. The OMOD is output to:
+### Deploying to the running Sedish HIE
 
-```
-openmrs-module-openmrs-module-registrationcore/omod/target/registrationcore-2.2.0.omod
-```
-
-To deploy it to the Sedish HIE, copy it to the custom modules directory:
-
-```bash
-cp openmrs-module-registrationcore/omod/target/registrationcore-2.2.0.omod \
-   ../sedish/packages/emr-isanteplus/config/custom_modules/
-```
-
-Then rebuild and redeploy the iSantePlus Docker image:
+After copying OMODs to custom_modules, rebuild and redeploy:
 
 ```bash
 cd ../sedish
@@ -303,8 +321,6 @@ docker build -t itechuw/docker-isanteplus-server:local-2 packages/emr-isanteplus
 docker service update --force isanteplus_isanteplus
 docker service update --force isanteplus_isanteplus2
 ```
-
-On CI, OMODs are uploaded as build artifacts after every push to `main` and attached to GitHub releases.
 
 ## CI/CD
 
