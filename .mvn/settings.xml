@@ -1,4 +1,18 @@
 <settings>
+    <!-- Mirror dead HTTP repos to the vendored local repo -->
+    <mirrors>
+        <mirror>
+            <id>marc-te-mirror</id>
+            <mirrorOf>marc-te,marc-te-main</mirrorOf>
+            <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+        </mirror>
+        <mirror>
+            <id>santesuite-mirror</id>
+            <mirrorOf>santesute-main,santesuite-main</mirrorOf>
+            <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+        </mirror>
+    </mirrors>
+
     <profiles>
         <profile>
             <id>openmrs-repos</id>
@@ -19,6 +33,11 @@
                     <id>openmrs-repo-thirdparty</id>
                     <name>OpenMRS Third Party Repository</name>
                     <url>https://mavenrepo.openmrs.org/thirdparty</url>
+                </repository>
+                <repository>
+                    <id>local-vendored</id>
+                    <name>Vendored dependencies (everest-core)</name>
+                    <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
                 </repository>
             </repositories>
         </profile>
