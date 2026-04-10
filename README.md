@@ -118,9 +118,50 @@ Modules not listed above depend only on OpenMRS core and upstream community modu
      </repository>
      ```
 
-3. **Align dependency versions** — if the module depends on other monorepo modules, update version properties to match the versions in this repo (check the table above).
+3. **Import the BOM** — if the module depends on other monorepo modules, add the BOM to its `<dependencyManagement>`:
 
-4. **Add to the root `pom.xml`** — insert a `<module>` entry in the correct build order (dependencies must be listed before dependents):
+   ```xml
+   <dependencyManagement>
+       <dependencies>
+           <dependency>
+               <groupId>org.openmrs.module</groupId>
+               <artifactId>isanteplus-bom</artifactId>
+               <version>1.0.0-SNAPSHOT</version>
+               <type>pom</type>
+               <scope>import</scope>
+           </dependency>
+       </dependencies>
+   </dependencyManagement>
+   ```
+
+   Then declare inter-module dependencies without version tags — the BOM provides them.
+
+4. **Add the module's version to the BOM** — in `bom/pom.xml`, add a property and entries for both `-api` and `-omod` artifacts:
+
+   ```xml
+   <properties>
+       <example.version>1.0.0-SNAPSHOT</example.version>
+   </properties>
+
+   <dependencyManagement>
+       <dependencies>
+           <dependency>
+               <groupId>org.openmrs.module</groupId>
+               <artifactId>example-api</artifactId>
+               <version>${example.version}</version>
+               <scope>provided</scope>
+           </dependency>
+           <dependency>
+               <groupId>org.openmrs.module</groupId>
+               <artifactId>example-omod</artifactId>
+               <version>${example.version}</version>
+               <scope>provided</scope>
+           </dependency>
+       </dependencies>
+   </dependencyManagement>
+   ```
+
+5. **Add to the root `pom.xml`** — insert a `<module>` entry in the correct build order (dependencies must be listed before dependents):
 
    ```xml
    <modules>
@@ -129,13 +170,13 @@ Modules not listed above depend only on OpenMRS core and upstream community modu
    </modules>
    ```
 
-5. **Verify the build**:
+6. **Verify the build**:
 
    ```bash
    mvn clean package -DskipTests -pl modules/example -am
    ```
 
-6. **Update this README** — add the module to the appropriate table above and update the dependency graph if it has inter-module dependencies.
+7. **Update this README** — add the module to the appropriate table above and update the dependency graph if it has inter-module dependencies.
 
 ### Creating a new module from scratch
 
@@ -165,7 +206,7 @@ Modules not listed above depend only on OpenMRS core and upstream community modu
        src/main/webapp/
    ```
 
-2. Follow steps 4-6 from the section above.
+2. Follow steps 3-7 from the section above (BOM import, add to BOM, add to root POM, verify, update README).
 
 ### Vendoring a new external dependency
 
@@ -183,36 +224,112 @@ If your module depends on a JAR that is not available from Maven Central or the 
 
 2. The root `pom.xml` already configures `lib/maven-repo/` as a local repository, so no additional configuration is needed.
 
+## Bill of Materials (BOM)
+
+The `bom/pom.xml` centralizes version management for all inter-module dependencies. It covers both `-api` and `-omod` artifacts for every module in the monorepo, plus vendored dependencies like everest-core.
+
+### How it works
+
+Modules import the BOM in their `<dependencyManagement>`:
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>isanteplus-bom</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+Then inter-module dependencies are declared without version tags:
+
+```xml
+<dependency>
+    <groupId>org.openmrs.module</groupId>
+    <artifactId>santedb-mpiclient-api</artifactId>
+    <!-- version inherited from BOM -->
+</dependency>
+```
+
+### Bumping a version
+
+All versions are defined as properties in `bom/pom.xml`. To bump a module version, change one line:
+
+```xml
+<properties>
+    <mpiclient.version>1.1.5-SNAPSHOT</mpiclient.version>  <!-- change here -->
+</properties>
+```
+
+Every module that depends on it picks up the new version automatically — no need to update multiple POMs.
+
 ## Vendored Dependencies
 
 The `lib/maven-repo/` directory contains `org.marc.everest` artifacts (v1.1.0) that are no longer available from their original Maven repositories (`te.marc-hi.ca` and `santesuite.org` are both defunct). These are HL7v3 data types used by the mpi-client and xds-sender modules for HL7v2 message processing.
 
 The root `pom.xml` configures this directory as a local Maven repository so builds work without external authentication or access to defunct servers.
 
-## OMODs
+## Getting an OMOD After Making Changes
 
-Built `.omod` files are located at:
+After modifying a module, build it and its dependencies:
+
+```bash
+mvn clean package -DskipTests -pl modules/registrationcore -am
+```
+
+The `-am` flag ensures dependencies (labintegration, mpi-client, xds-sender) are built first. The OMOD is output to:
 
 ```
-modules/<name>/omod/target/<artifact>-<version>.omod
+modules/registrationcore/omod/target/registrationcore-2.2.0.omod
 ```
 
-Deploy an OMOD to OpenMRS by copying it to the `modules/` directory of the OpenMRS application data folder. For the Sedish HIE deployment, OMODs go into `sedish/packages/emr-isanteplus/config/custom_modules/`.
+To deploy it to the Sedish HIE, copy it to the custom modules directory:
+
+```bash
+cp modules/registrationcore/omod/target/registrationcore-2.2.0.omod \
+   ../sedish/packages/emr-isanteplus/config/custom_modules/
+```
+
+Then rebuild and redeploy the iSantePlus Docker image:
+
+```bash
+cd ../sedish
+docker build -t itechuw/docker-isanteplus-server:local-2 packages/emr-isanteplus/
+docker service update --force isanteplus_isanteplus
+docker service update --force isanteplus_isanteplus2
+```
+
+On CI, OMODs are uploaded as build artifacts after every push to `main` and attached to GitHub releases.
 
 ## CI/CD
 
-GitHub Actions workflows:
+### CI (`ci.yml`)
 
-- **CI** (`ci.yml`) — Runs on every push and PR to `main`. Two parallel jobs:
-  - Full reactor build of all modules
-  - Focused build of Sedish HIE modules only
-  - Uploads built OMODs as downloadable artifacts
-- **Publish** (`publish.yml`) — On GitHub release creation, builds all modules and attaches OMODs as release assets.
+Runs on every push and PR to `main`. Uses **path-based change detection** to only build what changed:
 
-### Downloading OMODs from CI
+| Job | Triggers when | What it builds |
+|-----|---------------|----------------|
+| `build-sedish` | mpi-client, xds-sender, registrationcore, outgoing-exception, labintegration, bom, or lib changed | Sedish HIE modules with tests |
+| `build-core` | isanteplus, isanteplusreports, registration, or bom changed | iSantePlus core modules |
+| `build-upstream` | coreapps, htmlformentry, htmlformentryui, allergyui, referenceapplication, or bom changed | Upstream fork modules |
+| `build-all` | Any module changed (main branch only) | Full reactor build |
 
-After a successful CI run, OMODs are available as build artifacts on the Actions tab. For releases, OMODs are attached directly to the GitHub release and can be downloaded with:
+Each job uploads its OMODs as downloadable artifacts. BOM changes trigger all jobs since they can affect any module.
 
+### Publish (`publish.yml`)
+
+On GitHub release creation, builds all modules and attaches OMODs as release assets.
+
+### Downloading OMODs
+
+From CI: go to the Actions tab, select the workflow run, download artifacts.
+
+From releases:
 ```bash
 gh release download <tag> --pattern "*.omod"
 ```
@@ -221,6 +338,7 @@ gh release download <tag> --pattern "*.omod"
 
 ```
 .github/workflows/     GitHub Actions CI/CD
+bom/                   Bill of Materials (centralized version management)
 etl/                   ETL SQL scripts
 lib/maven-repo/        Vendored Maven dependencies (everest-core)
 modules/

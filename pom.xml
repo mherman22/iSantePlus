@@ -13,6 +13,7 @@
 
     <!-- Build order respects dependency graph -->
     <modules>
+        <module>bom</module>
         <module>modules/labintegration</module>
         <module>modules/mpi-client</module>
         <module>modules/xds-sender</module>
