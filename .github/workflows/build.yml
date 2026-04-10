@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '8.0.252'
-          distribution: adoptium
+          distribution: temurin
           cache: maven
 
       - name: Install vendored dependencies
