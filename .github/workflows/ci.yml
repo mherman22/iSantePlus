@@ -5,11 +5,16 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  release:
+    types: [created]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,3 +38,15 @@ jobs:
           name: omods
           path: '*/omod/target/*.omod'
           if-no-files-found: warn
+
+      - name: Attach OMODs to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for omod in */omod/target/*.omod; do
+            if [ -f "$omod" ]; then
+              echo "Uploading $omod"
+              gh release upload "${{ github.event.release.tag_name }}" "$omod" --clobber
+            fi
+          done
