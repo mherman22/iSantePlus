@@ -158,7 +158,7 @@
                                     <generatePom>false</generatePom>
                                     <artifactId>${project.parent.artifactId}</artifactId>
                                     <version>${project.version}</version>
-                                    <groupId>${groupId}</groupId>
+                                    <groupId>${project.groupId}</groupId>
                                 </configuration>
                             </execution>
                         </executions>
