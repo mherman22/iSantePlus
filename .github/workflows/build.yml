@@ -40,7 +40,7 @@ jobs:
 
       - name: Run tests
         if: github.event_name != 'pull_request'
-        run: mvn -B test -s .mvn/settings.xml -Dsurefire.shutdown=kill
+        run: mvn -B test -s .mvn/settings.xml
         env:
           TZ: Europe/Paris
 
