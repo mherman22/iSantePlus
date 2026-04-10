@@ -34,7 +34,7 @@ Central repository for all iSantePlus OpenMRS modules used in the Haiti Health I
 
 ## Prerequisites
 
-- **Java 8** (JDK)
+- **Java 8** (JDK) — required by OpenMRS platform
 - **Maven 3.6+**
 
 ## Building
@@ -51,7 +51,7 @@ mvn clean package -DskipTests
 mvn clean package -DskipTests -pl modules/mpi-client -am
 ```
 
-The `-am` (also make) flag builds any sibling modules that the target depends on.
+The `-am` (also make) flag automatically builds any sibling modules that the target depends on.
 
 ### Build only the Sedish HIE modules
 
@@ -61,17 +61,25 @@ mvn clean package -DskipTests \
   -am
 ```
 
+### Build a single module (if dependencies are already in local .m2)
+
+```bash
+mvn clean package -DskipTests -pl modules/xds-sender
+```
+
 ### Run tests
 
 ```bash
 mvn test
 ```
 
-### Build a single module (if dependencies are already in local .m2)
+### Install to local Maven repository
 
 ```bash
-mvn clean package -DskipTests -pl modules/xds-sender
+mvn clean install -DskipTests
 ```
+
+This installs all modules to your local `~/.m2/repository`, making them available as dependencies for other local projects (e.g., the Sedish deployment repo).
 
 ## Dependency Graph
 
@@ -85,29 +93,136 @@ outgoing-exception      (depends on: registrationcore, xds-sender)
 
 Modules not listed above depend only on OpenMRS core and upstream community modules.
 
+## Adding a New Module
+
+### From an existing external repository
+
+1. **Clone and import** the module source (without git history):
+
+   ```bash
+   git clone --depth 1 https://github.com/IsantePlus/openmrs-module-example.git /tmp/example
+   rm -rf /tmp/example/.git
+   cp -r /tmp/example modules/example
+   rm -rf /tmp/example
+   ```
+
+2. **Fix repository references** in the module's `pom.xml`:
+   - Remove any references to `te.marc-hi.ca`, `santesuite.org`, or other defunct repos
+   - Remove `github-packages` profiles that require private registry auth
+   - If the module depends on `everest-core`, add the local vendored repository:
+     ```xml
+     <repository>
+         <id>local-vendored</id>
+         <name>Vendored dependencies (everest-core)</name>
+         <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+     </repository>
+     ```
+
+3. **Align dependency versions** — if the module depends on other monorepo modules, update version properties to match the versions in this repo (check the table above).
+
+4. **Add to the root `pom.xml`** — insert a `<module>` entry in the correct build order (dependencies must be listed before dependents):
+
+   ```xml
+   <modules>
+       <!-- ... existing modules ... -->
+       <module>modules/example</module>
+   </modules>
+   ```
+
+5. **Verify the build**:
+
+   ```bash
+   mvn clean package -DskipTests -pl modules/example -am
+   ```
+
+6. **Update this README** — add the module to the appropriate table above and update the dependency graph if it has inter-module dependencies.
+
+### Creating a new module from scratch
+
+1. **Generate the OpenMRS module skeleton**:
+
+   ```bash
+   mvn archetype:generate \
+     -DarchetypeGroupId=org.openmrs.maven.archetypes \
+     -DarchetypeArtifactId=openmrs-owa-archetype \
+     -DarchetypeVersion=1.0.1
+   ```
+
+   Or manually create the standard OpenMRS module structure:
+
+   ```
+   modules/example/
+     pom.xml            (parent POM, packaging: pom)
+     api/
+       pom.xml          (API module)
+       src/main/java/
+       src/main/resources/
+       src/test/java/
+     omod/
+       pom.xml          (OMOD module)
+       src/main/java/
+       src/main/resources/
+       src/main/webapp/
+   ```
+
+2. Follow steps 4-6 from the section above.
+
+### Vendoring a new external dependency
+
+If your module depends on a JAR that is not available from Maven Central or the OpenMRS repository:
+
+1. Place the JAR and POM in `lib/maven-repo/` following the standard Maven layout:
+
+   ```
+   lib/maven-repo/
+     com/example/
+       some-library/1.0.0/
+         some-library-1.0.0.jar
+         some-library-1.0.0.pom
+   ```
+
+2. The root `pom.xml` already configures `lib/maven-repo/` as a local repository, so no additional configuration is needed.
+
 ## Vendored Dependencies
 
-The `lib/maven-repo/` directory contains `org.marc.everest` artifacts (v1.1.0) that are no longer available from their original Maven repositories. These are HL7v3 data types used by the mpi-client and xds-sender modules for HL7v2 message processing.
+The `lib/maven-repo/` directory contains `org.marc.everest` artifacts (v1.1.0) that are no longer available from their original Maven repositories (`te.marc-hi.ca` and `santesuite.org` are both defunct). These are HL7v3 data types used by the mpi-client and xds-sender modules for HL7v2 message processing.
 
 The root `pom.xml` configures this directory as a local Maven repository so builds work without external authentication or access to defunct servers.
 
 ## OMODs
 
-Built `.omod` files are located at `modules/<name>/omod/target/<artifact>-<version>.omod` after a successful build. These can be deployed to an OpenMRS instance by copying them to the `modules/` directory of the OpenMRS data folder.
+Built `.omod` files are located at:
+
+```
+modules/<name>/omod/target/<artifact>-<version>.omod
+```
+
+Deploy an OMOD to OpenMRS by copying it to the `modules/` directory of the OpenMRS application data folder. For the Sedish HIE deployment, OMODs go into `sedish/packages/emr-isanteplus/config/custom_modules/`.
 
 ## CI/CD
 
-GitHub Actions workflows are configured for:
+GitHub Actions workflows:
 
-- **CI** (`ci.yml`): Runs on every push and PR to `main`. Builds all modules and uploads OMODs as artifacts.
-- **Publish** (`publish.yml`): On GitHub release creation, builds all modules and attaches OMODs as release assets.
+- **CI** (`ci.yml`) — Runs on every push and PR to `main`. Two parallel jobs:
+  - Full reactor build of all modules
+  - Focused build of Sedish HIE modules only
+  - Uploads built OMODs as downloadable artifacts
+- **Publish** (`publish.yml`) — On GitHub release creation, builds all modules and attaches OMODs as release assets.
+
+### Downloading OMODs from CI
+
+After a successful CI run, OMODs are available as build artifacts on the Actions tab. For releases, OMODs are attached directly to the GitHub release and can be downloaded with:
+
+```bash
+gh release download <tag> --pattern "*.omod"
+```
 
 ## Repository Structure
 
 ```
 .github/workflows/     GitHub Actions CI/CD
 etl/                   ETL SQL scripts
-lib/maven-repo/        Vendored Maven dependencies
+lib/maven-repo/        Vendored Maven dependencies (everest-core)
 modules/
   allergyui/           OpenMRS allergy UI (upstream fork)
   coreapps/            OpenMRS core apps (upstream fork)
@@ -124,6 +239,14 @@ modules/
   xds-sender/          XDS.b document sender (SHR integration)
 pom.xml                Root reactor POM (aggregator)
 ```
+
+## Contributing
+
+1. Create a feature branch from `main`
+2. Make changes to the relevant module(s) under `modules/`
+3. Verify the build: `mvn clean package -DskipTests -pl modules/<changed-module> -am`
+4. Open a pull request — CI will build and validate automatically
+5. OMODs from your PR build are available as artifacts on the PR's Actions tab
 
 ## License
 
