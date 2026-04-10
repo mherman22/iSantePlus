@@ -2,9 +2,9 @@ name: Build, Test & Publish OMODs
 
 on:
   push:
-    branches: [main]
+    branches: [main, estructure/monorepo-modules]
   pull_request:
-    branches: [main]
+    branches: [main, estructure/monorepo-modules]
   release:
     types: [created]
   workflow_dispatch:
