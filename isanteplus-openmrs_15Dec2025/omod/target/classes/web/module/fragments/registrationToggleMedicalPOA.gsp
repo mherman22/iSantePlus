@@ -1,1 +1,0 @@
-<%ui.includeJavascript("isanteplus", "registrationToggleMedicalPOA.js");%>
