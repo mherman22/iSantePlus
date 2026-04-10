@@ -308,18 +308,28 @@ On CI, OMODs are uploaded as build artifacts after every push to `main` and atta
 
 ## CI/CD
 
-GitHub Actions workflows:
+### CI (`ci.yml`)
 
-- **CI** (`ci.yml`) — Runs on every push and PR to `main`. Two parallel jobs:
-  - Full reactor build of all modules
-  - Focused build of Sedish HIE modules only
-  - Uploads built OMODs as downloadable artifacts
-- **Publish** (`publish.yml`) — On GitHub release creation, builds all modules and attaches OMODs as release assets.
+Runs on every push and PR to `main`. Uses **path-based change detection** to only build what changed:
 
-### Downloading OMODs from CI
+| Job | Triggers when | What it builds |
+|-----|---------------|----------------|
+| `build-sedish` | mpi-client, xds-sender, registrationcore, outgoing-exception, labintegration, bom, or lib changed | Sedish HIE modules with tests |
+| `build-core` | isanteplus, isanteplusreports, registration, or bom changed | iSantePlus core modules |
+| `build-upstream` | coreapps, htmlformentry, htmlformentryui, allergyui, referenceapplication, or bom changed | Upstream fork modules |
+| `build-all` | Any module changed (main branch only) | Full reactor build |
 
-After a successful CI run, OMODs are available as build artifacts on the Actions tab. For releases, OMODs are attached directly to the GitHub release and can be downloaded with:
+Each job uploads its OMODs as downloadable artifacts. BOM changes trigger all jobs since they can affect any module.
 
+### Publish (`publish.yml`)
+
+On GitHub release creation, builds all modules and attaches OMODs as release assets.
+
+### Downloading OMODs
+
+From CI: go to the Actions tab, select the workflow run, download artifacts.
+
+From releases:
 ```bash
 gh release download <tag> --pattern "*.omod"
 ```

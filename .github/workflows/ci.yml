@@ -8,35 +8,54 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  # Detect which modules changed to avoid unnecessary builds
+  detect-changes:
     runs-on: ubuntu-latest
-
+    outputs:
+      sedish: ${{ steps.filter.outputs.sedish }}
+      core: ${{ steps.filter.outputs.core }}
+      upstream: ${{ steps.filter.outputs.upstream }}
+      bom: ${{ steps.filter.outputs.bom }}
+      any: ${{ steps.filter.outputs.any }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up JDK 8
-        uses: actions/setup-java@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
         with:
-          java-version: 8
-          distribution: temurin
-          cache: maven
+          filters: |
+            bom:
+              - 'bom/**'
+              - 'lib/**'
+              - 'pom.xml'
+            sedish:
+              - 'modules/mpi-client/**'
+              - 'modules/xds-sender/**'
+              - 'modules/registrationcore/**'
+              - 'modules/outgoing-exception/**'
+              - 'modules/labintegration/**'
+              - 'bom/**'
+              - 'lib/**'
+            core:
+              - 'modules/isanteplus/**'
+              - 'modules/isanteplusreports/**'
+              - 'modules/registration/**'
+              - 'bom/**'
+            upstream:
+              - 'modules/coreapps/**'
+              - 'modules/htmlformentry/**'
+              - 'modules/htmlformentryui/**'
+              - 'modules/allergyui/**'
+              - 'modules/referenceapplication/**'
+              - 'bom/**'
+            any:
+              - 'modules/**'
+              - 'bom/**'
+              - 'pom.xml'
 
-      - name: Build all modules
-        run: mvn -B clean package -DskipTests
-
-      - name: Run tests
-        run: mvn -B test
-
-      - name: Upload OMODs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: omods
-          path: modules/*/omod/target/*.omod
-          if-no-files-found: warn
-
-  build-sedish-modules:
-    # Fast check: build only the modules used by Sedish HIE
+  # Build Sedish HIE modules (the most critical path)
+  build-sedish:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.sedish == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,11 +69,17 @@ jobs:
 
       - name: Build Sedish HIE modules
         run: >
-          mvn -B clean package -DskipTests
-          -pl modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration
+          mvn -B clean install -DskipTests
+          -pl bom,modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration
           -am
 
+      - name: Test Sedish HIE modules
+        run: >
+          mvn -B test
+          -pl modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration
+
       - name: Upload Sedish OMODs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sedish-omods
@@ -64,4 +89,95 @@ jobs:
             modules/registrationcore/omod/target/*.omod
             modules/outgoing-exception/omod/target/*.omod
             modules/labintegration/omod/target/*.omod
+          if-no-files-found: warn
+
+  # Build iSantePlus core modules
+  build-core:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.core == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+
+      - name: Build iSantePlus core modules
+        run: >
+          mvn -B clean install -DskipTests
+          -pl bom,modules/isanteplus,modules/isanteplusreports,modules/registration
+          -am
+
+      - name: Upload core OMODs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-omods
+          path: |
+            modules/isanteplus/omod/target/*.omod
+            modules/isanteplusreports/omod/target/*.omod
+            modules/registration/omod/target/*.omod
+          if-no-files-found: warn
+
+  # Build upstream fork modules
+  build-upstream:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.upstream == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+
+      - name: Build upstream fork modules
+        run: >
+          mvn -B clean install -DskipTests
+          -pl bom,modules/htmlformentry,modules/allergyui,modules/htmlformentryui,modules/coreapps,modules/referenceapplication
+          -am
+
+      - name: Upload upstream OMODs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-omods
+          path: |
+            modules/coreapps/omod/target/*.omod
+            modules/htmlformentry/omod/target/*.omod
+            modules/htmlformentryui/omod/target/*.omod
+            modules/allergyui/omod/target/*.omod
+            modules/referenceapplication/omod/target/*.omod
+          if-no-files-found: warn
+
+  # Full reactor build on main (post-merge validation)
+  build-all:
+    needs: detect-changes
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.detect-changes.outputs.any == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+
+      - name: Full reactor build
+        run: mvn -B clean package -DskipTests
+
+      - name: Upload all OMODs
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-omods
+          path: modules/*/omod/target/*.omod
           if-no-files-found: warn
