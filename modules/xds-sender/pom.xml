@@ -30,7 +30,6 @@
 	<properties>
 		<revision>2.5.6-SNAPSHOT</revision>
 		<openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
-		<everestVersion>1.1.0</everestVersion>
 		<dcm4chee-xds2Version>2.0.6</dcm4chee-xds2Version>
 		<javax.servletVersion>4.0.1</javax.servletVersion>
 		<eventVersion>2.5</eventVersion>
@@ -41,40 +40,17 @@
 		<springWsVersion>2.4.7.RELEASE</springWsVersion>
 		<hapiFhirVersion>5.0.2</hapiFhirVersion>
 		<fhirModuleVersion>1.3.0</fhirModuleVersion>
-		<labintegrationVersion>2.3.7-SNAPSHOT</labintegrationVersion>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- iSantePlus BOM — centralizes inter-module versions -->
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
-				<artifactId>labintegration-api</artifactId>
-				<version>${labintegrationVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.marc.everest</groupId>
-				<artifactId>everest-core</artifactId>
-				<version>${everestVersion}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.marc.everest</groupId>
-				<artifactId>everest-rmim-uv-cdar2</artifactId>
-				<version>${everestVersion}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.marc.everest</groupId>
-				<artifactId>everest-formatters-xml-its1</artifactId>
-				<version>${everestVersion}</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.marc.everest</groupId>
-				<artifactId>everest-formatters-xml-dt-r1</artifactId>
-				<version>${everestVersion}</version>
-				<scope>compile</scope>
+				<artifactId>isanteplus-bom</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.dcm4che</groupId>

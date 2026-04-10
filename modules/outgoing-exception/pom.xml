@@ -25,8 +25,6 @@
 		<appframeworkVersion>2.10.0</appframeworkVersion>
 		<emrapiVersion>1.21.0</emrapiVersion>
 		<coreappsVersion>1.13.0</coreappsVersion>
-		<registrationcoreVersion>2.2.0</registrationcoreVersion>
-		<xdssenderVersion>2.5.9</xdssenderVersion>
 		<gsonVersion>2.8.1</gsonVersion>
 		<fasterXmlJacksonVersion>2.9.10.5</fasterXmlJacksonVersion>
 		<legacyuiVersion>1.0</legacyuiVersion>
@@ -45,6 +43,15 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- iSantePlus BOM — centralizes inter-module versions -->
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>isanteplus-bom</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 			<!-- Begin OpenMRS modules -->
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
@@ -62,18 +69,6 @@
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>uiframework-api</artifactId>
 				<version>${uiframeworkVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>registrationcore-api</artifactId>
-				<version>${registrationcoreVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>xds-sender-api</artifactId>
-				<version>${xdssenderVersion}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
