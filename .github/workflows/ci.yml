@@ -38,7 +38,7 @@ jobs:
             core:
               - 'isanteplus-openmrs_15Dec2025/**'
               - 'openmrs-isanteplusreports-module_13Janv2026/**'
-              - 'registration/**'
+              - 'openmrs-module-registration/**'
               - 'bom/**'
             upstream:
               - 'openmrs-coreapps-module/**'
@@ -57,7 +57,7 @@ jobs:
               - 'openmrs-module-labintegration/**'
               - 'isanteplus-openmrs_15Dec2025/**'
               - 'openmrs-isanteplusreports-module_13Janv2026/**'
-              - 'registration/**'
+              - 'openmrs-module-registration/**'
               - 'openmrs-htmlformentry-module/**'
 
   # Build Sedish HIE modules (the most critical path)
@@ -117,7 +117,7 @@ jobs:
       - name: Build iSantePlus core modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,isanteplus-openmrs_15Dec2025,openmrs-isanteplusreports-module_13Janv2026,registration
+          -pl bom,isanteplus-openmrs_15Dec2025,openmrs-isanteplusreports-module_13Janv2026,openmrs-module-registration
           -am
 
       - name: Upload core OMODs
@@ -128,7 +128,7 @@ jobs:
           path: |
             isanteplus-openmrs_15Dec2025/omod/target/*.omod
             openmrs-isanteplusreports-module_13Janv2026/omod/target/*.omod
-            registration/omod/target/*.omod
+            openmrs-module-registration/omod/target/*.omod
           if-no-files-found: warn
 
   # Build upstream fork modules

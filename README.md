@@ -20,7 +20,7 @@ Central repository for all iSantePlus OpenMRS modules used in the Haiti Health I
 |--------|----------|---------|-------------|
 | [isanteplus-openmrs_15Dec2025](isanteplus-openmrs_15Dec2025) | `isanteplus` | 1.3.0 | Core iSantePlus EMR module |
 | [openmrs-isanteplusreports-module_13Janv2026](openmrs-isanteplusreports-module_13Janv2026) | `isanteplusreports` | 1.1-SNAPSHOT | iSantePlus reporting |
-| [registration](registration) | `registration` | 1.0.0-SNAPSHOT | Patient registration UI |
+| [openmrs-module-registration](openmrs-module-registration) | `registration` | 1.0.0-SNAPSHOT | Patient registration UI |
 
 ### OpenMRS Upstream Forks
 
@@ -351,7 +351,7 @@ lib/maven-repo/        Vendored Maven dependencies (everest-core)
 openmrs-module-mpi-client/            MPI client (OpenCR integration)
 openmrs-module-outgoing-exception/    Outgoing message error handling
 openmrs-referenceapp-module/  Reference application (upstream fork)
-registration/          Patient registration UI
+openmrs-module-registration/          Patient registration UI
 openmrs-module-registrationcore/      Registration core (MPI import)
 openmrs-module-xds-sender/            XDS.b document sender (SHR integration)
 pom.xml                Root reactor POM (aggregator)
