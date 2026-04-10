@@ -28,29 +28,37 @@ jobs:
               - 'lib/**'
               - 'pom.xml'
             sedish:
-              - 'modules/mpi-client/**'
-              - 'modules/xds-sender/**'
-              - 'modules/registrationcore/**'
-              - 'modules/outgoing-exception/**'
-              - 'modules/labintegration/**'
+              - 'mpi-client/**'
+              - 'xds-sender/**'
+              - 'registrationcore/**'
+              - 'outgoing-exception/**'
+              - 'labintegration/**'
               - 'bom/**'
               - 'lib/**'
             core:
-              - 'modules/isanteplus/**'
-              - 'modules/isanteplusreports/**'
-              - 'modules/registration/**'
+              - 'isanteplus/**'
+              - 'isanteplusreports/**'
+              - 'registration/**'
               - 'bom/**'
             upstream:
-              - 'modules/coreapps/**'
-              - 'modules/htmlformentry/**'
-              - 'modules/htmlformentryui/**'
-              - 'modules/allergyui/**'
-              - 'modules/referenceapplication/**'
+              - 'coreapps/**'
+              - 'htmlformentry/**'
+              - 'htmlformentryui/**'
+              - 'allergyui/**'
+              - 'referenceapplication/**'
               - 'bom/**'
             any:
-              - 'modules/**'
               - 'bom/**'
               - 'pom.xml'
+              - 'mpi-client/**'
+              - 'xds-sender/**'
+              - 'registrationcore/**'
+              - 'outgoing-exception/**'
+              - 'labintegration/**'
+              - 'isanteplus/**'
+              - 'isanteplusreports/**'
+              - 'registration/**'
+              - 'htmlformentry/**'
 
   # Build Sedish HIE modules (the most critical path)
   build-sedish:
@@ -70,13 +78,13 @@ jobs:
       - name: Build Sedish HIE modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration
+          -pl bom,mpi-client,xds-sender,registrationcore,outgoing-exception,labintegration
           -am
 
       - name: Test Sedish HIE modules
         run: >
           mvn -B test
-          -pl modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration
+          -pl mpi-client,xds-sender,registrationcore,outgoing-exception,labintegration
 
       - name: Upload Sedish OMODs
         if: always()
@@ -84,11 +92,11 @@ jobs:
         with:
           name: sedish-omods
           path: |
-            modules/mpi-client/omod/target/*.omod
-            modules/xds-sender/omod/target/*.omod
-            modules/registrationcore/omod/target/*.omod
-            modules/outgoing-exception/omod/target/*.omod
-            modules/labintegration/omod/target/*.omod
+            mpi-client/omod/target/*.omod
+            xds-sender/omod/target/*.omod
+            registrationcore/omod/target/*.omod
+            outgoing-exception/omod/target/*.omod
+            labintegration/omod/target/*.omod
           if-no-files-found: warn
 
   # Build iSantePlus core modules
@@ -109,7 +117,7 @@ jobs:
       - name: Build iSantePlus core modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,modules/isanteplus,modules/isanteplusreports,modules/registration
+          -pl bom,isanteplus,isanteplusreports,registration
           -am
 
       - name: Upload core OMODs
@@ -118,9 +126,9 @@ jobs:
         with:
           name: core-omods
           path: |
-            modules/isanteplus/omod/target/*.omod
-            modules/isanteplusreports/omod/target/*.omod
-            modules/registration/omod/target/*.omod
+            isanteplus/omod/target/*.omod
+            isanteplusreports/omod/target/*.omod
+            registration/omod/target/*.omod
           if-no-files-found: warn
 
   # Build upstream fork modules
@@ -141,7 +149,7 @@ jobs:
       - name: Build upstream fork modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,modules/htmlformentry,modules/allergyui,modules/htmlformentryui,modules/coreapps,modules/referenceapplication
+          -pl bom,htmlformentry,allergyui,htmlformentryui,coreapps,referenceapplication
           -am
 
       - name: Upload upstream OMODs
@@ -150,11 +158,11 @@ jobs:
         with:
           name: upstream-omods
           path: |
-            modules/coreapps/omod/target/*.omod
-            modules/htmlformentry/omod/target/*.omod
-            modules/htmlformentryui/omod/target/*.omod
-            modules/allergyui/omod/target/*.omod
-            modules/referenceapplication/omod/target/*.omod
+            coreapps/omod/target/*.omod
+            htmlformentry/omod/target/*.omod
+            htmlformentryui/omod/target/*.omod
+            allergyui/omod/target/*.omod
+            referenceapplication/omod/target/*.omod
           if-no-files-found: warn
 
   # Full reactor build on main (post-merge validation)
@@ -179,5 +187,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: all-omods
-          path: modules/*/omod/target/*.omod
+          path: '*/omod/target/*.omod'
           if-no-files-found: warn

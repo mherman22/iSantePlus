@@ -8,29 +8,29 @@ Central repository for all iSantePlus OpenMRS modules used in the Haiti Health I
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [mpi-client](modules/mpi-client) | `santedb-mpiclient` | 1.1.5-SNAPSHOT | Master Patient Index client — syncs patients with OpenCR |
-| [registrationcore](modules/registrationcore) | `registrationcore` | 2.2.0 | Patient registration and MPI import |
-| [xds-sender](modules/xds-sender) | `xds-sender` | 2.5.9 | Sends clinical documents to the Shared Health Record |
-| [outgoing-exception](modules/outgoing-exception) | `outgoing-message-exceptions` | 1.1.1 | Handles failed outgoing messages |
-| [labintegration](modules/labintegration) | `labintegration` | 2.3.9-SNAPSHOT | Lab order integration |
+| [mpi-client](mpi-client) | `santedb-mpiclient` | 1.1.5-SNAPSHOT | Master Patient Index client — syncs patients with OpenCR |
+| [registrationcore](registrationcore) | `registrationcore` | 2.2.0 | Patient registration and MPI import |
+| [xds-sender](xds-sender) | `xds-sender` | 2.5.9 | Sends clinical documents to the Shared Health Record |
+| [outgoing-exception](outgoing-exception) | `outgoing-message-exceptions` | 1.1.1 | Handles failed outgoing messages |
+| [labintegration](labintegration) | `labintegration` | 2.3.9-SNAPSHOT | Lab order integration |
 
 ### iSantePlus Core
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [isanteplus](modules/isanteplus) | `isanteplus` | 1.3.0 | Core iSantePlus EMR module |
-| [isanteplusreports](modules/isanteplusreports) | `isanteplusreports` | 1.1-SNAPSHOT | iSantePlus reporting |
-| [registration](modules/registration) | `registration` | 1.0.0-SNAPSHOT | Patient registration UI |
+| [isanteplus](isanteplus) | `isanteplus` | 1.3.0 | Core iSantePlus EMR module |
+| [isanteplusreports](isanteplusreports) | `isanteplusreports` | 1.1-SNAPSHOT | iSantePlus reporting |
+| [registration](registration) | `registration` | 1.0.0-SNAPSHOT | Patient registration UI |
 
 ### OpenMRS Upstream Forks
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [coreapps](modules/coreapps) | `coreapps` | 1.19.0-SNAPSHOT | Core application framework |
-| [htmlformentry](modules/htmlformentry) | `htmlformentry` | 3.9.2 | HTML form entry engine |
-| [htmlformentryui](modules/htmlformentryui) | `htmlformentryui` | 1.6.3 | HTML form entry UI widgets |
-| [allergyui](modules/allergyui) | `allergyui` | 1.7.0 | Allergy management UI |
-| [referenceapplication](modules/referenceapplication) | `referenceapplication` | 2.6.0 | Reference application framework |
+| [coreapps](coreapps) | `coreapps` | 1.19.0-SNAPSHOT | Core application framework |
+| [htmlformentry](htmlformentry) | `htmlformentry` | 3.9.2 | HTML form entry engine |
+| [htmlformentryui](htmlformentryui) | `htmlformentryui` | 1.6.3 | HTML form entry UI widgets |
+| [allergyui](allergyui) | `allergyui` | 1.7.0 | Allergy management UI |
+| [referenceapplication](referenceapplication) | `referenceapplication` | 2.6.0 | Reference application framework |
 
 ## Prerequisites
 
@@ -48,7 +48,7 @@ mvn clean package -DskipTests
 ### Build a specific module (with its dependencies)
 
 ```bash
-mvn clean package -DskipTests -pl modules/mpi-client -am
+mvn clean package -DskipTests -pl mpi-client -am
 ```
 
 The `-am` (also make) flag automatically builds any sibling modules that the target depends on.
@@ -57,14 +57,14 @@ The `-am` (also make) flag automatically builds any sibling modules that the tar
 
 ```bash
 mvn clean package -DskipTests \
-  -pl modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration \
+  -pl mpi-client,xds-sender,registrationcore,outgoing-exception,labintegration \
   -am
 ```
 
 ### Build a single module (if dependencies are already in local .m2)
 
 ```bash
-mvn clean package -DskipTests -pl modules/xds-sender
+mvn clean package -DskipTests -pl xds-sender
 ```
 
 ### Run tests
@@ -102,7 +102,7 @@ Modules not listed above depend only on OpenMRS core and upstream community modu
    ```bash
    git clone --depth 1 https://github.com/IsantePlus/openmrs-module-example.git /tmp/example
    rm -rf /tmp/example/.git
-   cp -r /tmp/example modules/example
+   cp -r /tmp/example example
    rm -rf /tmp/example
    ```
 
@@ -166,14 +166,14 @@ Modules not listed above depend only on OpenMRS core and upstream community modu
    ```xml
    <modules>
        <!-- ... existing modules ... -->
-       <module>modules/example</module>
+       <module>example</module>
    </modules>
    ```
 
 6. **Verify the build**:
 
    ```bash
-   mvn clean package -DskipTests -pl modules/example -am
+   mvn clean package -DskipTests -pl example -am
    ```
 
 7. **Update this README** — add the module to the appropriate table above and update the dependency graph if it has inter-module dependencies.
@@ -192,7 +192,7 @@ Modules not listed above depend only on OpenMRS core and upstream community modu
    Or manually create the standard OpenMRS module structure:
 
    ```
-   modules/example/
+   example/
      pom.xml            (parent POM, packaging: pom)
      api/
        pom.xml          (API module)
@@ -279,19 +279,19 @@ The root `pom.xml` configures this directory as a local Maven repository so buil
 After modifying a module, build it and its dependencies:
 
 ```bash
-mvn clean package -DskipTests -pl modules/registrationcore -am
+mvn clean package -DskipTests -pl registrationcore -am
 ```
 
 The `-am` flag ensures dependencies (labintegration, mpi-client, xds-sender) are built first. The OMOD is output to:
 
 ```
-modules/registrationcore/omod/target/registrationcore-2.2.0.omod
+registrationcore/omod/target/registrationcore-2.2.0.omod
 ```
 
 To deploy it to the Sedish HIE, copy it to the custom modules directory:
 
 ```bash
-cp modules/registrationcore/omod/target/registrationcore-2.2.0.omod \
+cp registrationcore/omod/target/registrationcore-2.2.0.omod \
    ../sedish/packages/emr-isanteplus/config/custom_modules/
 ```
 
@@ -338,31 +338,30 @@ gh release download <tag> --pattern "*.omod"
 
 ```
 .github/workflows/     GitHub Actions CI/CD
+allergyui/             OpenMRS allergy UI (upstream fork)
 bom/                   Bill of Materials (centralized version management)
+coreapps/              OpenMRS core apps (upstream fork)
 etl/                   ETL SQL scripts
+htmlformentry/         HTML form entry engine (upstream fork)
+htmlformentryui/       HTML form entry UI (upstream fork)
+isanteplus/            Core iSantePlus module
+isanteplusreports/     iSantePlus reports
+labintegration/        Lab integration
 lib/maven-repo/        Vendored Maven dependencies (everest-core)
-modules/
-  allergyui/           OpenMRS allergy UI (upstream fork)
-  coreapps/            OpenMRS core apps (upstream fork)
-  htmlformentry/       HTML form entry engine (upstream fork)
-  htmlformentryui/     HTML form entry UI (upstream fork)
-  isanteplus/          Core iSantePlus module
-  isanteplusreports/   iSantePlus reports
-  labintegration/      Lab integration
-  mpi-client/          MPI client (OpenCR integration)
-  outgoing-exception/  Outgoing message error handling
-  referenceapplication/ Reference application (upstream fork)
-  registration/        Patient registration UI
-  registrationcore/    Registration core (MPI import)
-  xds-sender/          XDS.b document sender (SHR integration)
+mpi-client/            MPI client (OpenCR integration)
+outgoing-exception/    Outgoing message error handling
+referenceapplication/  Reference application (upstream fork)
+registration/          Patient registration UI
+registrationcore/      Registration core (MPI import)
+xds-sender/            XDS.b document sender (SHR integration)
 pom.xml                Root reactor POM (aggregator)
 ```
 
 ## Contributing
 
 1. Create a feature branch from `main`
-2. Make changes to the relevant module(s) under `modules/`
-3. Verify the build: `mvn clean package -DskipTests -pl modules/<changed-module> -am`
+2. Make changes to the relevant module(s)
+3. Verify the build: `mvn clean package -DskipTests -pl <changed-module> -am`
 4. Open a pull request — CI will build and validate automatically
 5. OMODs from your PR build are available as artifacts on the PR's Actions tab
 

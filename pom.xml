@@ -11,22 +11,22 @@
     <name>iSantePlus Module Monorepo</name>
     <description>Aggregator for all iSantePlus OpenMRS modules used in the Sedish Haiti HIE</description>
 
-    <!-- Build order respects dependency graph -->
+    <!-- Default reactor: Sedish HIE + iSantePlus core modules.
+         Upstream forks (allergyui, coreapps, htmlformentryui, referenceapplication)
+         are excluded from the default build due to legacy frontend tooling
+         (Node 6, PhantomJS, Ruby SASS) that requires specialized environments.
+         Build them individually: mvn clean package -DskipTests -pl coreapps -am -->
     <modules>
         <module>bom</module>
-        <module>modules/labintegration</module>
-        <module>modules/mpi-client</module>
-        <module>modules/xds-sender</module>
-        <module>modules/registrationcore</module>
-        <module>modules/outgoing-exception</module>
-        <module>modules/htmlformentry</module>
-        <module>modules/allergyui</module>
-        <module>modules/htmlformentryui</module>
-        <module>modules/coreapps</module>
-        <module>modules/registration</module>
-        <module>modules/referenceapplication</module>
-        <module>modules/isanteplus</module>
-        <module>modules/isanteplusreports</module>
+        <module>labintegration</module>
+        <module>mpi-client</module>
+        <module>xds-sender</module>
+        <module>registrationcore</module>
+        <module>outgoing-exception</module>
+        <module>htmlformentry</module>
+        <module>registration</module>
+        <module>isanteplus</module>
+        <module>isanteplusreports</module>
     </modules>
 
     <!-- Shared repositories inherited by all modules when built from this reactor -->
