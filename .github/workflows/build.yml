@@ -25,6 +25,15 @@ jobs:
           distribution: temurin
           cache: maven
 
+      - name: Install vendored dependencies
+        run: |
+          for jar in lib/maven-repo/org/marc/everest/*/1.1.0/*.jar; do
+            art=$(basename $(dirname $(dirname "$jar")))
+            pom="${jar%.jar}.pom"
+            mvn -B install:install-file -DgroupId=org.marc.everest -DartifactId=$art -Dversion=1.1.0 -Dpackaging=jar -Dfile="$jar" -DpomFile="$pom" -q
+            echo "Installed $art"
+          done
+
       - name: Build all modules
         run: mvn -B clean package -DskipTests -s .mvn/settings.xml
 
