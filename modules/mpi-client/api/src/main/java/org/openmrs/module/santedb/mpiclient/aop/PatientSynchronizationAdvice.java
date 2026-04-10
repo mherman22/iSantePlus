@@ -33,8 +33,14 @@ import org.springframework.aop.AfterReturningAdvice;
  * After returning from the save method of the Patient service
  */
 public class PatientSynchronizationAdvice implements AfterReturningAdvice {
-	
-	
+
+	/**
+	 * Thread-local flag to suppress MPI sync during patient import.
+	 * When set to true, the advice will skip spawning PatientUpdateWorker,
+	 * preventing the re-entrant import loop that creates duplicate patients.
+	 */
+	public static final ThreadLocal<Boolean> SUPPRESS = ThreadLocal.withInitial(() -> false);
+
 	private final Log log = LogFactory.getLog(this.getClass());
 
 	private final MpiClientConfiguration m_configuration = MpiClientConfiguration.getInstance();
@@ -44,17 +50,20 @@ public class PatientSynchronizationAdvice implements AfterReturningAdvice {
 	 * @see org.springframework.aop.AfterReturningAdvice#afterReturning(java.lang.Object, java.lang.reflect.Method, java.lang.Object[], java.lang.Object)
 	 */
 	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-		
-		
+		if (SUPPRESS.get()) {
+			log.info("MPI sync suppressed during patient import, skipping PatientUpdateWorker");
+			return;
+		}
+
+		String crEndpoint = Context.getAdministrationService().getGlobalProperty("mpi-client.endpoint.cr.addr");
+		if (crEndpoint == null || crEndpoint.trim().isEmpty()) {
+			return;
+		}
+
 		if(method.getName().equals("savePatient") && target instanceof PatientService)
 		{
 			MpiPatientExport patientExport = new MpiPatientExport((Patient)returnValue,null,null,null,null);
 			PatientUpdateWorker worker = new PatientUpdateWorker(patientExport, Context.getUserContext());
-			worker.start();
-		}
-		else if(method.getName().equals("getPatient"))
-		{
-			PatientSyncWorker worker = new PatientSyncWorker(((Patient)returnValue), Context.getUserContext());
 			worker.start();
 		}
 		else if(method.getName().equals("saveGlobalProperty"))

@@ -143,7 +143,6 @@ public class PatientSyncWorker extends Thread {
 			synchronized (s_xref) {
 				s_xref.remove(this.m_patient.getUuid());
 			}
-
 			Context.closeSession();
 		}
 	}

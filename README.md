@@ -8,7 +8,7 @@ Central repository for all iSantePlus OpenMRS modules used in the Haiti Health I
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [mpi-client](modules/mpi-client) | `santedb-mpiclient` | 1.1.4 | Master Patient Index client — syncs patients with OpenCR |
+| [mpi-client](modules/mpi-client) | `santedb-mpiclient` | 1.1.5-SNAPSHOT | Master Patient Index client — syncs patients with OpenCR |
 | [registrationcore](modules/registrationcore) | `registrationcore` | 2.2.0 | Patient registration and MPI import |
 | [xds-sender](modules/xds-sender) | `xds-sender` | 2.5.9 | Sends clinical documents to the Shared Health Record |
 | [outgoing-exception](modules/outgoing-exception) | `outgoing-message-exceptions` | 1.1.1 | Handles failed outgoing messages |

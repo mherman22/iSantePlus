@@ -96,7 +96,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<revision>1.1.4</revision>
+		<revision>1.1.5-SNAPSHOT</revision>
 		<openMRSVersion>2.0.5</openMRSVersion>
 		<gsonVersion>2.8.5</gsonVersion>
 		<eventApiVersion>2.5</eventApiVersion>
@@ -171,9 +171,14 @@
 			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
 		</repository>
 		<repository>
-			<id>local-vendored</id>
-			<name>Vendored dependencies (everest-core)</name>
-			<url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+			<id>marc-te</id>
+			<name>TECH EXCHANGE</name>
+			<url>http://te.marc-hi.ca/mvn</url>
+		</repository>
+		<repository>
+			<id>santesute-main</id>
+			<url>http://santesuite.org/mvn</url>
+			<name>SanteSuite</name>
 		</repository>
 	</repositories>
 
@@ -188,4 +193,57 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<profiles>
+		<profile>
+			<!-- Github Packages Integration -->
+			<id>github-packages</id>
+			<distributionManagement>
+				<!-- Deploy to Github Packages -->
+				<repository>
+					<id>github-packages</id>
+					<name>Github iSantePlus Packages</name>
+					<url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
+					<uniqueVersion>false</uniqueVersion>
+				</repository>
+				<snapshotRepository>
+					<id>github-packages</id>
+					<name>Github iSantePlus Packages</name>
+					<url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
+					<uniqueVersion>true</uniqueVersion>
+				</snapshotRepository>
+			</distributionManagement>
+			<repositories>
+				<!-- Use the Github Packages Repo first when looking up dependencies -->
+				<repository>
+					<id>github-packages</id>
+					<name>Github iSantePlus Packages</name>
+					<url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
+				</repository>
+			</repositories>
+			<build>
+				<plugins>
+					<!-- Disable possible test jar generation -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>none</phase>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>validate</id>
+								<phase>none</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

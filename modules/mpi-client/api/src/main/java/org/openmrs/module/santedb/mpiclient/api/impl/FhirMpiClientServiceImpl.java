@@ -226,10 +226,15 @@ public class FhirMpiClientServiceImpl implements MpiClientWorker, ApplicationCon
 			String stateOrRegion, String cityOrTownship, Set<PatientIdentifier> patientIdentifiers,
 			PatientIdentifier mothersIdentifier, String nextOfKinName, String birthPlace,
 			Map<String, Object> otherDataPoints) throws MpiClientException {
-
+/*
 		IQuery<IBaseBundle> query = loadSearchQuery(familyName, givenName, dateOfBirth, fuzzyDate, gender,
 				stateOrRegion, cityOrTownship, patientIdentifiers, mothersIdentifier, nextOfKinName, birthPlace,
 				otherDataPoints);
+*/
+		IQuery<IBaseBundle> query = loadSearchQuery(familyName, givenName, dateOfBirth, fuzzyDate, gender,
+				null, null, null, null, null, null,otherDataPoints);		
+		
+		
 
 		// Send the message and construct the result set
 		return getMpiPatientMatches(query);
@@ -239,6 +244,8 @@ public class FhirMpiClientServiceImpl implements MpiClientWorker, ApplicationCon
 		try {
 
 			Bundle results = query.returnBundle(Bundle.class).execute();
+			
+			log.warn(String.format("GetMpiPatientMatches ::: >>> "+ results.getEntry().size()));
 
 			List<String> goldenRecordUuids = new ArrayList<>();
 			List<MpiPatient> retVal = new ArrayList<>();
@@ -324,7 +331,15 @@ public class FhirMpiClientServiceImpl implements MpiClientWorker, ApplicationCon
 			} else
 				query = query.where(org.hl7.fhir.r4.model.Patient.BIRTHDATE.exactly().day(dateOfBirth));
 		}
+		
+		
+		if(gender!=null) {
+		if(gender.equals("M")) gender="male";
+		if(gender.equals("F")) gender="female";
+		}
 
+		log.warn(String.format("GetMpiPatientMatches GENDER ::: >>> "+gender));
+		
 		if (gender != null && !gender.isEmpty())
 			query = query.where(org.hl7.fhir.r4.model.Patient.GENDER.exactly().code(gender));
 
@@ -411,15 +426,45 @@ public class FhirMpiClientServiceImpl implements MpiClientWorker, ApplicationCon
 			throw new MpiClientException(e);
 		}
 	}
+/**
+     * Retrieves a list of patient from the MPI given their identifier
+     */
+    @Override
+    public List<MpiPatient> getPatientList(String identifier, String assigningAuthority) throws MpiClientException {
 
-	/**
-	 * Resolve patient identifier in the specified identity domain
-	 */
-	@Override
-	public PatientIdentifier resolvePatientIdentifier(Patient patient, String toAssigningAuthority)
-			throws MpiClientException {
-		// Send the message and construct the result set
-		try {
+    	List<MpiPatient> mpiPatientList=new ArrayList<MpiPatient>();
+        // Send the message and construct the result set
+        try {
+            Bundle results = this
+                    .getClient(true).search().forResource("Patient").where(org.hl7.fhir.r4.model.Patient.IDENTIFIER
+//                            .exactly().systemAndIdentifier(assigningAuthority, identifier))
+                            .exactly().identifier(identifier))
+                     .returnBundle(Bundle.class).execute();
+
+            for (BundleEntryComponent result : results.getEntry()) {
+                org.hl7.fhir.r4.model.Patient pat = (org.hl7.fhir.r4.model.Patient) result.getResource();
+                MpiPatient mpiPatient = fhirUtil.parseFhirPatient(pat, patientTranslator.toOpenmrsType(pat));
+                mpiPatientList.add(mpiPatient);
+                
+            }
+            
+            return mpiPatientList; // no results
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error in PDQ Search", e);
+            throw new MpiClientException(e);
+        } finally {
+        }
+    }
+
+    /**
+     * Resolve patient identifier in the specified identity domain
+     */
+    @Override
+    public PatientIdentifier resolvePatientIdentifier(Patient patient, String toAssigningAuthority)
+            throws MpiClientException {
+        // Send the message and construct the result set
+        try {
 
 			String identifier = null, assigningAuthority = null;
 			// Preferred correlation identifier
