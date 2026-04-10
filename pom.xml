@@ -26,7 +26,6 @@
         <module>openmrs-htmlformentry-module</module>
         <module>openmrs-module-registration</module>
         <module>isanteplus-openmrs_15Dec2025</module>
-        <module>openmrs-isanteplusreports-module_13Janv2026</module>
     </modules>
 
     <!-- Shared repositories inherited by all modules when built from this reactor -->
