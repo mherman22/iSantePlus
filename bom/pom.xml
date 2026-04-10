@@ -1,0 +1,247 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.openmrs.module</groupId>
+    <artifactId>isanteplus-bom</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>iSantePlus Bill of Materials</name>
+    <description>
+        Centralized version management for all iSantePlus inter-module dependencies.
+        Import this BOM in module POMs to inherit consistent dependency versions
+        without requiring parent POM inheritance.
+    </description>
+
+    <properties>
+        <!-- Sedish HIE modules -->
+        <mpiclient.version>1.1.5-SNAPSHOT</mpiclient.version>
+        <xdssender.version>2.5.9</xdssender.version>
+        <registrationcore.version>2.2.0</registrationcore.version>
+        <labintegration.version>2.3.9-SNAPSHOT</labintegration.version>
+        <outgoingexception.version>1.1.1</outgoingexception.version>
+
+        <!-- iSantePlus core modules -->
+        <isanteplus.version>1.3.0</isanteplus.version>
+        <isanteplusreports.version>1.1-SNAPSHOT</isanteplusreports.version>
+        <registration.version>1.0.0-SNAPSHOT</registration.version>
+
+        <!-- OpenMRS upstream forks -->
+        <coreapps.version>1.19.0-SNAPSHOT</coreapps.version>
+        <htmlformentry.version>3.9.2</htmlformentry.version>
+        <htmlformentryui.version>1.6.3</htmlformentryui.version>
+        <allergyui.version>1.7.0</allergyui.version>
+        <referenceapplication.version>2.6.0</referenceapplication.version>
+
+        <!-- Vendored -->
+        <everest.version>1.1.0</everest.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- ============================================================ -->
+            <!-- Sedish HIE modules                                           -->
+            <!-- ============================================================ -->
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>santedb-mpiclient-api</artifactId>
+                <version>${mpiclient.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>santedb-mpiclient-omod</artifactId>
+                <version>${mpiclient.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>xds-sender-api</artifactId>
+                <version>${xdssender.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>xds-sender-omod</artifactId>
+                <version>${xdssender.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>registrationcore-api</artifactId>
+                <version>${registrationcore.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>registrationcore-omod</artifactId>
+                <version>${registrationcore.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>labintegration-api</artifactId>
+                <version>${labintegration.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>labintegration-omod</artifactId>
+                <version>${labintegration.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>outgoing-message-exceptions-api</artifactId>
+                <version>${outgoingexception.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>outgoing-message-exceptions-omod</artifactId>
+                <version>${outgoingexception.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- ============================================================ -->
+            <!-- iSantePlus core modules                                      -->
+            <!-- ============================================================ -->
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>isanteplus-api</artifactId>
+                <version>${isanteplus.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>isanteplus-omod</artifactId>
+                <version>${isanteplus.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>isanteplusreports-api</artifactId>
+                <version>${isanteplusreports.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>isanteplusreports-omod</artifactId>
+                <version>${isanteplusreports.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>registration-api</artifactId>
+                <version>${registration.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>registration-omod</artifactId>
+                <version>${registration.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- ============================================================ -->
+            <!-- OpenMRS upstream forks                                        -->
+            <!-- ============================================================ -->
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>coreapps-api</artifactId>
+                <version>${coreapps.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>coreapps-omod</artifactId>
+                <version>${coreapps.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentry-api</artifactId>
+                <version>${htmlformentry.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentry-omod</artifactId>
+                <version>${htmlformentry.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentryui-api</artifactId>
+                <version>${htmlformentryui.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentryui-omod</artifactId>
+                <version>${htmlformentryui.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>allergyui-api</artifactId>
+                <version>${allergyui.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>allergyui-omod</artifactId>
+                <version>${allergyui.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>referenceapplication-api</artifactId>
+                <version>${referenceapplication.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>referenceapplication-omod</artifactId>
+                <version>${referenceapplication.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- ============================================================ -->
+            <!-- Vendored / external dependencies                             -->
+            <!-- ============================================================ -->
+            <dependency>
+                <groupId>org.marc.everest</groupId>
+                <artifactId>everest-core</artifactId>
+                <version>${everest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.marc.everest</groupId>
+                <artifactId>everest-rmim-uv-cdar2</artifactId>
+                <version>${everest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.marc.everest</groupId>
+                <artifactId>everest-formatters-xml-its1</artifactId>
+                <version>${everest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.marc.everest</groupId>
+                <artifactId>everest-formatters-xml-dt-r1</artifactId>
+                <version>${everest.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
