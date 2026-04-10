@@ -28,11 +28,11 @@ jobs:
               - 'lib/**'
               - 'pom.xml'
             sedish:
-              - 'mpi-client/**'
-              - 'xds-sender/**'
-              - 'registrationcore/**'
-              - 'outgoing-exception/**'
-              - 'labintegration/**'
+              - 'openmrs-module-mpi-client/**'
+              - 'openmrs-module-xds-sender/**'
+              - 'openmrs-module-registrationcore/**'
+              - 'openmrs-module-outgoing-exception/**'
+              - 'openmrs-module-labintegration/**'
               - 'bom/**'
               - 'lib/**'
             core:
@@ -50,11 +50,11 @@ jobs:
             any:
               - 'bom/**'
               - 'pom.xml'
-              - 'mpi-client/**'
-              - 'xds-sender/**'
-              - 'registrationcore/**'
-              - 'outgoing-exception/**'
-              - 'labintegration/**'
+              - 'openmrs-module-mpi-client/**'
+              - 'openmrs-module-xds-sender/**'
+              - 'openmrs-module-registrationcore/**'
+              - 'openmrs-module-outgoing-exception/**'
+              - 'openmrs-module-labintegration/**'
               - 'isanteplus-openmrs_15Dec2025/**'
               - 'openmrs-isanteplusreports-module_13Janv2026/**'
               - 'registration/**'
@@ -78,13 +78,13 @@ jobs:
       - name: Build Sedish HIE modules
         run: >
           mvn -B clean install -DskipTests
-          -pl bom,mpi-client,xds-sender,registrationcore,outgoing-exception,labintegration
+          -pl bom,openmrs-module-mpi-client,openmrs-module-xds-sender,openmrs-module-registrationcore,openmrs-module-outgoing-exception,openmrs-module-labintegration
           -am
 
       - name: Test Sedish HIE modules
         run: >
           mvn -B test
-          -pl mpi-client,xds-sender,registrationcore,outgoing-exception,labintegration
+          -pl openmrs-module-mpi-client,openmrs-module-xds-sender,openmrs-module-registrationcore,openmrs-module-outgoing-exception,openmrs-module-labintegration
 
       - name: Upload Sedish OMODs
         if: always()
@@ -92,11 +92,11 @@ jobs:
         with:
           name: sedish-omods
           path: |
-            mpi-client/omod/target/*.omod
-            xds-sender/omod/target/*.omod
-            registrationcore/omod/target/*.omod
-            outgoing-exception/omod/target/*.omod
-            labintegration/omod/target/*.omod
+            openmrs-module-mpi-client/omod/target/*.omod
+            openmrs-module-xds-sender/omod/target/*.omod
+            openmrs-module-registrationcore/omod/target/*.omod
+            openmrs-module-outgoing-exception/omod/target/*.omod
+            openmrs-module-labintegration/omod/target/*.omod
           if-no-files-found: warn
 
   # Build iSantePlus core modules

@@ -18,11 +18,11 @@
          Build them individually: mvn clean package -DskipTests -pl coreapps -am -->
     <modules>
         <module>bom</module>
-        <module>labintegration</module>
-        <module>mpi-client</module>
-        <module>xds-sender</module>
-        <module>registrationcore</module>
-        <module>outgoing-exception</module>
+        <module>openmrs-module-labintegration</module>
+        <module>openmrs-module-mpi-client</module>
+        <module>openmrs-module-xds-sender</module>
+        <module>openmrs-module-registrationcore</module>
+        <module>openmrs-module-outgoing-exception</module>
         <module>openmrs-htmlformentry-module</module>
         <module>registration</module>
         <module>isanteplus-openmrs_15Dec2025</module>

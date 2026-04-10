@@ -8,11 +8,11 @@ Central repository for all iSantePlus OpenMRS modules used in the Haiti Health I
 
 | Module | Artifact | Version | Description |
 |--------|----------|---------|-------------|
-| [mpi-client](mpi-client) | `santedb-mpiclient` | 1.1.5-SNAPSHOT | Master Patient Index client — syncs patients with OpenCR |
-| [registrationcore](registrationcore) | `registrationcore` | 2.2.0 | Patient registration and MPI import |
-| [xds-sender](xds-sender) | `xds-sender` | 2.5.9 | Sends clinical documents to the Shared Health Record |
-| [outgoing-exception](outgoing-exception) | `outgoing-message-exceptions` | 1.1.1 | Handles failed outgoing messages |
-| [labintegration](labintegration) | `labintegration` | 2.3.9-SNAPSHOT | Lab order integration |
+| [openmrs-module-mpi-client](openmrs-module-mpi-client) | `santedb-mpiclient` | 1.1.5-SNAPSHOT | Master Patient Index client — syncs patients with OpenCR |
+| [openmrs-module-registrationcore](openmrs-module-registrationcore) | `registrationcore` | 2.2.0 | Patient registration and MPI import |
+| [openmrs-module-xds-sender](openmrs-module-xds-sender) | `xds-sender` | 2.5.9 | Sends clinical documents to the Shared Health Record |
+| [openmrs-module-outgoing-exception](openmrs-module-outgoing-exception) | `outgoing-message-exceptions` | 1.1.1 | Handles failed outgoing messages |
+| [openmrs-module-labintegration](openmrs-module-labintegration) | `labintegration` | 2.3.9-SNAPSHOT | Lab order integration |
 
 ### iSantePlus Core
 
@@ -48,7 +48,7 @@ mvn clean package -DskipTests
 ### Build a specific module (with its dependencies)
 
 ```bash
-mvn clean package -DskipTests -pl mpi-client -am
+mvn clean package -DskipTests -pl openmrs-module-mpi-client -am
 ```
 
 The `-am` (also make) flag automatically builds any sibling modules that the target depends on.
@@ -57,14 +57,14 @@ The `-am` (also make) flag automatically builds any sibling modules that the tar
 
 ```bash
 mvn clean package -DskipTests \
-  -pl mpi-client,xds-sender,registrationcore,outgoing-exception,labintegration \
+  -pl openmrs-module-mpi-client,openmrs-module-xds-sender,openmrs-module-registrationcore,openmrs-module-outgoing-exception,openmrs-module-labintegration \
   -am
 ```
 
 ### Build a single module (if dependencies are already in local .m2)
 
 ```bash
-mvn clean package -DskipTests -pl xds-sender
+mvn clean package -DskipTests -pl openmrs-module-xds-sender
 ```
 
 ### Run tests
@@ -279,19 +279,19 @@ The root `pom.xml` configures this directory as a local Maven repository so buil
 After modifying a module, build it and its dependencies:
 
 ```bash
-mvn clean package -DskipTests -pl registrationcore -am
+mvn clean package -DskipTests -pl openmrs-module-registrationcore -am
 ```
 
 The `-am` flag ensures dependencies (labintegration, mpi-client, xds-sender) are built first. The OMOD is output to:
 
 ```
-registrationcore/omod/target/registrationcore-2.2.0.omod
+openmrs-module-openmrs-module-registrationcore/omod/target/registrationcore-2.2.0.omod
 ```
 
 To deploy it to the Sedish HIE, copy it to the custom modules directory:
 
 ```bash
-cp registrationcore/omod/target/registrationcore-2.2.0.omod \
+cp openmrs-module-registrationcore/omod/target/registrationcore-2.2.0.omod \
    ../sedish/packages/emr-isanteplus/config/custom_modules/
 ```
 
@@ -346,14 +346,14 @@ openmrs-htmlformentry-module/         HTML form entry engine (upstream fork)
 openmrs-htmlformentryui-module/       HTML form entry UI (upstream fork)
 isanteplus-openmrs_15Dec2025/            Core iSantePlus module
 openmrs-isanteplusreports-module_13Janv2026/     iSantePlus reports
-labintegration/        Lab integration
+openmrs-module-labintegration/        Lab integration
 lib/maven-repo/        Vendored Maven dependencies (everest-core)
-mpi-client/            MPI client (OpenCR integration)
-outgoing-exception/    Outgoing message error handling
+openmrs-module-mpi-client/            MPI client (OpenCR integration)
+openmrs-module-outgoing-exception/    Outgoing message error handling
 openmrs-referenceapp-module/  Reference application (upstream fork)
 registration/          Patient registration UI
-registrationcore/      Registration core (MPI import)
-xds-sender/            XDS.b document sender (SHR integration)
+openmrs-module-registrationcore/      Registration core (MPI import)
+openmrs-module-xds-sender/            XDS.b document sender (SHR integration)
 pom.xml                Root reactor POM (aggregator)
 ```
 
