@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.openmrs.module</groupId>
+    <artifactId>isanteplus-monorepo</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>iSantePlus Module Monorepo</name>
+    <description>Aggregator for all iSantePlus OpenMRS modules used in the Sedish Haiti HIE</description>
+
+    <!-- Build order respects dependency graph -->
+    <modules>
+        <module>modules/labintegration</module>
+        <module>modules/mpi-client</module>
+        <module>modules/xds-sender</module>
+        <module>modules/registrationcore</module>
+        <module>modules/outgoing-exception</module>
+        <module>modules/htmlformentry</module>
+        <module>modules/allergyui</module>
+        <module>modules/htmlformentryui</module>
+        <module>modules/coreapps</module>
+        <module>modules/registration</module>
+        <module>modules/referenceapplication</module>
+        <module>modules/isanteplus</module>
+        <module>modules/isanteplusreports</module>
+    </modules>
+
+    <!-- Shared repositories inherited by all modules when built from this reactor -->
+    <repositories>
+        <repository>
+            <id>openmrs-repo</id>
+            <name>OpenMRS Public Repository</name>
+            <url>https://mavenrepo.openmrs.org/public</url>
+        </repository>
+        <repository>
+            <id>openmrs-repo-thirdparty</id>
+            <name>OpenMRS Third Party Repository</name>
+            <url>https://mavenrepo.openmrs.org/thirdparty</url>
+        </repository>
+        <repository>
+            <id>local-vendored</id>
+            <name>Vendored dependencies (everest-core)</name>
+            <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>openmrs-repo</id>
+            <name>OpenMRS Public Repository</name>
+            <url>https://mavenrepo.openmrs.org/public</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

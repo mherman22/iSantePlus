@@ -1,0 +1,18 @@
+[
+  {
+    "id": "outgoingmessageexceptions.manageOutgoingMessageExceptionsDashboard",
+    "description": "${project.parent.artifactId}.description",
+    "extensions": [
+      {
+        "id": "${project.parent.artifactId}.homepage",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "order": 5,
+        "label": "${project.parent.artifactId}.label",
+        "url": "${project.parent.artifactId}/outgoingMessageExceptions.page",
+        "icon": "icon-envelope",
+        "requiredPrivilege": "View Outgoing Messages"
+      }
+    ]
+  }
+]

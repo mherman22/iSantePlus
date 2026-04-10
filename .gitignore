@@ -1,0 +1,27 @@
+# Maven
+target/
+*.class
+*.jar
+*.omod
+!lib/maven-repo/**/*.jar
+
+# IDE
+.idea/
+*.iml
+.project
+.settings/
+.classpath
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Node (coreapps frontend)
+node_modules/
+node/
+
+# Flattened POMs
+.flattened-pom.xml

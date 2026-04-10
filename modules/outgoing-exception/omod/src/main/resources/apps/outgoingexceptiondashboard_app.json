@@ -1,0 +1,63 @@
+[
+  {
+    "id": "outgoingmessageexceptions.manageOutgoingMessageExceptionsDashboard.pix",
+    "description": "${project.parent.artifactId}.pix.description",
+    "order": 10,
+    "extensions": [
+      {
+        "id": "${project.parent.artifactId}.pix",
+        "extensionPointId": "outgoingmessageexceptions/outgoingMessageExceptions.apps",
+        "type": "link",
+        "order": 5,
+        "label": "${project.parent.artifactId}.pix.label",
+        "url": "${project.parent.artifactId}/outgoingPixExceptions.page",
+        "icon": "icon-dashboard"
+      }
+    ]
+  }, {
+    "id": "outgoingmessageexceptions.manageOutgoingMessageExceptionsDashboard.pdq",
+    "description": "${project.parent.artifactId}.pdq.description",
+    "order": 2,
+    "extensions": [
+      {
+        "id": "${project.parent.artifactId}.pdq",
+        "extensionPointId": "outgoingmessageexceptions/outgoingMessageExceptions.apps",
+        "type": "link",
+        "order": 5,
+        "label": "${project.parent.artifactId}.pdq.label",
+        "url": "${project.parent.artifactId}/outgoingPdqExceptions.page",
+        "icon": "icon-dashboard"
+      }
+    ]
+  }, {
+    "id": "outgoingmessageexceptions.manageOutgoingMessageExceptionsDashboard.xdsb",
+    "description": "${project.parent.artifactId}.xdsb.description",
+    "order": 3,
+    "extensions": [
+      {
+        "id": "${project.parent.artifactId}.xdsb",
+        "extensionPointId": "outgoingmessageexceptions/outgoingMessageExceptions.apps",
+        "type": "link",
+        "order": 5,
+        "label": "${project.parent.artifactId}.xdsb.label",
+        "url": "${project.parent.artifactId}/outgoingMessageXdsbExceptions.page",
+        "icon": "icon-dashboard"
+      }
+    ]
+  }, {
+    "id": "outgoingmessageexceptions.manageOutgoingMessageExceptionsDashboard.ccd",
+    "description": "${project.parent.artifactId}.ccd.description",
+    "order": 4,
+    "extensions": [
+      {
+        "id": "${project.parent.artifactId}.ccd",
+        "extensionPointId": "outgoingmessageexception/outgoingMessageExceptions.apps",
+        "type": "link",
+        "order": 5,
+        "label": "${project.parent.artifactId}.ccd.label",
+        "url": "${project.parent.artifactId}/outgoingMessageCcdExceptions.page",
+        "icon": "icon-dashboard"
+      }
+    ]
+  }
+]

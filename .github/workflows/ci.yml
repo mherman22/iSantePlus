@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+
+      - name: Build all modules
+        run: mvn -B clean package -DskipTests
+
+      - name: Run tests
+        run: mvn -B test
+
+      - name: Upload OMODs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: omods
+          path: modules/*/omod/target/*.omod
+          if-no-files-found: warn
+
+  build-sedish-modules:
+    # Fast check: build only the modules used by Sedish HIE
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+
+      - name: Build Sedish HIE modules
+        run: >
+          mvn -B clean package -DskipTests
+          -pl modules/mpi-client,modules/xds-sender,modules/registrationcore,modules/outgoing-exception,modules/labintegration
+          -am
+
+      - name: Upload Sedish OMODs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sedish-omods
+          path: |
+            modules/mpi-client/omod/target/*.omod
+            modules/xds-sender/omod/target/*.omod
+            modules/registrationcore/omod/target/*.omod
+            modules/outgoing-exception/omod/target/*.omod
+            modules/labintegration/omod/target/*.omod
+          if-no-files-found: warn
