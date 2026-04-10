@@ -1,0 +1,29 @@
+<settings>
+    <profiles>
+        <profile>
+            <id>openmrs-repos</id>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>openmrs-repo</id>
+                    <name>OpenMRS Public Repository</name>
+                    <url>https://mavenrepo.openmrs.org/public</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <repositories>
+                <repository>
+                    <id>openmrs-repo</id>
+                    <name>OpenMRS Public Repository</name>
+                    <url>https://mavenrepo.openmrs.org/public</url>
+                </repository>
+                <repository>
+                    <id>openmrs-repo-thirdparty</id>
+                    <name>OpenMRS Third Party Repository</name>
+                    <url>https://mavenrepo.openmrs.org/thirdparty</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>openmrs-repos</activeProfile>
+    </activeProfiles>
+</settings>
