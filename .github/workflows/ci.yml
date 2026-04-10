@@ -8,62 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Detect which modules changed to avoid unnecessary builds
-  detect-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      sedish: ${{ steps.filter.outputs.sedish }}
-      core: ${{ steps.filter.outputs.core }}
-      upstream: ${{ steps.filter.outputs.upstream }}
-      bom: ${{ steps.filter.outputs.bom }}
-      any: ${{ steps.filter.outputs.any }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            bom:
-              - 'bom/**'
-              - 'lib/**'
-              - 'pom.xml'
-            sedish:
-              - 'openmrs-module-mpi-client/**'
-              - 'openmrs-module-xds-sender/**'
-              - 'openmrs-module-registrationcore/**'
-              - 'openmrs-module-outgoing-exception/**'
-              - 'openmrs-module-labintegration/**'
-              - 'bom/**'
-              - 'lib/**'
-            core:
-              - 'isanteplus-openmrs_15Dec2025/**'
-              - 'openmrs-isanteplusreports-module_13Janv2026/**'
-              - 'openmrs-module-registration/**'
-              - 'bom/**'
-            upstream:
-              - 'openmrs-coreapps-module/**'
-              - 'openmrs-htmlformentry-module/**'
-              - 'openmrs-htmlformentryui-module/**'
-              - 'openmrs-allergyui-module/**'
-              - 'openmrs-referenceapp-module/**'
-              - 'bom/**'
-            any:
-              - 'bom/**'
-              - 'pom.xml'
-              - 'openmrs-module-mpi-client/**'
-              - 'openmrs-module-xds-sender/**'
-              - 'openmrs-module-registrationcore/**'
-              - 'openmrs-module-outgoing-exception/**'
-              - 'openmrs-module-labintegration/**'
-              - 'isanteplus-openmrs_15Dec2025/**'
-              - 'openmrs-isanteplusreports-module_13Janv2026/**'
-              - 'openmrs-module-registration/**'
-              - 'openmrs-htmlformentry-module/**'
-
-  # Build Sedish HIE modules (the most critical path)
-  build-sedish:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.sedish == 'true' || github.event_name == 'workflow_dispatch'
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,117 +20,16 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: Build Sedish HIE modules
-        run: >
-          mvn -B clean install -DskipTests
-          -pl bom,openmrs-module-mpi-client,openmrs-module-xds-sender,openmrs-module-registrationcore,openmrs-module-outgoing-exception,openmrs-module-labintegration
-          -am
-
-      - name: Test Sedish HIE modules
-        run: >
-          mvn -B test
-          -pl openmrs-module-mpi-client,openmrs-module-xds-sender,openmrs-module-registrationcore,openmrs-module-outgoing-exception,openmrs-module-labintegration
-
-      - name: Upload Sedish OMODs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: sedish-omods
-          path: |
-            openmrs-module-mpi-client/omod/target/*.omod
-            openmrs-module-xds-sender/omod/target/*.omod
-            openmrs-module-registrationcore/omod/target/*.omod
-            openmrs-module-outgoing-exception/omod/target/*.omod
-            openmrs-module-labintegration/omod/target/*.omod
-          if-no-files-found: warn
-
-  # Build iSantePlus core modules
-  build-core:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.core == 'true' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 8
-        uses: actions/setup-java@v4
-        with:
-          java-version: 8
-          distribution: temurin
-          cache: maven
-
-      - name: Build iSantePlus core modules
-        run: >
-          mvn -B clean install -DskipTests
-          -pl bom,isanteplus-openmrs_15Dec2025,openmrs-isanteplusreports-module_13Janv2026,openmrs-module-registration
-          -am
-
-      - name: Upload core OMODs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: core-omods
-          path: |
-            isanteplus-openmrs_15Dec2025/omod/target/*.omod
-            openmrs-isanteplusreports-module_13Janv2026/omod/target/*.omod
-            openmrs-module-registration/omod/target/*.omod
-          if-no-files-found: warn
-
-  # Build upstream fork modules
-  build-upstream:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.upstream == 'true' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 8
-        uses: actions/setup-java@v4
-        with:
-          java-version: 8
-          distribution: temurin
-          cache: maven
-
-      - name: Build upstream fork modules
-        run: >
-          mvn -B clean install -DskipTests
-          -pl bom,openmrs-htmlformentry-module,openmrs-allergyui-module,openmrs-htmlformentryui-module,openmrs-coreapps-module,openmrs-referenceapp-module
-          -am
-
-      - name: Upload upstream OMODs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: upstream-omods
-          path: |
-            openmrs-coreapps-module/omod/target/*.omod
-            openmrs-htmlformentry-module/omod/target/*.omod
-            openmrs-htmlformentryui-module/omod/target/*.omod
-            openmrs-allergyui-module/omod/target/*.omod
-            openmrs-referenceapp-module/omod/target/*.omod
-          if-no-files-found: warn
-
-  # Full reactor build on main (post-merge validation)
-  build-all:
-    needs: detect-changes
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.detect-changes.outputs.any == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 8
-        uses: actions/setup-java@v4
-        with:
-          java-version: 8
-          distribution: temurin
-          cache: maven
-
-      - name: Full reactor build
+      - name: Build all modules
         run: mvn -B clean package -DskipTests
 
-      - name: Upload all OMODs
+      - name: Run tests
+        run: mvn -B test
+
+      - name: Upload OMODs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: all-omods
+          name: omods
           path: '*/omod/target/*.omod'
           if-no-files-found: warn
