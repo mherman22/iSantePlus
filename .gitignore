@@ -41,5 +41,10 @@ node_modules/
 node/
 npm-debug.log*
 
+# Sass/Compass build cache
+.sass-cache/
+.rubygems/
+.rubygems-provided/
+
 # Logs
 *.log
