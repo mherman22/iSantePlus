@@ -29,10 +29,10 @@ jobs:
         run: mvn -B clean package -DskipTests
 
       - name: Run tests
+        if: github.event_name != 'pull_request'
         run: mvn -B test
 
       - name: Upload OMODs
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: omods
@@ -46,7 +46,7 @@ jobs:
         run: |
           for omod in */omod/target/*.omod; do
             if [ -f "$omod" ]; then
-              echo "Uploading $omod"
+              echo "Uploading $(basename $omod)"
               gh release upload "${{ github.event.release.tag_name }}" "$omod" --clobber
             fi
           done

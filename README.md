@@ -308,31 +308,44 @@ On CI, OMODs are uploaded as build artifacts after every push to `main` and atta
 
 ## CI/CD
 
-### CI (`ci.yml`)
+A single workflow (`build.yml`) handles building, testing, and publishing:
 
-Runs on every push and PR to `main`. Uses **path-based change detection** to only build what changed:
+| Trigger | Build | Tests | Upload artifacts | Attach to release |
+|---------|-------|-------|-----------------|-------------------|
+| Pull request | Yes | No | Yes | No |
+| Push to main | Yes | Yes | Yes | No |
+| Release created | Yes | Yes | Yes | Yes |
+| Manual dispatch | Yes | Yes | Yes | No |
 
-| Job | Triggers when | What it builds |
-|-----|---------------|----------------|
-| `build-sedish` | mpi-client, xds-sender, registrationcore, outgoing-exception, labintegration, bom, or lib changed | Sedish HIE modules with tests |
-| `build-core` | isanteplus, isanteplusreports, registration, or bom changed | iSantePlus core modules |
-| `build-upstream` | coreapps, htmlformentry, htmlformentryui, allergyui, referenceapplication, or bom changed | Upstream fork modules |
-| `build-all` | Any module changed (main branch only) | Full reactor build |
-
-Each job uploads its OMODs as downloadable artifacts. BOM changes trigger all jobs since they can affect any module.
-
-### Publish (`publish.yml`)
-
-On GitHub release creation, builds all modules and attaches OMODs as release assets.
+PRs only build (no tests) to keep feedback fast. Tests run on merge to main and on releases.
 
 ### Downloading OMODs
 
-From CI: go to the Actions tab, select the workflow run, download artifacts.
+**From CI:** Go to the Actions tab, select the workflow run, download the `omods` artifact.
 
-From releases:
+**From releases:**
 ```bash
 gh release download <tag> --pattern "*.omod"
 ```
+
+### Creating a Release
+
+Releases attach all built OMODs as downloadable assets on the release page.
+
+**Via GitHub UI:**
+1. Go to the repo's Releases page
+2. Click "Draft a new release"
+3. Create a new tag (e.g. `v1.0.0`)
+4. Add release notes
+5. Click "Publish release"
+6. CI builds automatically and attaches OMODs to the release
+
+**Via CLI:**
+```bash
+gh release create v1.0.0 --title "v1.0.0" --notes "Release notes here"
+```
+
+The workflow triggers automatically — OMODs appear on the release page within a few minutes.
 
 ## Repository Structure
 
