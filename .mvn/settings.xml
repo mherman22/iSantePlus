@@ -1,15 +1,16 @@
 <settings>
-    <!-- Mirror dead HTTP repos to the vendored local repo -->
+    <!-- Mirror dead HTTP repos to a dummy that will fail gracefully.
+         The actual everest JARs are pre-installed via cp to ~/.m2/repository in CI. -->
     <mirrors>
         <mirror>
             <id>marc-te-mirror</id>
             <mirrorOf>marc-te,marc-te-main</mirrorOf>
-            <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+            <url>https://repo.maven.apache.org/maven2</url>
         </mirror>
         <mirror>
             <id>santesuite-mirror</id>
             <mirrorOf>santesute-main,santesuite-main</mirrorOf>
-            <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
+            <url>https://repo.maven.apache.org/maven2</url>
         </mirror>
     </mirrors>
 
@@ -33,11 +34,6 @@
                     <id>openmrs-repo-thirdparty</id>
                     <name>OpenMRS Third Party Repository</name>
                     <url>https://mavenrepo.openmrs.org/thirdparty</url>
-                </repository>
-                <repository>
-                    <id>local-vendored</id>
-                    <name>Vendored dependencies (everest-core)</name>
-                    <url>file://${session.executionRootDirectory}/lib/maven-repo</url>
                 </repository>
             </repositories>
         </profile>

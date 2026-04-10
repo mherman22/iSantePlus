@@ -26,10 +26,17 @@ jobs:
           cache: maven
 
       - name: Install vendored dependencies
-        run: cp -r lib/maven-repo/* ~/.m2/repository/
+        run: |
+          mkdir -p ~/.m2/repository
+          cp -r lib/maven-repo/* ~/.m2/repository/
+          echo "Installed vendored JARs:"
+          find ~/.m2/repository/org/marc/everest -name "*.jar" | head -10
+
+      - name: Clear cached resolution failures
+        run: find ~/.m2/repository -name "*.lastUpdated" -delete 2>/dev/null || true
 
       - name: Build all modules
-        run: mvn -B clean package -DskipTests -s .mvn/settings.xml
+        run: mvn -B -U clean package -DskipTests -s .mvn/settings.xml
 
       - name: Run tests
         if: github.event_name != 'pull_request'
