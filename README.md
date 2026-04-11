@@ -2,36 +2,6 @@
 
 Central repository for all iSantePlus OpenMRS modules used in the Haiti Health Information Exchange (Sedish HIE).
 
-## Modules
-
-### Sedish HIE Integration
-
-| Module | Artifact | Version | Description |
-|--------|----------|---------|-------------|
-| [openmrs-module-mpi-client](openmrs-module-mpi-client) | `santedb-mpiclient` | 1.1.5-SNAPSHOT | Master Patient Index client — syncs patients with OpenCR |
-| [openmrs-module-registrationcore](openmrs-module-registrationcore) | `registrationcore` | 2.2.0 | Patient registration and MPI import |
-| [openmrs-module-xds-sender](openmrs-module-xds-sender) | `xds-sender` | 2.5.9 | Sends clinical documents to the Shared Health Record |
-| [openmrs-module-outgoing-exception](openmrs-module-outgoing-exception) | `outgoing-message-exceptions` | 1.1.1 | Handles failed outgoing messages |
-| [openmrs-module-labintegration](openmrs-module-labintegration) | `labintegration` | 2.3.9-SNAPSHOT | Lab order integration |
-
-### iSantePlus Core
-
-| Module | Artifact | Version | Description |
-|--------|----------|---------|-------------|
-| [isanteplus-openmrs_15Dec2025](isanteplus-openmrs_15Dec2025) | `isanteplus` | 1.3.0 | Core iSantePlus EMR module |
-| [openmrs-isanteplusreports-module_13Janv2026](openmrs-isanteplusreports-module_13Janv2026) | `isanteplusreports` | 1.1-SNAPSHOT | iSantePlus reporting |
-| [openmrs-module-registration](openmrs-module-registration) | `registration` | 1.0.0-SNAPSHOT | Patient registration UI |
-
-### OpenMRS Upstream Forks
-
-| Module | Artifact | Version | Description |
-|--------|----------|---------|-------------|
-| [openmrs-coreapps-module](openmrs-coreapps-module) | `coreapps` | 1.19.0-SNAPSHOT | Core application framework |
-| [openmrs-htmlformentry-module](openmrs-htmlformentry-module) | `htmlformentry` | 3.9.2 | HTML form entry engine |
-| [openmrs-htmlformentryui-module](openmrs-htmlformentryui-module) | `htmlformentryui` | 1.6.3 | HTML form entry UI widgets |
-| [openmrs-allergyui-module](openmrs-allergyui-module) | `allergyui` | 1.7.0 | Allergy management UI |
-| [openmrs-referenceapp-module](openmrs-referenceapp-module) | `referenceapplication` | 2.6.0 | Reference application framework |
-
 ## Prerequisites
 
 - **Java 8** (JDK) — required by OpenMRS platform
